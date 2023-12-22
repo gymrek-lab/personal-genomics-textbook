@@ -28,6 +28,15 @@ parts:
   - caption: Module 2 - Ancestry
     chapters:
       - file: ancestry/intro_popgen
+        sections:
+        - file: ancestry/popgen/genetic_variation_terminology.md
+        - file: ancestry/popgen/forces_evolution.md
+        - file: ancestry/popgen/mutations.md
+        - file: ancestry/popgen/drift.md
+        - file: ancestry/popgen/selection.md
+        - file: ancestry/popgen/hwe.md
+        - file: ancestry/popgen/fst.md
+        - file: ancestry/popgen/review_questions.md
       - file: ancestry/global_ancestry
       - file: ancestry/relative_finding
       - file: ancestry/admixture
