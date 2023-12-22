@@ -1,0 +1,19 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: index
+parts:
+  - caption: Introduction
+    chapters:
+      - file: intro/intro_to_your_genome
+      - file: intro/intro_genome_tech
+      - file: intro/genome_file_formats
+  - caption: Ancestry
+    chapters:
+      - file: ancestry/forces_of_evolution
+      - file: ancestry/genetic_variation
+      - file: ancestry/global_ancestry
+      - file: ancestry/relative_finding
+      - file: ancestry/local_ancestry
+  - caption: Helpful math and CS refreshers
