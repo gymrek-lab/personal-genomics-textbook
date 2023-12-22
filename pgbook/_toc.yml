@@ -4,16 +4,28 @@
 format: jb-book
 root: index
 parts:
-  - caption: Introduction
+  - caption: Module 1 - Introduction
     chapters:
       - file: intro/intro_to_your_genome
+        sections:
+        - file: intro/genome/structure_DNA
+        - file: intro/genome/genome_organization
+        - file: intro/genome/central_dogma
+        - file: intro/genome/noncoding
+        - file: intro/genome/review_questions
       - file: intro/intro_genome_tech
       - file: intro/genome_file_formats
-  - caption: Ancestry
+  - caption: Module 2 - Ancestry
     chapters:
-      - file: ancestry/forces_of_evolution
-      - file: ancestry/genetic_variation
+      - file: ancestry/intro_popgen
       - file: ancestry/global_ancestry
       - file: ancestry/relative_finding
-      - file: ancestry/local_ancestry
-  - caption: Helpful math and CS refreshers
+  - caption: Appendix 1 - review of math+CS concepts
+    chapters:
+      - file: appendix/linear_algebra.md
+  - caption: Appendix 2 - glossary and notation
+    chapters:
+      - file: appendix/glossary.md
+      - file: appendix/software.md
+      - file: appendix/unix.md
+      - file: appendix/notation.md
