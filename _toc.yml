@@ -36,6 +36,7 @@ parts:
         - file: ancestry/popgen/selection.md
         - file: ancestry/popgen/hwe.md
         - file: ancestry/popgen/fst.md
+        - file: ancestry/popgen/recombination.md
         - file: ancestry/popgen/review_questions.md
       - file: ancestry/global_ancestry
       - file: ancestry/relative_finding

@@ -6,4 +6,6 @@ TODO list:
 * Add pgen/bgen to file formats
 * Add pictures of spread of polymorphisms to 3.1
 * Need to add a section before forces of evolution introducing terminology to describe genetic variation
-* Work Wright Fisher activity into the drift section
+* Work Wright Fisher activity into the drift section. maybe make it into an app with a link so they don't have to download the notebooks
+* plink IBD
+* genetic genealogy
