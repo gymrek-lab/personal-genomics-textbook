@@ -1,0 +1,5 @@
+# 1.4 The non-coding genome
+
+While a lot of work in human genetics focuses on genes, only a tiny portion of the human genome actually encodes for protein-coding gene sequences. In fact, coding regions comprise only around 1.5% of our genomes. The rest of the "non-coding" genome is made up of a variety of sequences, including introns, long repeat elements, and other regions. While these non-coding regions used to be referred to as "junk DNA", in fact, these regions encode many *regulatory sequences* that are key for determining which genes get expressed (turned on), their relative abundances, and in which contexts. 
+
+In fact, when we talk about complex traits, we will see that the vast majority of genetic variants explaining risk for complex traits such as diabetes, heart disease, schizophrenia, and other traits, are residing in non-coding regions of the genome.
