@@ -1,3 +1,3 @@
-# 1.5 Chapter 1 Review Questions
+# 1.5 Review Questions
 
 Under construction!
