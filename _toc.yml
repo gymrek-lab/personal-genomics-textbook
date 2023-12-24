@@ -29,24 +29,31 @@ parts:
     chapters:
       - file: ancestry/intro_popgen
         sections:
-        - file: ancestry/popgen/genetic_variation_terminology.md
-        - file: ancestry/popgen/forces_evolution.md
-        - file: ancestry/popgen/mutations.md
-        - file: ancestry/popgen/drift.md
-        - file: ancestry/popgen/selection.md
-        - file: ancestry/popgen/hwe.md
-        - file: ancestry/popgen/fst.md
-        - file: ancestry/popgen/recombination.md
-        - file: ancestry/popgen/review_questions.md
+        - file: ancestry/popgen/genetic_variation_terminology
+        - file: ancestry/popgen/forces_evolution
+        - file: ancestry/popgen/mutations
+        - file: ancestry/popgen/drift
+        - file: ancestry/popgen/selection
+        - file: ancestry/popgen/hwe
+        - file: ancestry/popgen/fst
+        - file: ancestry/popgen/recombination
+        - file: ancestry/popgen/review_questions
       - file: ancestry/global_ancestry
+        sections:
+        - file: ancestry/global/pca_global_ancestry
+        - file: ancestry/global/admixture_global_ancestry
       - file: ancestry/relative_finding
       - file: ancestry/admixture
+      - file: ancestry/plink_1000G
+        sections:
+        - file: ancestry/plink1kg/1000G
+        - file: ancestry/plink1kg/plink
   - caption: Appendix 1 - review of math+CS concepts
     chapters:
-      - file: appendix/linear_algebra.md
+      - file: appendix/linear_algebra
   - caption: Appendix 2 - glossary and notation
     chapters:
-      - file: appendix/glossary.md
-      - file: appendix/software.md
-      - file: appendix/unix.md
-      - file: appendix/notation.md
+      - file: appendix/glossary
+      - file: appendix/software
+      - file: appendix/unix
+      - file: appendix/notation
