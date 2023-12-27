@@ -53,7 +53,7 @@ parts:
       - file: appendix/linear_algebra
   - caption: Appendix 2 - glossary and notation
     chapters:
-      - file: appendix/glossary
-      - file: appendix/software
       - file: appendix/unix
+      - file: appendix/software
+      - file: appendix/glossary
       - file: appendix/notation
