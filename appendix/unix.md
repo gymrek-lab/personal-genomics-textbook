@@ -1,4 +1,4 @@
-# Chapter A1: Unix commands used
+# Chapter A2.1: Unix commands used
 
 * `cd`
 * `ls -ltrh`

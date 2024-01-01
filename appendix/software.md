@@ -1,4 +1,4 @@
-# Chapter A.2: List of software tools used
+# Chapter A2.2: List of software tools used
 
 * `tabix`
 * `bgzip`

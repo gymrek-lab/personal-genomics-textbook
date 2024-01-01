@@ -43,14 +43,42 @@ parts:
         - file: ancestry/global/pca_global_ancestry
         - file: ancestry/global/admixture_global_ancestry
       - file: ancestry/relative_finding
+        sections:
+        - file: ancestry/relfind/ibd
+        - file: ancestry/relfind/ibd_pedigree
+        - file: ancestry/relfind/ibd_plink
+        - file: ancestry/relfind/ibd_segments
+        - file: ancestry/relfind/genetic_genealogy
       - file: ancestry/admixture
       - file: ancestry/plink_1000G
         sections:
         - file: ancestry/plink1kg/1000G
         - file: ancestry/plink1kg/plink
+  - caption: Module 3 - Complex traits
+    chapters:
+      - file: complextraits/overview
+      - file: complextraits/gwas
+      - file: complextraits/lmm
+      - file: complextraits/qtls
+      - file: complextraits/fine-mapping
+      - file: complextraits/prs
+  - caption: Module 4 - Trans-ancestry approaches
+    chapters:
+      - file: multianc/fine-mapping
+      - file: multianc/prs
+  - caption: Module 5 - Beyond common variants
+    chapters:
+      - file: beyond/rare
+      - file: beyond/complex
+  - caption: Module 6 - Ethics
+    chapters:
+      - file: ethics/privacy
+      - file: ethics/health
+      - file: ethics/equity
   - caption: Appendix 1 - review of math+CS concepts
     chapters:
       - file: appendix/linear_algebra
+      - file: appendix/hmm
   - caption: Appendix 2 - glossary and notation
     chapters:
       - file: appendix/unix
