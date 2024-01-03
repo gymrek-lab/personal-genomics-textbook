@@ -1,0 +1,939 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2.3 Global ancestry analysis with PCA &#8212; CSE284 - Personal Genomics</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ancestry/global/pca_global_ancestry';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.2 Global ancestry analysis with ADMIXTURE" href="admixture_global_ancestry.html" />
+    <link rel="prev" title="Chapter 4: Global ancestry" href="../global_ancestry.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="CSE284 - Personal Genomics - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="CSE284 - Personal Genomics - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Personal Genomics for Bioinformaticians
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 1 - Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../intro/intro_to_your_genome.html">Chapter 1: Introduction to the human genome</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/structure_DNA.html">1.1 The structure of DNA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/genome_organization.html">1.2 Organization of the human genome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/central_dogma.html">1.3 Genes and the central dogma</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/noncoding.html">1.4 The non-coding genome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/review_questions.html">1.5 Review Questions</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../intro/intro_genome_tech.html">Chapter 2: Overview of technologies for genome analysis</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/genotype_arrays.html">2.1 Genotyping arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/ngs.html">2.2 Next-generation sequencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/long_reads.html">2.3 Long-read technologies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/tech_summary.html">2.4 Summary of genomics technologies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/review_questions.html">2.5 Review Questions</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../intro/genome_file_formats.html">Tutorial 1: file formats for describing genetic variation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/formats/vcf.html">T1.1 VCF files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/formats/plink.html">T1.2 Plink files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/formats/pgen.html">T1.2 PGEN files</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 2 - Ancestry</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../intro_popgen.html">Chapter 3: Introduction to population genetics</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../popgen/genetic_variation_terminology.html">3.1 Genetic variation terminology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../popgen/forces_evolution.html">3.2 The four forces of evolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../popgen/mutations.html">3.3 Types and patterns of mutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../popgen/drift.html">3.4 Genetic drift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../popgen/selection.html">3.5 Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../popgen/hwe.html">3.6 Hardy-Weinberg Equilibrium and random mating</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../popgen/fst.html">3.7 Measuring population differentiation with Fst</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../popgen/recombination.html">3.8 Recombination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../popgen/review_questions.html">3.9 Review Questions</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../global_ancestry.html">Chapter 4: Global ancestry</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">2.3 Global ancestry analysis with PCA</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="admixture_global_ancestry.html">4.2 Global ancestry analysis with ADMIXTURE</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../relative_finding.html">Chapter 5: Relative finding</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../relfind/ibd.html">5.1 Identity by descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../relfind/ibd_pedigree.html">5.2 Expected IBD of close relatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../relfind/ibd_plink.html">5.3 Computing expected IBD - plink method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../relfind/ibd_segments.html">5.4 Computing expected IBD segment sharing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../relfind/genetic_genealogy.html">5.5 Genetic genealogy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../admixture.html">Chapter 6: Admixture</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../plink1kg/1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plink1kg/plink.html">T2.2 Some tips and examples for using plink</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 3 - Complex traits</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../complextraits/overview.html">Chapter XX: Introduction to complex traits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complextraits/gwas.html">Chapter XX: Genome-wide association studies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complextraits/lmm.html">Chapter XX: Linear mixed models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complextraits/qtls.html">Chapter XX: Quantitative trait loci and functional genomics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complextraits/fine-mapping.html">Chapter XX: Fine-mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../complextraits/prs.html">Chapter XX: Polygenic risk scores</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 4 - Trans-ancestry approaches</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../multianc/fine-mapping.html">Chapter XX: PRS and portability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../multianc/prs.html">Chapter XX: PRS and portability</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 5 - Beyond common variants</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../beyond/rare.html">Chapter XX: Rare variants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../beyond/complex.html">Chapter XX: Complex variants</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 6 - Ethics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../ethics/privacy.html">Chapter XX: Ethics part I - privacy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ethics/health.html">Chapter XX: Ethics part II - health</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ethics/equity.html">Chapter XX: Ethics part I - equity</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 1 - review of math+CS concepts</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/linear_algebra.html">Chapter A1.1 Review of linear algebra concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/hmm.html">Chapter A2.2: Hidden Markov Models</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 2 - glossary and notation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/unix.html">Chapter A2.1: Unix commands used</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/software.html">Chapter A2.2: List of software tools used</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/glossary.html">Chapter A2.3: Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/notation.html">Chapter A2.4: Notation used throughout the book</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/gymrek-lab/personal-genomics-textbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/gymrek-lab/personal-genomics-textbook/issues/new?title=Issue%20on%20page%20%2Fancestry/global/pca_global_ancestry.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/ancestry/global/pca_global_ancestry.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>2.3 Global ancestry analysis with PCA</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">2.3 Global ancestry analysis with PCA</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#race-ethnicity-and-genetic-ancestry">2.3.1 Race, ethnicity, and genetic ancestry</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-pca">2.3.2 Introduction to PCA</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#review-of-basic-descriptive-statistics">2.3.3 Review of basic descriptive statistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#review-of-eigenvalues-and-eigenvectors">2.3.4 Review of eigenvalues and eigenvectors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performing-pca">2.3.5 Performing PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-transpose-trick">2.3.6 The transpose trick</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-on-human-data">2.3.7 PCA on human data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="o">%</span><span class="n">pylab</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="global-ancestry-analysis-with-pca">
+<h1>2.3 Global ancestry analysis with PCA<a class="headerlink" href="#global-ancestry-analysis-with-pca" title="Permalink to this heading">#</a></h1>
+<p>A major reason many people participate in “direct-to-consumer” genetics is to learn about their ancestry. We will think about two different ways to describe someone’s ancestry:</p>
+<ul class="simple">
+<li><p><strong>Global ancestry</strong>: provides a high-level description of someone’s overall ancestry. For example, we might describe someone’s ancestry as “European”, or “African”, or “10% European and 90% East Asian”. Depending on our dataset and application, we may be able to be more precise. e.g. “50% Chinese and 50% Japanese.”</p></li>
+<li><p><strong>Local ancestry</strong>: describes the ancestral origin of individual fragments of the genome. For example, we might say that the first half of one of your copies of chromosome 1 is of African origin. You can think of <em>global ancestry</em> as a genome-wide average of someone’s <em>local ancestry</em>.</p></li>
+</ul>
+<p>In this session, we will focus on two methods for computing global ancestry: PCA (Notes 2.3) and ADMIXTURE (Notes 2.4). Next week we will discuss methods for analyzing local ancestry.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="race-ethnicity-and-genetic-ancestry">
+<h1>2.3.1 Race, ethnicity, and genetic ancestry<a class="headerlink" href="#race-ethnicity-and-genetic-ancestry" title="Permalink to this heading">#</a></h1>
+<p>Borrell, et al 2021 [1] define:</p>
+<ul class="simple">
+<li><p><strong>Race</strong> and <strong>ethnicity</strong> are self-ascribed or socially ascribed (e.g. by police or medical staff) identities.</p></li>
+<li><p><strong>Genetic ancestry</strong> describes the genetic origin of one’s population. (This often correlates with the geographic origin of someone’s ancestors)</p></li>
+</ul>
+<p>We will focus on <em>genetic ancestry</em> here. We will use genetic information to quantitatively measure ancestry. The result will be a continuous definition of ancestry (rather than discrete labels such as “White” or “Black”) that is inferred in an unbiasd way from the data.</p>
+<p>Importantly, while the terms “race”, “ethnicity”, and “genetic ancestry” have different meanings, they are often used somewhat interchangeably in genomics and medical literature. In some cases, this has been the cause of great harm especially to under-represented minorities, for example when “race-specific” reference values for certain medical tests are used. We will explore these issues more in coming lectures.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="introduction-to-pca">
+<h1>2.3.2 Introduction to PCA<a class="headerlink" href="#introduction-to-pca" title="Permalink to this heading">#</a></h1>
+<p>Our goal will be to take a large matrix of genotypes (0s, 1s, and 2s for each person at each SNP), and use these to identify “population structure”, i.e. different population groups and how they are related to each other. In our application, we’ll have a set of samples with known labels (from the 1000 Genomes Project) and will use these to infer the ancestry of unlabeled samples (e.g. from 23andme).</p>
+<p>This is a high-dimensionality problem. We typically will have tens of thousands or more features (SNPs) for each sample. We will first use <em>principal components analysis</em> (PCA) to address this challenge. Intuitively, PCA will find linear combinations of features (these are the <em>principal components</em>, or PCs) which explain the most variation in our data. This will have the advantage of performing <em>feature reduction</em> (we can look at a small number of PCs rather than a huge number of SNPs). It will also allow us to identify <em>clusters</em> of samples based on visual inspection of the data in PC-space.</p>
+<p>Before performing PCA on genetic data, we will first go through a toy example to more easily illustrate what PCA is doing. Consider that you have collected a dataset consisting of the height and weight for a set of samples. The cell below generates this dummy set of data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">200</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+<span class="n">height</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">65</span>
+<span class="n">weight</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">120</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="n">height</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="n">weight</span><span class="p">})</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>height</th>
+      <th>weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>64.374698</td>
+      <td>119.829936</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>65.960695</td>
+      <td>120.590901</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>64.401457</td>
+      <td>119.597407</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>62.771941</td>
+      <td>119.467423</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>64.538570</td>
+      <td>119.501133</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can make a scatter plot of these variables to see their relationship:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;height&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;weight&quot;</span><span class="p">]);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Height&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Weight&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/b4625835c49694f8a8a73a1fd15b2db4fb007c6162cc4b4c82f63cee72912dcb.png" src="../../_images/b4625835c49694f8a8a73a1fd15b2db4fb007c6162cc4b4c82f63cee72912dcb.png" />
+</div>
+</div>
+<p>Intuitively, if we had do draw a line through these points that explained the largest about of variation in our data, we’d draw it along the x=y diagonal. After that, the rest of the variation in the data can be described as the distance of each point from that diagonal. Those two directions will be the two principal components (PCs).</p>
+<p>Generally, if we have <span class="math notranslate nohighlight">\(n\)</span> samples and <span class="math notranslate nohighlight">\(p\)</span> features, we will be able to find <span class="math notranslate nohighlight">\(min(n-1, m)\)</span> PCs. In this example, we have <span class="math notranslate nohighlight">\(m=2\)</span> features, and can fully explain the data with 2 PCs. (Often in our genetic data, we will have many more features than samples. In that case the number of PCs will be limited by the sample size). The PCs are ordered according to how much variation they explain (PC1 explains the most variation, PC2 explains the next most, etc.).</p>
+<section id="review-of-basic-descriptive-statistics">
+<h2>2.3.3 Review of basic descriptive statistics<a class="headerlink" href="#review-of-basic-descriptive-statistics" title="Permalink to this heading">#</a></h2>
+<p>Let <span class="math notranslate nohighlight">\(X={x_{ij}}\)</span> be our matrix of data. We have <span class="math notranslate nohighlight">\(m\)</span> features (<span class="math notranslate nohighlight">\(i=1..m\)</span>) and <span class="math notranslate nohighlight">\(n\)</span> samples (<span class="math notranslate nohighlight">\(j=1..n\)</span>). In the case of genetics data, <span class="math notranslate nohighlight">\(x_{ij}\)</span> would give sample <span class="math notranslate nohighlight">\(j\)</span>’s genotype (0, 1, or 2) at SNP <span class="math notranslate nohighlight">\(i\)</span>. In our height and weight example, we have <span class="math notranslate nohighlight">\(m=2\)</span> features (height and weight) and simulated <span class="math notranslate nohighlight">\(n=200\)</span> samples. Note below we will use <span class="math notranslate nohighlight">\(X_i = {x_{i1}, x_{i2}, ... x_{in}}\)</span> to refer to the vector of data across all samples for feature <span class="math notranslate nohighlight">\(i\)</span>.</p>
+<p>We will make use of the following statistics:</p>
+<ul class="simple">
+<li><p><strong>Mean</strong>: <span class="math notranslate nohighlight">\(\overline{X_i} = \frac{1}{n} \sum_{j=1}^n x_{ij}\)</span></p></li>
+<li><p><strong>Variance</strong>: <span class="math notranslate nohighlight">\(\sigma^2(X_i) = \frac{1}{n-1} \sum_{j=1}^n (x_{ij}-\overline{X_i})^2\)</span></p></li>
+<li><p><strong>Covariance</strong>: <span class="math notranslate nohighlight">\(cov(X_i, X_k) = \frac{1}{n-1} \sum_{j=1}^n (x_{ij}-\overline{X_i})(x_{kj}-\overline{X_k})\)</span></p></li>
+</ul>
+<p>Note some special properties of the covariance:</p>
+<ol class="arabic simple">
+<li><p>The covariance of a vector with itself is equal to the variance: <span class="math notranslate nohighlight">\(cov(X_i, X_i) = \sigma^2(X_i)\)</span></p></li>
+<li><p>Covariance ie symmatric: <span class="math notranslate nohighlight">\(cov(X_i, X_k) = cov(X_k, X_i)\)</span>.</p></li>
+</ol>
+<p>When performing PCA, we will be dealing primarily with the <em>covariance matrix</em>, often denoted as <span class="math notranslate nohighlight">\(cov(X)\)</span> or <span class="math notranslate nohighlight">\(\Sigma\)</span>. (Note, covariance matrices will come up again in our trait prediction module). The covariance matrix is simply a matrix of the covariances between all pairs of features. So:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(cov(X)\)</span> has dimension <span class="math notranslate nohighlight">\(m \times m\)</span></p></li>
+<li><p>Entry <span class="math notranslate nohighlight">\(i,k\)</span> gives <span class="math notranslate nohighlight">\(cov(X_i, X_k)\)</span></p></li>
+<li><p>Diagonal elements of the covariance matrix give <span class="math notranslate nohighlight">\(\sigma^2(X_1), \sigma^2(X_2), ... \sigma^2(X_m)\)</span>.</p></li>
+<li><p>Off diagonal elements give the covariance of each pair of features (e.g. SNPs).</p></li>
+</ul>
+<p>Note, if the data is scaled such that the mean of each feature is 0, the covariance matrix can easily be computed as <span class="math notranslate nohighlight">\(cov(X)=XX^T/(n-1)\)</span>. We can also use the <code class="docutils literal notranslate"><span class="pre">np.cov</span></code> function to compute the covariance matrix. The cell below does this for our height and weight data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># diagonals give Var(height) and Var(weight)</span>
+<span class="c1"># Off-diagonals give Cov(height, weight)</span>
+<span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span>
+<span class="n">cov</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.68217761, 0.23093475],
+       [0.23093475, 0.09883179]])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="review-of-eigenvalues-and-eigenvectors">
+<h2>2.3.4 Review of eigenvalues and eigenvectors<a class="headerlink" href="#review-of-eigenvalues-and-eigenvectors" title="Permalink to this heading">#</a></h2>
+<p>The key idea of PCA is going to be looking for structure in the covariance matrix. For this, we will use the concept of eigenvalues and eigenvectors from linear algebra. Note, there are full courses on linear algebra that will cover these concepts in detail. Here, we just attempt to understand these at a high level to give us intuition into what PCA is doing.</p>
+<p>Given a square matrix <span class="math notranslate nohighlight">\(C\)</span> (such as our <span class="math notranslate nohighlight">\(m\)</span> by <span class="math notranslate nohighlight">\(m\)</span> covariance matrix), which represents some linear transformation:</p>
+<p>An <strong>eigenvector</strong> <span class="math notranslate nohighlight">\(\vec{v}\)</span> of a matrix <span class="math notranslate nohighlight">\(C\)</span> is a non-zero vector that does not change direction when <span class="math notranslate nohighlight">\(C\)</span> is applied to it:</p>
+<div class="math notranslate nohighlight">
+\[C\vec{v} = \lambda \vec{v}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\lambda\)</span> is a scalar value known as the <strong>eigenvalue</strong> associated with eigenvector <span class="math notranslate nohighlight">\(\vec{v}\)</span>.</p>
+<p>If <span class="math notranslate nohighlight">\(C\)</span> is an <span class="math notranslate nohighlight">\(m\times m\)</span> matrix, there are <span class="math notranslate nohighlight">\(m\)</span> eigenvectors and corresponding eigenvalues:</p>
+<div class="math notranslate nohighlight">
+\[ \vec{v_1}, \vec{v_2}, ... \vec{v_m}\]</div>
+<div class="math notranslate nohighlight">
+\[ \lambda_1, \lambda_2, ... \lambda_m\]</div>
+<p>These are ordered by the absolute value of the eigenvalues. Intuitively:</p>
+<ul class="simple">
+<li><p>The top eigenvectors are linear combinations of features that explain the most variation in our data.</p></li>
+<li><p>The corresponding eigenvalues tell us about how much variation is explained</p></li>
+</ul>
+<p>Let’s compute the eigenvalues and eigenvectors of our height and weight dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">cov</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">eigvals</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">eigvecs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.7625315 0.0184779]
+[[ 0.94446029 -0.32862557]
+ [ 0.32862557  0.94446029]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s draw the direction of the eigenvectors on our height vs. weight plot. These should go in the directions we intuitively thought should correspond to the two PCs.</p>
+<p>See the cell below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">DrawArrow</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Draw a an arrow from point1 to point2.</span>
+<span class="sd">    Takes an input a matplotlib ax object so</span>
+<span class="sd">    you can add to an existing plot</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span> <span class="ow">or</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s1">&#39;-&gt;&#39;</span><span class="p">,</span>
+                    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                    <span class="n">shrinkA</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shrinkB</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">point2</span><span class="p">,</span> <span class="n">point1</span><span class="p">,</span> <span class="n">arrowprops</span><span class="o">=</span><span class="n">arrowprops</span><span class="p">)</span>
+    
+<span class="c1"># Make arrows start at the mean of each dimension</span>
+<span class="n">mean_vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;height&quot;</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;weight&quot;</span><span class="p">])]</span>
+<span class="n">point1</span> <span class="o">=</span> <span class="n">mean_vals</span>
+
+<span class="n">pc1_point2</span> <span class="o">=</span> <span class="n">mean_vals</span><span class="o">+</span><span class="n">eigvecs</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">eigvals</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">pc2_point2</span> <span class="o">=</span> <span class="n">mean_vals</span><span class="o">+</span><span class="n">eigvecs</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">eigvals</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;height&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;weight&quot;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">);</span>
+<span class="n">DrawArrow</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">pc1_point2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">DrawArrow</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">pc2_point2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Height&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Weight&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/284e7319cb66a0fe880825a8beb24dc048e1fc8bbca097c4f3a78aeccd025bb1.png" src="../../_images/284e7319cb66a0fe880825a8beb24dc048e1fc8bbca097c4f3a78aeccd025bb1.png" />
+</div>
+</div>
+<p>We note an interesting property - that the covariance matrix <span class="math notranslate nohighlight">\(C\)</span> can now be decomposed in terms of its eigenvectors and eigenvalues. Let:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(Q\)</span> be an <span class="math notranslate nohighlight">\(m \times m\)</span> matrix with columns <span class="math notranslate nohighlight">\(\vec{v_1}, \vec{v_2}, ... \vec{v_m}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\Lambda\)</span> be a diagonal <span class="math notranslate nohighlight">\(m \times m\)</span> matrix with diagonal values <span class="math notranslate nohighlight">\(\lambda_1, \lambda_2, ... \lambda_m\)</span> and off-diagonal values 0.</p></li>
+</ul>
+<p>Then we can write:</p>
+<div class="math notranslate nohighlight">
+\[ C = Q \Lambda Q^T\]</div>
+<p>This is called the <strong>eigendecomposition</strong> of <span class="math notranslate nohighlight">\(C\)</span>. Let’s just convince ourselves this is true on our height and weight data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">eigvecs</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">eigvals</span><span class="p">))</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">eigvecs</span><span class="o">.</span><span class="n">transpose</span><span class="p">()))</span> <span class="c1"># Q*L*Q^T</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cov</span><span class="p">)</span> <span class="c1"># cov</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.68217761 0.23093475]
+ [0.23093475 0.09883179]]
+[[0.68217761 0.23093475]
+ [0.23093475 0.09883179]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we can project our original data onto the PCs:</p>
+<div class="math notranslate nohighlight">
+\[ X' = X^T Q\]</div>
+<p>here <span class="math notranslate nohighlight">\(X'\)</span> is an <span class="math notranslate nohighlight">\(n \times m\)</span> matrix giving the projection of each sample along the <span class="math notranslate nohighlight">\(m\)</span> PCs. Note e.g. the projection of sample 1 along PC 1 is the dot product of sample 1’s data with eigenvector 1.</p>
+<p>We can compute the projection of our height and weight data along the first two PCs, and plot the results. Note, since we only have two features, the first two PCs explains all the variation in our data, and so there is no longer any structure in the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">proj</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">eigvecs</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">proj</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">proj</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;PC1&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;PC2&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/5a4afad4d3d335131571e0575730abbe4304cb8ac86d47c001e9fb13a145a458.png" src="../../_images/5a4afad4d3d335131571e0575730abbe4304cb8ac86d47c001e9fb13a145a458.png" />
+</div>
+</div>
+</section>
+<section id="performing-pca">
+<h2>2.3.5 Performing PCA<a class="headerlink" href="#performing-pca" title="Permalink to this heading">#</a></h2>
+<p>Below are general steps for performing PCA, but we will describe variables in terms of SNP data.</p>
+<ul class="simple">
+<li><p><strong>Step 1</strong>: Obtain a matrix of genotypes <span class="math notranslate nohighlight">\(D\)</span>, such that <span class="math notranslate nohighlight">\(D_{ij}\)</span> gives the number of non-reference alleles for sample <span class="math notranslate nohighlight">\(j\)</span> and SNP <span class="math notranslate nohighlight">\(i\)</span>. Our matrix will have dimensions <span class="math notranslate nohighlight">\(m \times n\)</span> and all of the entries will be 0s, 1s, or 2s. Note in practice this matrix will need to be cleaned to remove missing data, very rare or invariant SNPs, and pruned to remove highly correlated SNPs. More on that later.</p></li>
+<li><p><strong>Step 2</strong>: Center and scale each feature (SNP). Typically data for each SNP is scaled such that genotypes have mean 0 and variance 1. i.e. we take <span class="math notranslate nohighlight">\(\frac{X_i - \overline{X_i}}{\sigma({X_i})}\)</span>.</p></li>
+</ul>
+<p>For a SNP with MAF <span class="math notranslate nohighlight">\(p_i\)</span>, this would come out to:</p>
+<div class="math notranslate nohighlight">
+\[X_{ij} \in {\frac{-2p_i}{\sqrt{2p_i(1-p_i)}}, \frac{1-2p_i}{\sqrt{2p_i(1-p_i)}}, \frac{2-2p_i}{\sqrt{2p_i(1-p_i)}}}\]</div>
+<p>(whereas our original data consisted of 0s, 1s, and 2s.)</p>
+<ul class="simple">
+<li><p><strong>Step 3</strong>: Calculate a covariance matrix <span class="math notranslate nohighlight">\(Cov(X) = XX^T/n\)</span>. Note, since we scaled our data in step 2, all of the diagonal elements of this covariance matrix will be equal to 1.</p></li>
+<li><p><strong>Step 4</strong>: Compute the eigendecomposition of <span class="math notranslate nohighlight">\(Cov(X)\)</span> to get its eigenvectors and eigenvalues</p></li>
+<li><p><strong>Step 5</strong>: Project the original data on the PCs: <span class="math notranslate nohighlight">\(X_{proj} = X^TQ\)</span></p></li>
+<li><p><strong>Step 6</strong>: Plot PCs to visualize. i.e. plot column 1 vs. column 2 of <span class="math notranslate nohighlight">\(X_{proj}\)</span> to visualize the project of samples along the first two PCs.</p></li>
+</ul>
+</section>
+<section id="the-transpose-trick">
+<h2>2.3.6 The transpose trick<a class="headerlink" href="#the-transpose-trick" title="Permalink to this heading">#</a></h2>
+<p>In our PCA description above, we took the covariance of <span class="math notranslate nohighlight">\(X\)</span>, which gave us an <span class="math notranslate nohighlight">\(m\)</span> by <span class="math notranslate nohighlight">\(m\)</span> matrix with the covariance between each pair of <em>SNPs</em>. In this case, we took the the eigenvectors <span class="math notranslate nohighlight">\(Q\)</span> of <span class="math notranslate nohighlight">\(C=XX^T/n\)</span>, and <span class="math notranslate nohighlight">\(X^TQ\)</span> gave us the projection of each sample along the PCs.</p>
+<p>An alternative way we could have done this is by taking the covariance matrix of <span class="math notranslate nohighlight">\(X^T\)</span> (<span class="math notranslate nohighlight">\(C=X^TX/n\)</span>). In this case, entries of the covariance matrix give the pairwise covariance between <em>samples</em>. This can actually be faster to compute, and the matrix forms the <strong>genetic relatedness matrix</strong> (GRM) we will use later on in the course when we talk about linear mixed models. In this case, the eigenvectors <span class="math notranslate nohighlight">\(V\)</span> of <span class="math notranslate nohighlight">\(C\)</span> themselves give the projection of each sample along the PCs.</p>
+<p>Note these two methods:</p>
+<ol class="arabic simple">
+<li><p>Using the covariance matrix of <span class="math notranslate nohighlight">\(X\)</span>, and projecting samples using <span class="math notranslate nohighlight">\(X^TQ\)</span></p></li>
+<li><p>Using the covariance matrix of <span class="math notranslate nohighlight">\(X^T\)</span>, in which case the eigenvectors themselves already give the sample projections.</p></li>
+</ol>
+<p>end up giving equivalent results. This is because of the following property:</p>
+<p>If <span class="math notranslate nohighlight">\(v\)</span> is an eigenvector of <span class="math notranslate nohighlight">\(XX^T\)</span>, then <span class="math notranslate nohighlight">\(X^Tv\)</span> is an eigenvector of <span class="math notranslate nohighlight">\(X^TX\)</span>. This is known as the “transpose trick”. See <a class="reference external" href="https://stats.stackexchange.com/questions/7111/how-to-perform-pca-for-data-of-very-high-dimensionality/7144#7144">https://stats.stackexchange.com/questions/7111/how-to-perform-pca-for-data-of-very-high-dimensionality/7144#7144</a>.</p>
+</section>
+<section id="pca-on-human-data">
+<h2>2.3.7 PCA on human data<a class="headerlink" href="#pca-on-human-data" title="Permalink to this heading">#</a></h2>
+<p>In class you will perform PCA on the 1000 Genomes Project samples and visualize the first several PCs of the data. You should find:</p>
+<ul class="simple">
+<li><p>PC1 mostly separates African from non-African samples (AFR vs. others)</p></li>
+<li><p>PC2 separates East Eurasian from West Eurasian samples (EAS vs. EUR)</p></li>
+<li><p>Other groups will fall between the EUR, AFR, and EAS superpopulations. e.g. admixed African samples will fall bewteen African and European groups.</p></li>
+</ul>
+<p>Some important notes on PCA interpretation:</p>
+<ul class="simple">
+<li><p>The SNPs themselves are largely similar across different populations. What differs is their frequencies.</p></li>
+<li><p>PCA reflects present-day populations, but major world populations have varied dramatically over the course of human history.</p></li>
+<li><p>While PCA on present day populations highlights “African”, “European” and “East Asian” these should not be interpreted as “pure” population groups. Nearly all present-day humans are in fact mixtures of previous major population groups. More on this in a couple weeks.</p></li>
+</ul>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<p>[1] Race and Genetic Ancestry in Medicine — A Time for Reckoning with Racism. Borrell, et al. NEJM 2021.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ancestry/global"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../global_ancestry.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Chapter 4: Global ancestry</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="admixture_global_ancestry.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">4.2 Global ancestry analysis with ADMIXTURE</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">2.3 Global ancestry analysis with PCA</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#race-ethnicity-and-genetic-ancestry">2.3.1 Race, ethnicity, and genetic ancestry</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-pca">2.3.2 Introduction to PCA</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#review-of-basic-descriptive-statistics">2.3.3 Review of basic descriptive statistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#review-of-eigenvalues-and-eigenvectors">2.3.4 Review of eigenvalues and eigenvectors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performing-pca">2.3.5 Performing PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-transpose-trick">2.3.6 The transpose trick</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-on-human-data">2.3.7 PCA on human data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Melissa Gymrek
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

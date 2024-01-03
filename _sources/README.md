@@ -2,6 +2,7 @@ This repository contains source material for the CSE284 textbook
 
 
 TODO list:
+* fix numbering of jupyter notebook for global ancestry. break up PCA into multiple sections
 * Add mitochondria/auto/x/y to intro genome chapter
 * Add pgen/bgen to file formats
 * Add pictures of spread of polymorphisms to 3.1

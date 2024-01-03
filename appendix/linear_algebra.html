@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Review of linear algebra concepts &#8212; CSE284 - Personal Genomics</title>
+    <title>Chapter A1.1: Review of linear algebra concepts &#8212; CSE284 - Personal Genomics</title>
   
   
   
@@ -65,8 +65,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'appendix/linear_algebra';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Glossary" href="glossary.html" />
-    <link rel="prev" title="Admixture" href="../ancestry/admixture.html" />
+    <link rel="next" title="Chapter A2.2: Hidden Markov Models" href="hmm.html" />
+    <link rel="prev" title="Chapter 19: Ethics part I - equity" href="../ethics/equity.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -207,20 +207,64 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../ancestry/popgen/review_questions.html">3.9 Review Questions</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../ancestry/global_ancestry.html">Global ancestry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ancestry/relative_finding.html">Relative finding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ancestry/admixture.html">Admixture</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ancestry/global_ancestry.html">Chapter 4: Global ancestry</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ancestry/global/pca_global_ancestry.html">2.3 Global ancestry analysis with PCA</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../ancestry/global/admixture_global_ancestry.html">4.2 Global ancestry analysis with ADMIXTURE</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ancestry/relative_finding.html">Chapter 5: Relative finding</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ancestry/relfind/ibd.html">5.1 Identity by descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ancestry/relfind/ibd_pedigree.html">5.2 Expected IBD of close relatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ancestry/relfind/ibd_plink.html">5.3 Computing expected IBD - plink method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ancestry/relfind/ibd_segments.html">5.4 Computing expected IBD segment sharing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ancestry/relfind/genetic_genealogy.html">5.5 Genetic genealogy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ancestry/admixture.html">Chapter 6: Admixture</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ancestry/plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ancestry/plink1kg/1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ancestry/plink1kg/plink.html">T2.2 Some tips and examples for using plink</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 3 - Complex traits</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../complextraits/overview.html">Chapter 7: Introduction to complex traits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../complextraits/gwas.html">Chapter 8: Genome-wide association studies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../complextraits/lmm.html">Chapter 9: Linear mixed models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../complextraits/qtls.html">Chapter 10: Quantitative trait loci and functional genomics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../complextraits/fine-mapping.html">Chapter 11: Fine-mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../complextraits/prs.html">Chapter 12: Polygenic risk scores</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 4 - Trans-ancestry approaches</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../multianc/fine-mapping.html">Chapter 13: Multi-ancestry fine-mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../multianc/prs.html">Chapter 14: PRS and portability</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 5 - Beyond common variants</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../beyond/rare.html">Chapter 15: Rare variants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../beyond/complex.html">Chapter 16: Complex variants</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 6 - Ethics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ethics/privacy.html">Chapter 17: Ethics part I - privacy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ethics/health.html">Chapter 18: Ethics part II - health</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ethics/equity.html">Chapter 19: Ethics part I - equity</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 1 - review of math+CS concepts</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Review of linear algebra concepts</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Chapter A1.1: Review of linear algebra concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hmm.html">Chapter A2.2: Hidden Markov Models</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 2 - glossary and notation</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="software.html">List of software tools used</a></li>
-<li class="toctree-l1"><a class="reference internal" href="unix.html">Unix commands used</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notation.html">Notation used throughout the book</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unix.html">Chapter A2.1: Unix commands used</a></li>
+<li class="toctree-l1"><a class="reference internal" href="software.html">Chapter A2.2: List of software tools used</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Chapter A2.3: Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notation.html">Chapter A2.4: Notation used throughout the book</a></li>
 </ul>
 
     </div>
@@ -404,7 +448,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Review of linear algebra concepts</h1>
+    <h1>Chapter A1.1: Review of linear algebra concepts</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -418,8 +462,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="review-of-linear-algebra-concepts">
-<h1>Review of linear algebra concepts<a class="headerlink" href="#review-of-linear-algebra-concepts" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="chapter-a1-1-review-of-linear-algebra-concepts">
+<h1>Chapter A1.1: Review of linear algebra concepts<a class="headerlink" href="#chapter-a1-1-review-of-linear-algebra-concepts" title="Permalink to this heading">#</a></h1>
 </section>
 
     <script type="text/x-thebe-config">
@@ -453,20 +497,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../ancestry/admixture.html"
+       href="../ethics/equity.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Admixture</p>
+        <p class="prev-next-title">Chapter 19: Ethics part I - equity</p>
       </div>
     </a>
     <a class="right-next"
-       href="glossary.html"
+       href="hmm.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Glossary</p>
+        <p class="prev-next-title">Chapter A2.2: Hidden Markov Models</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
