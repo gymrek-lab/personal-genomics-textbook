@@ -7,3 +7,4 @@
 * `mkdir`
 * `cp`
 * `bgzip`
+* `zcat` (note about Mac)
