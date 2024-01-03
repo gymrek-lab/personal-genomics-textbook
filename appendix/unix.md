@@ -11,3 +11,4 @@
 * Stringing together long bash commands with pipes, "\"
 * `awk` (set delim with F, extract columns, print, filter)
 * `grep`
+* `wc`

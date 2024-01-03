@@ -2,3 +2,5 @@
 
 * `tabix`
 * `bgzip`
+* `plink`
+* `bcftools`
