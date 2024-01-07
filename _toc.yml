@@ -12,76 +12,76 @@ parts:
         - file: intro/genome/genome_organization
         - file: intro/genome/central_dogma
         - file: intro/genome/noncoding
-        - file: intro/genome/review_questions
+#        - file: intro/genome/review_questions
       - file: intro/intro_genome_tech
         sections:
         - file: intro/tech/genotype_arrays
         - file: intro/tech/ngs
         - file: intro/tech/long_reads
         - file: intro/tech/tech_summary
-        - file: intro/tech/review_questions
+#        - file: intro/tech/review_questions
       - file: intro/genome_file_formats
         sections:
+        - file: intro/formats/genetic_variation_terminology
         - file: intro/formats/vcf
         - file: intro/formats/plink
         - file: intro/formats/pgen
   - caption: Module 2 - Ancestry
     chapters:
-      - file: ancestry/intro_popgen
-        sections:
-        - file: ancestry/popgen/genetic_variation_terminology
-        - file: ancestry/popgen/forces_evolution
-        - file: ancestry/popgen/mutations
-        - file: ancestry/popgen/drift
-        - file: ancestry/popgen/selection
-        - file: ancestry/popgen/hwe
-        - file: ancestry/popgen/fst
-        - file: ancestry/popgen/recombination
-        - file: ancestry/popgen/review_questions
-      - file: ancestry/global_ancestry
-        sections:
-        - file: ancestry/global/pca_global_ancestry
-        - file: ancestry/global/admixture_global_ancestry
-      - file: ancestry/relative_finding
-        sections:
-        - file: ancestry/relfind/ibd
-        - file: ancestry/relfind/ibd_pedigree
-        - file: ancestry/relfind/ibd_plink
-        - file: ancestry/relfind/ibd_segments
-        - file: ancestry/relfind/genetic_genealogy
-      - file: ancestry/admixture
+#      - file: ancestry/intro_popgen
+#        sections:
+#        - file: ancestry/popgen/genetic_variation_terminology
+#        - file: ancestry/popgen/forces_evolution
+#        - file: ancestry/popgen/mutations
+#        - file: ancestry/popgen/drift
+#        - file: ancestry/popgen/selection
+#        - file: ancestry/popgen/hwe
+#        - file: ancestry/popgen/fst
+#        - file: ancestry/popgen/recombination
+#        - file: ancestry/popgen/review_questions
+#      - file: ancestry/global_ancestry
+#        sections:
+#        - file: ancestry/global/pca_global_ancestry
+#        - file: ancestry/global/admixture_global_ancestry
+#      - file: ancestry/relative_finding
+#        sections:
+#        - file: ancestry/relfind/ibd
+#        - file: ancestry/relfind/ibd_pedigree
+#        - file: ancestry/relfind/ibd_plink
+#        - file: ancestry/relfind/ibd_segments
+#        - file: ancestry/relfind/genetic_genealogy
+#      - file: ancestry/admixture
       - file: ancestry/plink_1000G
         sections:
         - file: ancestry/plink1kg/1000G
-        - file: ancestry/plink1kg/plink
-  - caption: Module 3 - Complex traits
-    chapters:
-      - file: complextraits/overview
-      - file: complextraits/gwas
-      - file: complextraits/lmm
-      - file: complextraits/qtls
-      - file: complextraits/fine-mapping
-      - file: complextraits/prs
-  - caption: Module 4 - Trans-ancestry approaches
-    chapters:
-      - file: multianc/fine-mapping
-      - file: multianc/prs
-  - caption: Module 5 - Beyond common variants
-    chapters:
-      - file: beyond/rare
-      - file: beyond/complex
-  - caption: Module 6 - Ethics
-    chapters:
-      - file: ethics/privacy
-      - file: ethics/health
-      - file: ethics/equity
-  - caption: Appendix 1 - review of math+CS concepts
-    chapters:
-      - file: appendix/linear_algebra
-      - file: appendix/hmm
-  - caption: Appendix 2 - glossary and notation
+#        - file: ancestry/plink1kg/plink
+#  - caption: Module 3 - Complex traits
+#    chapters:
+#      - file: complextraits/overview
+#      - file: complextraits/gwas
+#      - file: complextraits/lmm
+#      - file: complextraits/qtls
+#      - file: complextraits/fine-mapping
+#      - file: complextraits/prs
+#  - caption: Module 4 - Trans-ancestry approaches
+#    chapters:
+#      - file: multianc/fine-mapping
+#      - file: multianc/prs
+#  - caption: Module 5 - Beyond common variants
+#    chapters:
+#      - file: beyond/rare
+#      - file: beyond/complex
+#  - caption: Module 6 - Ethics
+#    chapters:
+#      - file: ethics/privacy
+#      - file: ethics/health
+#      - file: ethics/equity
+  - caption: Appendix 1 - glossary and notation
     chapters:
       - file: appendix/unix
-      - file: appendix/software
-      - file: appendix/glossary
-      - file: appendix/notation
+#      - file: appendix/software
+#      - file: appendix/notation
+#  - caption: Appendix 2 - review of math+CS concepts
+#    chapters:
+#      - file: appendix/linear_algebra
+#      - file: appendix/hmm

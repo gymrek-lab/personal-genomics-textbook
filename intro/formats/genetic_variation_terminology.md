@@ -1,4 +1,4 @@
-# 3.1 Genetic variation terminology
+# T1.1 Genetic variation terminology
 
 ## Terminology for describing genetic variation
 

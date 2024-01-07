@@ -1,1 +1,0 @@
-# Chapter A2.3: Glossary 
