@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>T1.3 Plink files &#8212; CSE284 - Personal Genomics</title>
+    <title>T1.1 Genetic variation terminology &#8212; CSE284 - Personal Genomics</title>
   
   
   
@@ -62,11 +62,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'intro/formats/plink';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'intro/formats/genetic_variation_terminology';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="T1.4 PGEN files" href="pgen.html" />
-    <link rel="prev" title="T1.2 VCF files" href="vcf.html" />
+    <link rel="next" title="T1.2 VCF files" href="vcf.html" />
+    <link rel="prev" title="Tutorial 1: file formats for describing genetic variation" href="../genome_file_formats.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -187,9 +189,9 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../genome_file_formats.html">Tutorial 1: file formats for describing genetic variation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="genetic_variation_terminology.html">T1.1 Genetic variation terminology</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">T1.1 Genetic variation terminology</a></li>
 <li class="toctree-l2"><a class="reference internal" href="vcf.html">T1.2 VCF files</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">T1.3 Plink files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plink.html">T1.3 Plink files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pgen.html">T1.4 PGEN files</a></li>
 </ul>
 </li>
@@ -275,7 +277,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/gymrek-lab/personal-genomics-textbook/issues/new?title=Issue%20on%20page%20%2Fintro/formats/plink.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/gymrek-lab/personal-genomics-textbook/issues/new?title=Issue%20on%20page%20%2Fintro/formats/genetic_variation_terminology.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -305,7 +307,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../../_sources/intro/formats/plink.md" target="_blank"
+      <li><a href="../../_sources/intro/formats/genetic_variation_terminology.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -376,7 +378,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -387,11 +391,20 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>T1.3 Plink files</h1>
+    <h1>T1.1 Genetic variation terminology</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-for-describing-genetic-variation">Terminology for describing genetic variation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#describing-patterns-of-snp-variation">Describing patterns of SNP variation</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -401,58 +414,40 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="t1-3-plink-files">
-<h1>T1.3 Plink files<a class="headerlink" href="#t1-3-plink-files" title="Permalink to this heading">#</a></h1>
-<p>You will also come across genotypes in the format used by Plink (<a class="reference external" href="https://www.cog-genomics.org/plink/1.9/formats">https://www.cog-genomics.org/plink/1.9/formats</a>), which can perform many different functions, including filter, association testing, IBD calculation, and more.</p>
-<p>The text version of plink files includes:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="t1-1-genetic-variation-terminology">
+<h1>T1.1 Genetic variation terminology<a class="headerlink" href="#t1-1-genetic-variation-terminology" title="Permalink to this heading">#</a></h1>
+<section id="terminology-for-describing-genetic-variation">
+<h2>Terminology for describing genetic variation<a class="headerlink" href="#terminology-for-describing-genetic-variation" title="Permalink to this heading">#</a></h2>
+<p>For most analyses in this course, we will focus on analysis of single nucleotide polymorphisms (SNPs). We introduce here some basic terminology used to describe a particular SNP.</p>
 <ul class="simple">
-<li><p>FAM (sample info): A text file with no header line, and one line per sample with the following six fields:</p>
+<li><p>We can refer to a SNP in at least two ways:</p>
 <ul>
-<li><p>Family ID (‘FID’)</p></li>
-<li><p>Within-family ID (‘IID’; cannot be ‘0’)</p></li>
-<li><p>Within-family ID of father (‘0’ if father isn’t in dataset)</p></li>
-<li><p>Within-family ID of mother (‘0’ if mother isn’t in dataset)</p></li>
-<li><p>Sex code (‘1’ = male, ‘2’ = female, ‘0’ = unknown)</p></li>
-<li><p>Phenotype value (‘1’ = control, ‘2’ = case, ‘-9’/’0’/non-numeric = missing data if case/control)</p></li>
+<li><p><em>Genomic coordinates</em>: We can use chr:pos (e.g. chr1:12345) to refer to the position of a SNP relative to the reference genome. Note, it is always important to include the build of the reference genome when using genomic coordinates. The most recent build of the reference is GRCh38 (or hg38). The previous build was GRCh37 (or hg19). Coordinates change slightly between builds. The <a class="reference external" href="https://genome.ucsc.edu/cgi-bin/hgLiftOver">liftover tool</a> can be used to convert coordinates from one build to another. Note, some reference builds also differ slightly in how they refer to chromosomes. For example, hg19 uses “chr1”, “chr2”, etc., whereas GRCh37 uses the same coordinate system but uses “1”, “2”, etc.</p></li>
+<li><p><em>rsid</em>: Many SNPs also have identifiers based on the <a class="reference external" href="https://www.ncbi.nlm.nih.gov/snp/">dbSNP</a> database. For example, rs12913832 describes the SNP at position chr15:28120472 in the GRCh38 reference build.</p></li>
 </ul>
 </li>
-<li><p>PED (genotypes): Contains no header line, and one line per sample with 2V+6 fields where V is the number of variants. The first six fields are the same as those in a .fam file.</p></li>
-<li><p>MAP (variants info) : A text file with no header file, and one line per variant with the following 3-4 fields:</p>
-<ul>
-<li><p>Chromosome code. PLINK 1.9 also permits contig names here, but most older programs do not.</p></li>
-<li><p>Variant identifier</p></li>
-<li><p>Position in morgans or centimorgans (optional; also safe to use dummy value of ‘0’)</p></li>
-<li><p>Base-pair coordinate</p></li>
+<li><p>An <em>allele</em> refers to different versions of a region of the genome. Most SNPs are <em>biallelic</em>, meaning there are only two possible bases. For example, a SNP might have “A” and “C” as possible alleles. Some SNPs or other variant types can be <em>multi-allelic</em>, meaning there are more than two possible alleles.</p></li>
+<li><p>The <em>reference allele</em> refers to the allele present in the reference genome build. An <em>alternate allele</em> refers to an allele that does not match the reference.</p></li>
+<li><p>The <em>major allele</em> refers to the allele that is most common in the population. The <em>minor allele</em> is the rarer allele. Often but not always, the major allele matches the reference genome. Be careful to not mix these up.</p></li>
+<li><p>A <em>genotype</em> refers to the combination of alleles a person has at a specific variant region. For a bi-allelic SNP with “A” and “C” as possible alleles, the possible diploid genotypes are “AA”, “AC”, or “CC”.</p></li>
+<li><p>A genotype is referred to as <em>homozygous</em> if both alleles are the same and <em>heterozygous</em> if the two alleles are different.</p></li>
 </ul>
-</li>
-</ul>
-<p>The binary versions of these files are bed/bim files.</p>
-<p>You can find example plink data in: <code class="docutils literal notranslate"><span class="pre">/datasets/cs284-sp22-a00-public/ps2/</span></code>:</p>
-<p>When running plink, you will almost always use one of these options:</p>
+</section>
+<section id="describing-patterns-of-snp-variation">
+<h2>Describing patterns of SNP variation<a class="headerlink" href="#describing-patterns-of-snp-variation" title="Permalink to this heading">#</a></h2>
+<p>We can summarize variability of a particular SNP in the population based on the following metrics:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--bfile</span> <span class="pre">&lt;prefix&gt;</span></code>: uses <code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;.bed</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;.bim</span></code> as input</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--file</span> <span class="pre">&lt;prefix&gt;</span></code>: uses <code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;.ped</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;.map</span></code>, and <code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;.fam</span></code> as input</p></li>
+<li><p><em>Minor allele frequency</em> (MAF) gives the frequency of the minor allele out of all observed alleles in a set of samples. Note, since humans are diploid, each sample has two alleles (except when considering sex chromosomes). So if we observe 6 samples, with genotypes AA, AA, AA, AC, CC, AA, the minor allele is “C”, and the minor allele frequency is 3/12 = 0.25.</p></li>
+<li><p><em>Minor allele count</em> (MAC) gives the number of times the minor allele was observed in a set of samples.</p></li>
+<li><p><em>Alternate allele frequency</em> gives the frequency of the alternate (non-reference) allele.</p></li>
 </ul>
-<p>You will probably eventually encounter the need to convert things between VCF/plink formats. Plink can do that:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># VCF-&gt;plink</span>
-<span class="nb">echo</span><span class="w"> </span>rs112607901<span class="w"> </span>&gt;<span class="w"> </span>exclude.txt<span class="w"> </span><span class="c1"># this ID was duplicated</span>
-plink<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--vcf<span class="w"> </span>pset1_1000Genomes_chr16.vcf.gz<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--recode<span class="w">  </span><span class="se">\</span>
-<span class="w">  </span>--exclude<span class="w"> </span>exclude.txt<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--out<span class="w"> </span>pset1_1000Genomes_chr16
-
-<span class="c1"># Plink-&gt;VCF</span>
-zcat<span class="w"> </span>pset1_1000Genomes_chr16.vcf.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s2">&quot;^#&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-f<span class="w"> </span><span class="m">1</span>-5<span class="w"> </span>&gt;<span class="w"> </span>gtdata_alleles.tab
-plink<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--file<span class="w"> </span>pset1_1000Genomes_chr16<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--recode<span class="w"> </span>vcf<span class="w"> </span>bgz<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--a2-allele<span class="w"> </span>gtdata_alleles.tab<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="s1">&#39;#&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--real-ref-alleles<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--exclude<span class="w"> </span>exclude.txt<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--out<span class="w"> </span>pset1_1000Genomes_chr16_converted
-</pre></div>
-</div>
+<p>SNPs are often categorized based on their MAF/MAC. For example:</p>
+<ul class="simple">
+<li><p>A SNP is typically referred to <em>common</em> if it has MAF &gt;= 1%. (Note: you might see different thresholds for, but this is most widely used)</p></li>
+<li><p>SNPs with MAF &lt; 1% are often referred to as <em>rare</em>. (Note: you might see different thresholds for, but this is most widely used)</p></li>
+<li><p>A <em>singleton</em> is a SNP with MAC of 1. That is, if we are analyzing <span class="math notranslate nohighlight">\(N\)</span> individuals, a singleton would have MAF of <span class="math notranslate nohighlight">\(1/(2N)\)</span>. Singletons are the rarest possible SNP one can observe in a dataset of a particular size.</p></li>
+</ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -486,20 +481,20 @@ plink<span class="w"> </span><span class="se">\</span>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="vcf.html"
+       href="../genome_file_formats.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">T1.2 VCF files</p>
+        <p class="prev-next-title">Tutorial 1: file formats for describing genetic variation</p>
       </div>
     </a>
     <a class="right-next"
-       href="pgen.html"
+       href="vcf.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">T1.4 PGEN files</p>
+        <p class="prev-next-title">T1.2 VCF files</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -509,6 +504,21 @@ plink<span class="w"> </span><span class="se">\</span>
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-for-describing-genetic-variation">Terminology for describing genetic variation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#describing-patterns-of-snp-variation">Describing patterns of SNP variation</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

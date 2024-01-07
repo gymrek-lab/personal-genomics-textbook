@@ -1,4 +1,4 @@
-# T1.2 Plink files
+# T1.3 Plink files
 
 You will also come across genotypes in the format used by Plink (https://www.cog-genomics.org/plink/1.9/formats), which can perform many different functions, including filter, association testing, IBD calculation, and more.
 

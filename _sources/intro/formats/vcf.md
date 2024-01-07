@@ -1,4 +1,4 @@
-# T1.1 VCF files
+# T1.2 VCF files
 
 Data you will download from 23andme is in VCF format. VCF files generally have:
 
