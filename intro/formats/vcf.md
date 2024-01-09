@@ -1,6 +1,8 @@
 # T1.2 VCF files
 
-Data you will download from 23andme is in VCF format. VCF files generally have:
+Data you will download from 23andme is in VCF format. 
+See the [VCF spec](https://samtools.github.io/hts-specs/VCFv4.2.pdf) for a full description.
+VCF files generally have:
 
 * Header lines beginning with `##` which describe the data in each field. They also contain helpful things like the commands uesd to generate the file, information about the reference genome used, etc.
 * A final header line beginning with `#CHROM` which gives the column headers of the data in the following rows.
@@ -16,27 +18,39 @@ Data you will download from 23andme is in VCF format. VCF files generally have:
   - FORMAT: ":"-separated list of data fields reported for each sample
   - The remaining part of the line has one column per sample. Each sample has a ":"-separated list of data values according to the order specified in FORMAT> 
 
-The most important FORMAT field is "GT", which gives the genotype of each sample. 0=reference allele, 1=alternate allele 1, 2=alternate allele 2, etc. For example GT=0/0 means a sample is homozygous for the reference allele, 1/1 means heterozygous.
+The most important FORMAT field is "GT", which gives the genotype of each sample. 0=reference allele, 1=alternate allele 1, 2=alternate allele 2, etc. For example GT=0/0 means a sample is homozygous for the reference allele, 1/1 means heterozygous. Some VCFs will have additional FORMAT and INFO fields with extra metadata. 
+
+Below is an example VCF file:
+```
+##fileformat=VCFv4.1
+##FILTER=<ID=PASS,Description="All filters passed">
+##fileDate=20150218
+##source=1000GenomesPhase3Pipeline
+##INFO=<ID=VT,Number=.,Type=String,Description="indicates what type of variant the line represents">
+#CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  sample1
+16  31002227  rs569316018 C A 100 PASS  VT=SNP GT  0|0
+16  31006003  rs143693530 C A 100 PASS  VT=SNP GT  0|1
+```
+
+You can see sample1 is homozygous for the reference allele at SNP rs569316018 and heterozygous at SNP rs143693530.
 
 For unphased genotypes, alleles are separated by a "/", meaning they are unordered.
 For phased genotypes, alleles are separated by a "|", meaning they are ordered.
 
-The full spec is described here: https://samtools.github.io/hts-specs/VCFv4.2.pdf
-
 You can look at these example VCF files on datahub:
 
-* `/datasets/cs284-sp21-A00-public/ps1/pset1_1000Genomes_chr16.vcf` (phased, multi-sample)
-* `/datasets/cs185-sp21-A00-public/datasets/week3/friend_genome.vcf.gz` (unphased, single-sample)
+* `~/public/ps1/pset1_1000Genomes_chr16.vcf`
+* `~/public/1000Genomes/ALL.chr22.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz`
 
 Note the second is zipped. You can zip and index VCF files using `bgzip` and `tabix`:
 
 ```shell
-cp /datasets/cs284-sp21-A00-public/ps1/pset1_1000Genomes_chr16.vcf . # copy to current dir
+cp ~/public/ps1/pset1_1000Genomes_chr16.vcf . # copy to current dir
 bgzip pset1_1000Genomes_chr16.vcf 
 tabix -p vcf pset1_1000Genomes_chr16.vcf.gz
 ```
 
-Indexing allows us to easily extract specific genomic locations, e.g.:
+Indexing allows us to easily extract specific genomic locations with tabix, e.g.:
 ```shell
 tabix pset1_1000Genomes_chr16.vcf.gz 16:31011634-31011635
 ```
