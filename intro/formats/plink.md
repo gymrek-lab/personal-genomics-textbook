@@ -2,6 +2,7 @@
 
 You will also come across genotypes in the format used by Plink (https://www.cog-genomics.org/plink/1.9/formats), which can perform many different functions, including filter, association testing, IBD calculation, and more.
 
+## Plink text files (fam/ped/map)
 The text version of plink files includes:
 
 * FAM (sample info): A text file with no header line, and one line per sample with the following six fields:
@@ -18,7 +19,9 @@ The text version of plink files includes:
   - Position in morgans or centimorgans (optional; also safe to use dummy value of '0')
   - Base-pair coordinate
 
-The binary versions of these files are bed/bim files.
+## Plink binary files (bed/bim/fam)
+
+Plink files may be compressed into binary formats. The binary versions of these files are bed/bim files. Bed files are not human readable but can be converted back to ped/map files.
 
 You can find example plink data in: `~/public/ps2/`:
 
@@ -52,3 +55,8 @@ plink \
   --out pset1_1000Genomes_chr16_converted
 ```
 
+## Plink pgen format (pgen/pvar/psam)
+
+Plink2 has introduced a new binary format, [pgen](https://github.com/chrchang/plink-ng/blob/master/pgen_spec/pgen_spec.pdf), which shows better compute performance especially on recent massive biobank datasets. It also has better support for phased, multi-allelic, and dosage data.
+
+To specify `pgen` input, instead of using `--bfile` or `--file`, you can use `--pfile <PREFIX>`, which looks for files `<PREFIX>.pgen`, `<PREFIX>.pvar`, and `<PREFIX>.psam`. 

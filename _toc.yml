@@ -24,7 +24,6 @@ parts:
         sections:
         - file: intro/formats/vcf
         - file: intro/formats/plink
-#        - file: intro/formats/pgen
   - caption: Module 2 - Ancestry
     chapters:
 #      - file: ancestry/intro_popgen
@@ -75,9 +74,9 @@ parts:
 #      - file: ethics/privacy
 #      - file: ethics/health
 #      - file: ethics/equity
-#  - caption: Appendix 1 - glossary and notation
-#    chapters:
-#      - file: appendix/unix
+  - caption: Appendix 1 - glossary and notation
+    chapters:
+      - file: appendix/unix
 #      - file: appendix/software
 #      - file: appendix/notation
 #  - caption: Appendix 2 - review of math+CS concepts
