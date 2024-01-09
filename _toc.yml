@@ -12,7 +12,6 @@ parts:
         - file: intro/genome/genome_organization
         - file: intro/genome/central_dogma
         - file: intro/genome/noncoding
-#        - file: intro/genome/review_questions
       - file: intro/intro_genome_tech
         sections:
         - file: intro/tech/genotype_arrays
@@ -85,3 +84,6 @@ parts:
 #    chapters:
 #      - file: appendix/linear_algebra
 #      - file: appendix/hmm
+#  - caption: References
+#    chapters:
+#      - file: references
