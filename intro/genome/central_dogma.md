@@ -7,6 +7,9 @@ Genes consist of several main components:
 * *Introns* are (often quite long) sequences between exons that do not actually code for sequence of the final protein
 * There are also often *untranslated regions* (UTRs) at the 5' and 3' ends of proteins which encode important regulatory sequences. Technically, UTRs are considered exons but they do not actually get translated into proteins.
 
+![transcription](images/Promoter.png)
+Source: [Libretexts Biology](https://bio.libretexts.org/Bookshelves/Genetics/Genetics_Agriculture_and_Biotechnology_(Suza_and_Lee)/01%3A_Chapters/1.05%3A_Gene_Expression-_Transcription)
+
 The *central dogma* describes the process by which DNA is converted into proteins. It can be summarized as "DNA->RNA->Protein". Briefly:
 * DNA encodes information required to make a protein in the form of a gene.
 * Genes get *transcribed* into an intermediate molecule, RNA (ribonucleic acid). RNA is similar in structure to DNA, except it is single stranded, and has bases A, C, G, and U rather than A, C, G, and T. After transcription, the RNA is further processed through *splicing*, which removes the intron sequences between the exons. While spliced out, the introns often contain important sequences that help regulate splicing and other processes. This spliced form of RNA is referred to as *messenger RNA*, or *mRNA*. 
