@@ -1,7 +1,8 @@
-# T1.3 Plink files
+# T1.2 Plink files
 
 You will also come across genotypes in the format used by Plink (https://www.cog-genomics.org/plink/1.9/formats), which can perform many different functions, including filter, association testing, IBD calculation, and more.
 
+## Plink text files (fam/ped/map)
 The text version of plink files includes:
 
 * FAM (sample info): A text file with no header line, and one line per sample with the following six fields:
@@ -18,9 +19,11 @@ The text version of plink files includes:
   - Position in morgans or centimorgans (optional; also safe to use dummy value of '0')
   - Base-pair coordinate
 
-The binary versions of these files are bed/bim files.
+## Plink binary files (bed/bim/fam)
 
-You can find example plink data in: `/datasets/cs284-sp22-a00-public/ps2/`:
+Plink files may be compressed into binary formats. The binary versions of these files are bed/bim files. Bed files are not human readable but can be converted back to ped/map files.
+
+You can find example plink data in: `~/public/ps2/`:
 
 When running plink, you will almost always use one of these options:
 * `--bfile <prefix>`: uses `<prefix>.bed` and `<prefix>.bim` as input
@@ -38,6 +41,10 @@ plink \
   --out pset1_1000Genomes_chr16
 
 # Plink->VCF
+# Note, plink may change the allele order if the major allele
+# is not the reference. We use the --a2-allele and 
+# --real-ref-alleles options below to force it to correctly
+# set ref/alt in the output VCF file
 zcat pset1_1000Genomes_chr16.vcf.gz | grep -v "^#" | cut -f 1-5 > gtdata_alleles.tab
 plink \
   --file pset1_1000Genomes_chr16 \
@@ -48,3 +55,8 @@ plink \
   --out pset1_1000Genomes_chr16_converted
 ```
 
+## Plink pgen format (pgen/pvar/psam)
+
+Plink2 has introduced a new binary format, [pgen](https://github.com/chrchang/plink-ng/blob/master/pgen_spec/pgen_spec.pdf), which shows better compute performance especially on recent massive biobank datasets. It also has better support for phased, multi-allelic, and dosage data.
+
+To specify `pgen` input, instead of using `--bfile` or `--file`, you can use `--pfile <PREFIX>`, which looks for files `<PREFIX>.pgen`, `<PREFIX>.pvar`, and `<PREFIX>.psam`. 

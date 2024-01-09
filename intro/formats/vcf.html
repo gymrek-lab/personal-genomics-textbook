@@ -65,8 +65,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'intro/formats/vcf';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="T1.3 Plink files" href="plink.html" />
-    <link rel="prev" title="T1.1 Genetic variation terminology" href="genetic_variation_terminology.html" />
+    <link rel="next" title="T1.2 Plink files" href="plink.html" />
+    <link rel="prev" title="Tutorial 1: file formats for describing genetic variation" href="../genome_file_formats.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -175,6 +175,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../genome/genome_organization.html">1.2 Organization of the human genome</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../genome/central_dogma.html">1.3 Genes and the central dogma</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../genome/noncoding.html">1.4 The non-coding genome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../genome/genetic_variation_terminology.html">1.5 Genetic variation terminology</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../intro_genome_tech.html">Chapter 2: Overview of technologies for genome analysis</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -185,10 +186,8 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../genome_file_formats.html">Tutorial 1: file formats for describing genetic variation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="genetic_variation_terminology.html">T1.1 Genetic variation terminology</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">T1.2 VCF files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plink.html">T1.3 Plink files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pgen.html">T1.4 PGEN files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plink.html">T1.2 Plink files</a></li>
 </ul>
 </li>
 </ul>
@@ -198,10 +197,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../../ancestry/plink1kg/1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
 </ul>
 </li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 1 - glossary and notation</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/unix.html">Chapter A2.1: Unix commands used</a></li>
 </ul>
 
     </div>
@@ -401,7 +396,9 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="t1-2-vcf-files">
 <h1>T1.2 VCF files<a class="headerlink" href="#t1-2-vcf-files" title="Permalink to this heading">#</a></h1>
-<p>Data you will download from 23andme is in VCF format. VCF files generally have:</p>
+<p>Data you will download from 23andme is in VCF format.
+See the <a class="reference external" href="https://samtools.github.io/hts-specs/VCFv4.2.pdf">VCF spec</a> for a full description.
+VCF files generally have:</p>
 <ul class="simple">
 <li><p>Header lines beginning with <code class="docutils literal notranslate"><span class="pre">##</span></code> which describe the data in each field. They also contain helpful things like the commands uesd to generate the file, information about the reference genome used, etc.</p></li>
 <li><p>A final header line beginning with <code class="docutils literal notranslate"><span class="pre">#CHROM</span></code> which gives the column headers of the data in the following rows.</p></li>
@@ -420,22 +417,33 @@ document.write(`
 </ul>
 </li>
 </ul>
-<p>The most important FORMAT field is “GT”, which gives the genotype of each sample. 0=reference allele, 1=alternate allele 1, 2=alternate allele 2, etc. For example GT=0/0 means a sample is homozygous for the reference allele, 1/1 means heterozygous.</p>
+<p>The most important FORMAT field is “GT”, which gives the genotype of each sample. 0=reference allele, 1=alternate allele 1, 2=alternate allele 2, etc. For example GT=0/0 means a sample is homozygous for the reference allele, 1/1 means heterozygous. Some VCFs will have additional FORMAT and INFO fields with extra metadata.</p>
+<p>Below is an example VCF file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">##fileformat=VCFv4.1</span>
+<span class="c1">##FILTER=&lt;ID=PASS,Description=&quot;All filters passed&quot;&gt;</span>
+<span class="c1">##fileDate=20150218</span>
+<span class="c1">##source=1000GenomesPhase3Pipeline</span>
+<span class="c1">##INFO=&lt;ID=VT,Number=.,Type=String,Description=&quot;indicates what type of variant the line represents&quot;&gt;</span>
+<span class="c1">#CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  sample1</span>
+<span class="mi">16</span>  <span class="mi">31002227</span>  <span class="n">rs569316018</span> <span class="n">C</span> <span class="n">A</span> <span class="mi">100</span> <span class="n">PASS</span>  <span class="n">VT</span><span class="o">=</span><span class="n">SNP</span> <span class="n">GT</span>  <span class="mi">0</span><span class="o">|</span><span class="mi">0</span>
+<span class="mi">16</span>  <span class="mi">31006003</span>  <span class="n">rs143693530</span> <span class="n">C</span> <span class="n">A</span> <span class="mi">100</span> <span class="n">PASS</span>  <span class="n">VT</span><span class="o">=</span><span class="n">SNP</span> <span class="n">GT</span>  <span class="mi">0</span><span class="o">|</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>You can see sample1 is homozygous for the reference allele at SNP rs569316018 and heterozygous at SNP rs143693530.</p>
 <p>For unphased genotypes, alleles are separated by a “/”, meaning they are unordered.
 For phased genotypes, alleles are separated by a “|”, meaning they are ordered.</p>
-<p>The full spec is described here: <a class="reference external" href="https://samtools.github.io/hts-specs/VCFv4.2.pdf">https://samtools.github.io/hts-specs/VCFv4.2.pdf</a></p>
 <p>You can look at these example VCF files on datahub:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">/datasets/cs284-sp21-A00-public/ps1/pset1_1000Genomes_chr16.vcf</span></code> (phased, multi-sample)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">/datasets/cs185-sp21-A00-public/datasets/week3/friend_genome.vcf.gz</span></code> (unphased, single-sample)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">~/public/ps1/pset1_1000Genomes_chr16.vcf</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">~/public/1000Genomes/ALL.chr22.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz</span></code></p></li>
 </ul>
 <p>Note the second is zipped. You can zip and index VCF files using <code class="docutils literal notranslate"><span class="pre">bgzip</span></code> and <code class="docutils literal notranslate"><span class="pre">tabix</span></code>:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>/datasets/cs284-sp21-A00-public/ps1/pset1_1000Genomes_chr16.vcf<span class="w"> </span>.<span class="w"> </span><span class="c1"># copy to current dir</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>~/public/ps1/pset1_1000Genomes_chr16.vcf<span class="w"> </span>.<span class="w"> </span><span class="c1"># copy to current dir</span>
 bgzip<span class="w"> </span>pset1_1000Genomes_chr16.vcf<span class="w"> </span>
 tabix<span class="w"> </span>-p<span class="w"> </span>vcf<span class="w"> </span>pset1_1000Genomes_chr16.vcf.gz
 </pre></div>
 </div>
-<p>Indexing allows us to easily extract specific genomic locations, e.g.:</p>
+<p>Indexing allows us to easily extract specific genomic locations with tabix, e.g.:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>tabix<span class="w"> </span>pset1_1000Genomes_chr16.vcf.gz<span class="w"> </span><span class="m">16</span>:31011634-31011635
 </pre></div>
 </div>
@@ -483,12 +491,12 @@ bcftools<span class="w"> </span>query<span class="w"> </span>-e<span class="s1">
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="genetic_variation_terminology.html"
+       href="../genome_file_formats.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">T1.1 Genetic variation terminology</p>
+        <p class="prev-next-title">Tutorial 1: file formats for describing genetic variation</p>
       </div>
     </a>
     <a class="right-next"
@@ -496,7 +504,7 @@ bcftools<span class="w"> </span>query<span class="w"> </span>-e<span class="s1">
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">T1.3 Plink files</p>
+        <p class="prev-next-title">T1.2 Plink files</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
