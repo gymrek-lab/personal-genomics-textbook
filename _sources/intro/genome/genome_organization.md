@@ -12,6 +12,9 @@ Not all chromosomes are created equally! Chromosome 1 is the largest, whereas ch
 
 There are special regions at the ends and middle of each chromosome. The ends consist largely of repetitive sequences making up regions called *telomeres*. For humans, the telomere sequence consists of repeats of "TTAGGG". The middles of chromosomes are called *centromeres*. In humans, centromeres consist large of repeats called alpha satellites, with repeat units of 171 base pairs.
 
+![Centromere and Telomere](images/Centromere.jpg)
+Source: [NIH Educational Resources](https://www.genome.gov/genetics-glossary/Centromere)
+
 ## Humans have two copies of the genome
 
 Humans are *diploid*, meaning most of our cells consist of two entire copies of the genome **each of which are double-stranded**, as we discussed in the last section. Note, germ cells, i.e. egg and sperm, contain only one copy. More on that later). Our diploid cells contain 2 copies of each autosome (1 copy inherited from each parent), and 2 sex chromosomes (again, one inherited from each parent) for a total of 46 chromosomes. Individuals with two copies of chromosome X are typically female. Individuals with one copy of X and one copy of Y are typically male.

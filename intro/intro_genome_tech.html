@@ -185,13 +185,22 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="tech/tech_summary.html">2.4 Summary of genomics technologies</a></li>
 </ul>
 </li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="genome_file_formats.html">Tutorial 1: file formats for describing genetic variation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="formats/vcf.html">T1.2 VCF files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="formats/plink.html">T1.2 Plink files</a></li>
+</ul>
+</li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 2 - Ancestry</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../ancestry/plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ancestry/plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../ancestry/plink1kg/1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
 </ul>
 </li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 1 - glossary and notation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../appendix/unix.html">Chapter A1.1: Unix cheat sheet</a></li>
 </ul>
 
     </div>
@@ -391,7 +400,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="chapter-2-overview-of-technologies-for-genome-analysis">
 <h1>Chapter 2: Overview of technologies for genome analysis<a class="headerlink" href="#chapter-2-overview-of-technologies-for-genome-analysis" title="Permalink to this heading">#</a></h1>
-<p>As human geneticists, we are primarily interested in studing <em>genetic variation</em>, or differences in genome sequences across individuals. Multiple technologies now enable profiling genetic variation at massive scale. While the majority of the course will focus on what we can do with all of that data, it is important to have an understanding of the basic sources of data we’ll be working with.</p>
+<p>As human geneticists, we are primarily interested in studing <em>genetic variation</em>, or differences in genome sequences across individuals. Multiple technologies now enable profiling genetic variation at a massive scale. While the majority of the course will focus on what we can do with all of that data, it is important to have an understanding of the basic sources of data we’ll be working with.</p>
 <p>Genomics technologies have evolved rapidly over the last 10-20 years. However we will focus on a few main technologies that are most widely used, each with different pros and cons:</p>
 <ul class="simple">
 <li><p><strong>Genotyping arrays</strong>: Genotyping arrays assay a predefined set of positions in the genome already known to be polymorphic (variable in the population). They typically analyze a million or so positions that are known to be variable across individuals. By focusing on a small subset (&lt;1%) of the genome, they are both very cheap (around $100 or less per person) and result in data that is a pretty manageable size.</p></li>

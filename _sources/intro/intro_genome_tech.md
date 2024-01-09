@@ -1,6 +1,6 @@
 # Chapter 2: Overview of technologies for genome analysis
 
-As human geneticists, we are primarily interested in studing *genetic variation*, or differences in genome sequences across individuals. Multiple technologies now enable profiling genetic variation at massive scale. While the majority of the course will focus on what we can do with all of that data, it is important to have an understanding of the basic sources of data we'll be working with.
+As human geneticists, we are primarily interested in studing *genetic variation*, or differences in genome sequences across individuals. Multiple technologies now enable profiling genetic variation at a massive scale. While the majority of the course will focus on what we can do with all of that data, it is important to have an understanding of the basic sources of data we'll be working with.
 
 Genomics technologies have evolved rapidly over the last 10-20 years. However we will focus on a few main technologies that are most widely used, each with different pros and cons:
 
