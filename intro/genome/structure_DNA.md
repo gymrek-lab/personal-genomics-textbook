@@ -4,7 +4,7 @@ Our genome is composed of DNA (deoxyribonucleic acid).
 DNA consists of two chains of *nucleotides* coiled around each other in a characteristic double helix structure.
 Each nucleotide consists of the following components:
 
-* five-sided ssugar
+* five-sided sugar
 * phosphate group
 * nitrogenous base
 
