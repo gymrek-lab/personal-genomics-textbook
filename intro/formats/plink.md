@@ -38,6 +38,10 @@ plink \
   --out pset1_1000Genomes_chr16
 
 # Plink->VCF
+# Note, plink may change the allele order if the major allele
+# is not the reference. We use the --a2-allele and 
+# --real-ref-alleles options below to force it to correctly
+# set ref/alt in the output VCF file
 zcat pset1_1000Genomes_chr16.vcf.gz | grep -v "^#" | cut -f 1-5 > gtdata_alleles.tab
 plink \
   --file pset1_1000Genomes_chr16 \
