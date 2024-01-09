@@ -4,7 +4,7 @@ As human geneticists, we are primarily interested in studing *genetic variation*
 
 Genomics technologies have evolved rapidly over the last 10-20 years. However we will focus on a few main technologies that are most widely used, each with different pros and cons:
 
-* **Genotyping arrays**: SNP genotyping arrays assay a predefined set of positions in the genome already known to be polymorphic. They typically analyze a million or so SNPs. By focusing on a small subset (<1%) of the genome, they are both very cheap (around $100 or less per person) and result in data that is a pretty manageable size. 
+* **Genotyping arrays**: Genotyping arrays assay a predefined set of positions in the genome already known to be polymorphic (variable in the population). They typically analyze a million or so positions that are known to be variable across individuals. By focusing on a small subset (<1%) of the genome, they are both very cheap (around $100 or less per person) and result in data that is a pretty manageable size. 
 
 * **Next-generation sequencing (NGS)**: NGS (most notably, Illumina technology) enables sequencing of DNA fragments. However, we cannot read entire chromosomes of DNA at once. Rather, the genome is fragmented into small sequences. NGS generates billions of short *reads* of DNA, usually around 100-150bp each. These short sequences of DNA can then be aligned back to a reference genome. Mutations are identified by comparing observed bases in the reads to those in the reference genome to identify differences. Modern NGS data is highly accurate, with per-base errors less than 1%. 
 
