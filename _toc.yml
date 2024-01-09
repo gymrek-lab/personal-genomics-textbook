@@ -23,7 +23,7 @@ parts:
       - file: intro/genome_file_formats
         sections:
         - file: intro/formats/vcf
-#        - file: intro/formats/plink
+        - file: intro/formats/plink
 #        - file: intro/formats/pgen
   - caption: Module 2 - Ancestry
     chapters:

@@ -1,4 +1,4 @@
-# T1.3 Plink files
+# T1.2 Plink files
 
 You will also come across genotypes in the format used by Plink (https://www.cog-genomics.org/plink/1.9/formats), which can perform many different functions, including filter, association testing, IBD calculation, and more.
 
@@ -20,7 +20,7 @@ The text version of plink files includes:
 
 The binary versions of these files are bed/bim files.
 
-You can find example plink data in: `/datasets/cs284-sp22-a00-public/ps2/`:
+You can find example plink data in: `~/public/ps2/`:
 
 When running plink, you will almost always use one of these options:
 * `--bfile <prefix>`: uses `<prefix>.bed` and `<prefix>.bim` as input
