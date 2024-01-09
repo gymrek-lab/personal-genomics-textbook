@@ -12,16 +12,16 @@ parts:
         - file: intro/genome/genome_organization
         - file: intro/genome/central_dogma
         - file: intro/genome/noncoding
+        - file: intro/genome/genetic_variation_terminology
+        # To add: info on *reference genomes*
       - file: intro/intro_genome_tech
         sections:
         - file: intro/tech/genotype_arrays
         - file: intro/tech/ngs
         - file: intro/tech/long_reads
         - file: intro/tech/tech_summary
-#        - file: intro/tech/review_questions
       - file: intro/genome_file_formats
         sections:
-        - file: intro/formats/genetic_variation_terminology
         - file: intro/formats/vcf
         - file: intro/formats/plink
         - file: intro/formats/pgen
