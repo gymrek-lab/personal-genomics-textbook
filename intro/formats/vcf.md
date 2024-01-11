@@ -6,7 +6,7 @@ VCF files generally have:
 
 * Header lines beginning with `##` which describe the data in each field. They also contain helpful things like the commands uesd to generate the file, information about the reference genome used, etc.
 * A final header line beginning with `#CHROM` which gives the column headers of the data in the following rows.
-* One line per variant describinging:
+* One line per variant describing:
   - CHROM: the chromosome of the variant
   - POS: the position on the chromosome of the variant
   - ID: the identifier of the variant, for example a dbSNP rsid.
