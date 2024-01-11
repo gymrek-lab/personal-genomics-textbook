@@ -1,4 +1,4 @@
-# 3.5 Selection
+# 3.4 Selection
 
 ## Incorporating selection into our model for drift
 The model of genetic drift above assumed that alleles in each generation are drawn at random from the alleles available from the previous generation. In that case, alleles were considered *neutral*. That is, whether you inherited A vs. B had no effect on your health and ability to produce offspring.

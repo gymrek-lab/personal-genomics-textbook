@@ -1,4 +1,4 @@
-# 3.6 Hardy-Weinberg Equilibrium and random mating
+# 3.5 Hardy-Weinberg Equilibrium and random mating
 
 Humans are *diploid*, meaning we all have two genome copies in most of our cells: one maternally inherited and one paternally inherited. 
 Under the assumption of *random mating* (i.e. males ane females pair randomly with each other and then have offspring, and this happens again and again each generation), we can think of our two copies of each chromosome as being drawn at random from the pool of available chromosomes in the population. 

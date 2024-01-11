@@ -1,4 +1,4 @@
-# 3.3 Types and patterns of mutations
+# 3.2 Types and patterns of mutations
 
 ## Types of mutations
 
@@ -12,7 +12,7 @@ We will refer to these spelling changes as *Single Nucleotide Polymorphisms* or 
 
 Note, there are many other interesting ways genomes can vary that we will only consider later on. These include:
 
-* *Indels*, or insertions or deletions of 1 or more nucleotide.
+* *Indels*, or insertions or deletions of 1 or more bp.
 * *Structural variants*, which can involve rearrangements or insertions or deletions of large (>1kb) chunks of the genome.
 * *Tandem repeats*, which consist of repeated sequences in tandem. These regions often vary in copy number of the repeat across individuals
 * *Copy number variants*, similar to tandem repeats but usually longer. These regions also frequently vary in copy number.
@@ -24,8 +24,6 @@ On average, the human mutation rate is around 1.5x10e-8 per base per generation.
 Because mutations accumulate at a constant(ish) rate, they can be used as a *molecular clock*. By comparing the genomes (or regions of the genome) of two individuals and counting the number of positions at which they differ, we can infer how long ago those individuals, or those genomic regions, shared a common ancestor.
 
 We can learn something about the age of a mutation based on how frequent it is. For example, mutations that are very common in many different world populations likely arose long ago before the split of modern populations. On the other hand, mutations that are very rare or only seen in specific population groups likely arose more recently. These properties will help us later on when we use genetic variation to infer an individual's ancestry.
-
-
 
 ## Somatic mutations
 
