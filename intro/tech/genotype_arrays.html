@@ -187,21 +187,34 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../genome_file_formats.html">Tutorial 1: file formats for describing genetic variation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../formats/vcf.html">T1.2 VCF files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../formats/plink.html">T1.3 Plink files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../formats/pgen.html">T1.4 PGEN files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../formats/plink.html">T1.2 Plink files</a></li>
 </ul>
 </li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 2 - Ancestry</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/intro_popgen.html">Chapter 3: Introduction to population genetics</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/forces_evolution.html">3.1 The four forces of evolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/mutations.html">3.2 Types and patterns of mutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/drift.html">3.3 Genetic drift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/selection.html">3.4 Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/hwe.html">3.5 Hardy-Weinberg Equilibrium and random mating</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/fst.html">3.6 Measuring population differentiation with Fst</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/selection_metrics.html">3.8 Detecting signals of positive selection</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../ancestry/plink1kg/1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
 </ul>
 </li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 1 - glossary and notation</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/unix.html">Chapter A1.1: Unix commands used</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/unix.html">Chapter A1.1: Unix cheat sheet</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
 </ul>
 
     </div>
@@ -403,7 +416,7 @@ document.write(`
 <h1>2.1 Genotyping arrays<a class="headerlink" href="#genotyping-arrays" title="Permalink to this heading">#</a></h1>
 <p>The majority of existing datasets in commerical direct to consumer companies such as 23andme, as well as datasets for large genome-wide association studies, are derived from genotyping arrays. (However, this is changing. within the next year there will be millions of NGS datasaets available from multiple projects including the UK Biobank, All of Us, Million Veterans Program, and others.) Note, you might hear this technology also referred to as SNP chips or SNP microarrays.</p>
 <p>While each copy of our genome is around 3 billion base pairs, the majority of that sequence is identical between individuals. In fact, two copies of the genome will tend to differ only at 1 in 1,000 bases. We will refer to these single base pair differences as SNPs, or Single Nucleotide Polymorphisms. Some SNPs are very common - i.e. the same variant may be found in a large percentage of people. Other SNPs are rare, meaning they are not found in many people. We will talk much more about nomenclature and properties of SNPs in the next module.</p>
-<p>The main idea of genotyping arrays is to save costs by only analyzing a small subset of the genome. Work from the early days following the human genome project (see the <a class="reference external" href="https://www.genome.gov/10001688/international-hapmap-project">Hapmap Project</a>) found that the majority of <em>common</em> genetic variation in humans could be captured by around 500,000 SNPs. Note, many more common SNPs exist, but many SNPs are highly correlated with each other and thus provide redundant information. Thus, rather than sequencing the entire genome of many people, we can do targeted analysis of these known “tag” SNPs.</p>
+<p>The main idea of genotyping arrays is to save costs by only analyzing a small subset of the genome. Works from the early days following the human genome project (see the <a class="reference external" href="https://www.genome.gov/10001688/international-hapmap-project">Hapmap Project</a>) found that the majority of <em>common</em> genetic variation in humans could be captured by around 500,000 SNPs. Note, many more common SNPs exist, but many SNPs are highly correlated with each other and thus provide redundant information. Thus, rather than sequencing the entire genome of many people, we can do targeted analysis of these known “tag” SNPs.</p>
 <p>To perform SNP genotyping using microarray technology, DNA is fragmented and then hybridized to a large array containing hundreds of thousands of these different probes (short sequences). The majority of SNPs have only two possible bases (<em>alleles</em>) that are common in the population. For each SNP, the array has two probes designed to capture each these two possible bases at a given site. By the intensities of the two probesd (let’s call them “A” and “B”), we can determine whether a person is <em>homozygous</em> for A (AA), homozygous for B (BB), or <em>heterozygous</em> (AB).</p>
 <p>Most genotyping arrays target between 500,000 to 1.5 million SNPs. Commonly used arrays from Affymetrix and Illumina, as well as 23andme’s custom chip, have around 600,000. Larger arrays exist. For example, the Illumina Human Omni2.5S-8 chip captures around 2.5 million SNPs. There are also custom arrays designed to get higher resolution at certain regions of the genome of interest. For example, a “Human Origins” chip available from ThermoFisher is specifically designed for study of human history. The “immunochip” from Illumina has dense coverage of SNPs near loci associated with major autoimmune and inflammatory diseases.</p>
 </section>

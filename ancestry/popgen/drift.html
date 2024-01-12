@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>3.4 Genetic drift &#8212; CSE284 - Personal Genomics</title>
+    <title>3.3 Genetic drift &#8212; CSE284 - Personal Genomics</title>
   
   
   
@@ -67,6 +67,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'ancestry/popgen/drift';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3.4 Selection" href="selection.html" />
+    <link rel="prev" title="3.2 Types and patterns of mutations" href="mutations.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -175,6 +177,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../../intro/genome/genome_organization.html">1.2 Organization of the human genome</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../intro/genome/central_dogma.html">1.3 Genes and the central dogma</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../intro/genome/noncoding.html">1.4 The non-coding genome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/genetic_variation_terminology.html">1.5 Genetic variation terminology</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../intro/intro_genome_tech.html">Chapter 2: Overview of technologies for genome analysis</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -185,23 +188,35 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../intro/genome_file_formats.html">Tutorial 1: file formats for describing genetic variation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../intro/formats/genetic_variation_terminology.html">T1.1 Genetic variation terminology</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../intro/formats/vcf.html">T1.2 VCF files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../intro/formats/plink.html">T1.3 Plink files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../intro/formats/pgen.html">T1.4 PGEN files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/formats/plink.html">T1.2 Plink files</a></li>
 </ul>
 </li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 2 - Ancestry</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro_popgen.html">Chapter 3: Introduction to population genetics</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="forces_evolution.html">3.1 The four forces of evolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mutations.html">3.2 Types and patterns of mutations</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">3.3 Genetic drift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selection.html">3.4 Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hwe.html">3.5 Hardy-Weinberg Equilibrium and random mating</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fst.html">3.6 Measuring population differentiation with Fst</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selection_metrics.html">3.8 Detecting signals of positive selection</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../plink1kg/1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
 </ul>
 </li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 1 - glossary and notation</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/unix.html">Chapter A2.1: Unix commands used</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/unix.html">Chapter A1.1: Unix cheat sheet</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
 </ul>
 
     </div>
@@ -385,7 +400,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>3.4 Genetic drift</h1>
+    <h1>3.3 Genetic drift</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -400,24 +415,34 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="genetic-drift">
-<h1>3.4 Genetic drift<a class="headerlink" href="#genetic-drift" title="Permalink to this heading">#</a></h1>
-<p>Consider the following simplified model of evolution of a single position of the genome: we have a starting population of N people (and so, 2N copies of the genome since we are diploid).
+<h1>3.3 Genetic drift<a class="headerlink" href="#genetic-drift" title="Permalink to this heading">#</a></h1>
+<p>Consider the following simplified model of evolution of a single position of the genome: we have a starting population of <span class="math notranslate nohighlight">\(N\)</span> people (and so, <span class="math notranslate nohighlight">\(2N\)</span> copies of the genome since we are diploid).
 The position has two alleles, A and B, with frequencies p and 1-p in the population.
-We will assume that the population size is constant at N people over time, and that generations are non-overlapping.
-So, every generation, we have N new individuals. Their two alleles are each drawn at random from the 2N available alleles from the previous generation.
+We will assume that the population size is constant at <span class="math notranslate nohighlight">\(N\)</span> people over time, and that generations are non-overlapping.
+So, every generation, we have <span class="math notranslate nohighlight">\(N\)</span> new individuals. Their two alleles are each drawn at random from the <span class="math notranslate nohighlight">\(2N\)</span> available alleles from the previous generation.
 This process happens over and over again over many generations of evolution.</p>
 <p>This simple process of genetic drift is formalized in the <em>Wright-Fisher model</em>.
-If there are 2N total alleles, and the frequency of A is p, then the probability that there will be k copies of A in the next generation can be computed using the binomial distribution:</p>
+If there are <span class="math notranslate nohighlight">\(2N\)</span> total alleles, and the frequency of A is <span class="math notranslate nohighlight">\(p\)</span>, then the probability that there will be <span class="math notranslate nohighlight">\(k\)</span> copies of A in the next generation can be computed using the binomial distribution:</p>
 <div class="math notranslate nohighlight">
-\[P(k copies of A) = (2N choose k)p^k(1-p)^{2NN-k}\]</div>
-<p>This process gets repeated each generation. Note, each generation we must recompute p based on the observed frequency of A in the previous generation.</p>
-<p>The Wright-Fisher model is essentially a simple random walk. Note that both p=0 and p=1 are <em>absorbing states</em>. In the absence of new mutations, once we reach an absorbing state, we are stuck there forever. i.e. once either A or B disappears, the allele frequencies will stay constant in all future generations. We call this <em>fixation</em> of one of the alleles (and <em>loss</em> of the other). If we run the evolution process for enough generations, eventually we will reach one of these absorbing states.</p>
+\[P(k \text{ copies of } A) = {2N \choose k}p^k(1-p)^{2N-k}\]</div>
+<p>This process gets repeated each generation. Note, each generation we must recompute <span class="math notranslate nohighlight">\(p\)</span> based on the observed frequency of A in the previous generation.</p>
+<p>The figure below illustrates the process fo genetic drift in simulated data. Each line shows a different random simulation. The x-axis is the number of generations that have passed, and the y-axis is the frequency <span class="math notranslate nohighlight">\(p\)</span> over time, which started at <span class="math notranslate nohighlight">\(p=0.5\)</span>:</p>
+<p><img alt="drift_example" src="../../_images/drift1.png" /></p>
+<p>The Wright-Fisher model is essentially a simple random walk. Note that both <span class="math notranslate nohighlight">\(p=0\)</span> and <span class="math notranslate nohighlight">\(p=1\)</span> are <em>absorbing states</em>. In the absence of new mutations, once we reach an absorbing state, we are stuck there forever. i.e. once either A or B disappears, the allele frequencies will stay constant in all future generations. We call this <em>fixation</em> of one of the alleles (and <em>loss</em> of the other). If we run the evolution process for enough generations, eventually we will reach one of these absorbing states.</p>
 <p>Some interesting properties about patterns of genetic variation in populations can be derived from this model:</p>
 <ul class="simple">
-<li><p><em>Effects of population size</em>: The smaller the population size, the more dramatic effect genetic drift will have. If a population is very large, frequencies will remain pretty stable across generations due to the law of large numbers. In the extreme case of infinite population size, allele frequencies will stay constant. On the other hand, if a population is very small, due to sampling noise there may be large fluctations in allele frequencies each generation.</p></li>
-<li><p><em>Effects of population bottlenecks</em>: A population bottleneck occurs when a small group of founder individuals from an original population forms a new population group, creaing a substantial reduction in population size. This can have dramatic effects on allele frequencies. For example, if an allele that was originally rare was present in one of the small number of founrders, that allele may suddenly become common in the new bottlenecked population. One consequence is that populations such as Ashkenazi Jews, early French Canadian settlers, and Finnish, which experienced recent bottlenecks, have a high rate of recessive disorders which are rare in other groups but common in the bottlenecked groups since they happened to be carried by some of the original founders.</p></li>
-<li><p><em>Effects of allele frequencies</em>: An allele that is at 50% frequency as a 50% chance to eventually be lost or become fixed. mAn allele that is rare is more likely to eventually be lost. On the other hand, an allele that is very common is likely to eventually take over and become fixed. Formally, the probability that an allele with frequency p will eventually be fixed is equal to p. The time it takes for fixation to occur is proportional to the population size. Fixation will happen more quickly in small populations and take a long time in large populations.</p></li>
+<li><p><em>Effects of population size</em>: The smaller the population size, the more dramatic effect genetic drift will have. If a population is very large, frequencies will remain pretty stable across generations due to the law of large numbers. In the extreme case of infinite population size, allele frequencies will stay constant. On the other hand, if a population is very small, due to sampling noise there may be large fluctations in allele frequencies each generation. The simulations below show how the behavior of drift is different in small (left) vs. large (right) populations.</p></li>
 </ul>
+<p><img alt="drift_example_popsize" src="../../_images/drift2.png" /></p>
+<ul class="simple">
+<li><p><em>Effects of population bottlenecks</em>: A population bottleneck occurs when a small group of founder individuals from an original population forms a new population group, creaing a substantial reduction in population size. This can have dramatic effects on allele frequencies. For example, if an allele that was originally rare was present in one of the small number of founrders, that allele may suddenly become common in the new bottlenecked population. One consequence is that populations such as Ashkenazi Jews, early French Canadian settlers, and Finnish, which experienced recent bottlenecks, have a high rate of recessive disorders which are rare in other groups but common in the bottlenecked groups since they happened to be carried by some of the original founders. The simulations in the figure below were generated with a population size that starts at 10,000 then drops to 50 at generation 500. You can see nearly all alleles quickly go to either fixation or loss.</p></li>
+</ul>
+<p><img alt="drift_example_bottleneck" src="../../_images/bottleneck.png" /></p>
+<ul class="simple">
+<li><p><em>Effects of allele frequencies</em>: An allele that is at 50% frequency as a 50% chance to eventually be lost or become fixed. An allele that is rare is more likely to eventually be lost. On the other hand, an allele that is very common is likely to eventually take over and become fixed. Formally, the probability that an allele with frequency <span class="math notranslate nohighlight">\(p\)</span> will eventually be fixed is equal to <span class="math notranslate nohighlight">\(p\)</span>. The time it takes for fixation to occur is proportional to the population size. Fixation will happen more quickly in small populations and take a long time in large populations.</p></li>
+</ul>
+<p>The simulations below show how the behavior of drift is different for an allele with starting frequency of 0.5 (left) vs. 0.2 (right). In the second case, loss is more likely and happens more quickly than when the starting frequency is 0.5.</p>
+<p><img alt="drift_example_afreq" src="../../_images/drift3.png" /></p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -450,6 +475,24 @@ If there are 2N total alleles, and the frequency of A is p, then the probability
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="mutations.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">3.2 Types and patterns of mutations</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="selection.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">3.4 Selection</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               

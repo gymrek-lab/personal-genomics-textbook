@@ -1,4 +1,4 @@
-# 3.7 Measuring population differentiation with Fst
+# 3.6 Measuring population differentiation with Fst
 
 We introduce a metric known as $F_{ST}$, or the *fixation index*, which is commonly used in population genetics to quantify the differentiation of two or more population groups. This metric can be computed with plink (`plink --fst`), and is also output by ADMIXTURE to measure the differentiation of the K source populations identified.
 
