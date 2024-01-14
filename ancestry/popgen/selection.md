@@ -18,6 +18,8 @@ The above model of selection is quite simple and does not consider that alleles 
 
 * **Stabilizing selection**:  In this case, heterozygotes (AB) have an advantage over homozygotes (AA or BB). An example of this is the gene *HBB* involved in sickle-cell anemia. Having two copies (BB) of mutant HBB results in sickle-cell anemia. However, heterozygotes (AB) have an advantage over homozygotes for AA, in that they are largely resistant to malaria. In cases of stabilizing selection, a deleterious allele is maintained in the population even though it can have a negative impact, since it has an advantage when found in a heterozygous state.
 
-* **Disruptive selection**: In this case, heterozygotes have a disadvantage over either homozygous genotype. There are several examples of this type of selection in non-humans. Let us know if you think of any examples in humans!
+* **Disruptive selection**: In this case, heterozygotes have a disadvantage over either homozygous genotype. There are several examples of this type of selection in non-humans.
 
 While we will not cover them in detail in this course, a number of methods have been developed for identifying regions of the genome under selection. Many of these are reviewed in [Haasl and Payseur](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4868130/).
+
+See also this great chapter in Jonathan Pritchard's online book for more about [signals of positive selection](https://web.stanford.edu/group/pritchardlab/HGbook/Release-2023-09/HGBook-2023-09-chapters/HGBook-2023-09-23-ch2.6.pdf).

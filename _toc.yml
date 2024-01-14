@@ -30,12 +30,11 @@ parts:
         sections:
         - file: ancestry/popgen/forces_evolution
         - file: ancestry/popgen/mutations
-        # To add: add figures to drift from sims, WF activity
         - file: ancestry/popgen/drift
-        # To add: metrics from selection reading
         - file: ancestry/popgen/selection
         - file: ancestry/popgen/hwe
         - file: ancestry/popgen/fst
+        - file: ancestry/popgen/WF-simulations
 #        - file: ancestry/popgen/recombination # TODO
 #      - file: ancestry/global_ancestry
 #        sections:
@@ -81,6 +80,7 @@ parts:
 #      - file: appendix/notation
 #  - caption: Appendix 2 - review of math+CS concepts
 #    chapters:
+#      - file: appendix/prob_dists
 #      - file: appendix/linear_algebra
 #      - file: appendix/hmm
 #  - caption: References
