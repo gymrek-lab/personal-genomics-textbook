@@ -67,7 +67,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'ancestry/popgen/WF-simulations';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Tutorial 2: Working with 1000 Genomes data and plink" href="../plink_1000G.html" />
+    <link rel="next" title="Chapter 4: Global ancestry" href="../global_ancestry.html" />
     <link rel="prev" title="3.6 Measuring population differentiation with Fst" href="fst.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -205,7 +205,12 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Activity: Exploring the Wright-Fisher model of genetic drift</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../global_ancestry.html">Chapter 4: Global ancestry</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../global/pca_global_ancestry.html">4.1 Global ancestry analysis with PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../global/admixture_global_ancestry.html">4.2 Global ancestry analysis with ADMIXTURE</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../plink1kg/1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
 </ul>
 </li>
@@ -534,7 +539,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/eb4779226ef381742d6fca802f1efff12b8afa9252820fbae970d0cefa484116.png" src="../../_images/eb4779226ef381742d6fca802f1efff12b8afa9252820fbae970d0cefa484116.png" />
+<img alt="../../_images/abc71ef64a5636b6bd95e256cd5973f8b45f599835a2eb893a0c0666fe40a11a.png" src="../../_images/abc71ef64a5636b6bd95e256cd5973f8b45f599835a2eb893a0c0666fe40a11a.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -556,7 +561,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/913efc5468d02e3df658a409c41b08c9033182ce3e12d1ba13717496e42cf9db.png" src="../../_images/913efc5468d02e3df658a409c41b08c9033182ce3e12d1ba13717496e42cf9db.png" />
+<img alt="../../_images/2bbaccf27126692d2e06d43cf56dcd0aeb9b727f15589601aeff846d0247c397.png" src="../../_images/2bbaccf27126692d2e06d43cf56dcd0aeb9b727f15589601aeff846d0247c397.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -594,7 +599,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/24697f05f1b3c3680b894ae11b2a8e83bf067c75e725acbccd47ced0cc31cbea.png" src="../../_images/24697f05f1b3c3680b894ae11b2a8e83bf067c75e725acbccd47ced0cc31cbea.png" />
+<img alt="../../_images/451dfb7eadf35a74eecf0dacf964da381652625333709019d2e46114bb66d530.png" src="../../_images/451dfb7eadf35a74eecf0dacf964da381652625333709019d2e46114bb66d530.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -633,7 +638,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/48005a23db59118d045b1221c24135d2ceee2bc91c445c59ba87dad9284ab5b9.png" src="../../_images/48005a23db59118d045b1221c24135d2ceee2bc91c445c59ba87dad9284ab5b9.png" />
+<img alt="../../_images/3290188a92e92968af9a73c811896ee59773a4fbff36ebb9f5b855a519d0f864.png" src="../../_images/3290188a92e92968af9a73c811896ee59773a4fbff36ebb9f5b855a519d0f864.png" />
 </div>
 </div>
 </section>
@@ -714,7 +719,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/8890241c5b32fb3882b679ed90c55552309747a1d70f94d69211d03a841b6129.png" src="../../_images/8890241c5b32fb3882b679ed90c55552309747a1d70f94d69211d03a841b6129.png" />
+<img alt="../../_images/9fb214fd555f415089ac10aa6f4769d2b9ae5c66020a1e270b114244dffa8404.png" src="../../_images/9fb214fd555f415089ac10aa6f4769d2b9ae5c66020a1e270b114244dffa8404.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -755,8 +760,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/a3ec6a440e30e08f31ff1970d4fc4b4d064bade50ad4871c4c69fd1abd28fca8.png" src="../../_images/a3ec6a440e30e08f31ff1970d4fc4b4d064bade50ad4871c4c69fd1abd28fca8.png" />
-<img alt="../../_images/07bcb59b831158a4bb4b0f193a7f41a2c67dd8e66ebaeb3927afce6c576458ed.png" src="../../_images/07bcb59b831158a4bb4b0f193a7f41a2c67dd8e66ebaeb3927afce6c576458ed.png" />
+<img alt="../../_images/9a3c6d8a9cfa26f15710c09343ea33312f87f653b75b48b120d6aa0371909cac.png" src="../../_images/9a3c6d8a9cfa26f15710c09343ea33312f87f653b75b48b120d6aa0371909cac.png" />
+<img alt="../../_images/45e4fb68795a05dac90b678f92e24df229a9e8d99afef1d247b940707ffa7f91.png" src="../../_images/45e4fb68795a05dac90b678f92e24df229a9e8d99afef1d247b940707ffa7f91.png" />
 </div>
 </div>
 </section>
@@ -802,11 +807,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="../plink_1000G.html"
+       href="../global_ancestry.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Tutorial 2: Working with 1000 Genomes data and plink</p>
+        <p class="prev-next-title">Chapter 4: Global ancestry</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
