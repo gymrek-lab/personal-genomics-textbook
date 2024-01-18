@@ -40,10 +40,10 @@ parts:
         sections:
         - file: ancestry/global/pca_global_ancestry
         - file: ancestry/global/admixture_global_ancestry
-#      - file: ancestry/relative_finding
-#        sections:
-#        - file: ancestry/relfind/ibd
-#        - file: ancestry/relfind/ibd_pedigree
+      - file: ancestry/relative_finding
+        sections:
+        - file: ancestry/relfind/ibd
+        - file: ancestry/relfind/ibd_pedigree
 #        - file: ancestry/relfind/ibd_plink
 #        - file: ancestry/relfind/ibd_segments
 #        - file: ancestry/relfind/genetic_genealogy

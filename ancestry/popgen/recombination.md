@@ -74,3 +74,10 @@ $$r^2 = \frac{D^2}{q_1(1-q_1)q_2(1-q_2)}$$
 
 $r^2$ is between 0 and 1 (although it is not always possible for $r^2$ to reach 1, depending on the allele frequencies of the two SNPs considered). It will also be a convenient metric later on when we talk about GWAS and fine-mapping.
 
+## LD patterns
+
+Below shows a representative example region of the genome, in which the LD ($r^2$) is plotted for each pair of SNPs. 
+
+![ld_hotspots](images/ld_hotspots.png)
+
+Notice the triangle shape. The triangles indicate large blocks (*LD blocks*) of variants that are in high correlation with each other. The breaks between triangles indicate *recombination hotspots*, where recombination frequently occurs and has broken down the correlation between variants. Note, LD patterns often vary substantially by ancestry.
