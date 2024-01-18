@@ -92,4 +92,4 @@ $$P(IBD=2) = \frac{N(IBS=2)-N(IBS=2|IBD=0)P(IBD=0)-P(IBS=2|IBD=1)P(IBD=1)}{N(IBS
 
 ## Summary
 
-Given unphased SNP genotypes for a pair of individuals, as well as minor allele frequencies for each SNP, you could derive the IBS sharing at each SNP and use that to estimate the percent of the genome two individuals share at IBD=0, 1, or 2.
+Given unphased SNP genotypes for a pair of individuals, as well as minor allele frequencies for each SNP, you could derive the IBS sharing at each SNP and use that to estimate the percent of the genome two individuals share at IBD=0, 1, or 2. Based on those percentages, you could infer the possible familial relationship (see the plot above of percent IBD=0 vs. percent IBD=1).
