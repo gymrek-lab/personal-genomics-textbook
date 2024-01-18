@@ -65,7 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'ancestry/relfind/ibd';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Tutorial 2: Working with 1000 Genomes data and plink" href="../plink_1000G.html" />
+    <link rel="next" title="5.2 Expected IBD of close relatives" href="ibd_pedigree.html" />
     <link rel="prev" title="Chapter 5: Relative finding" href="../relative_finding.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -211,6 +211,8 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../relative_finding.html">Chapter 5: Relative finding</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">5.1 Identity by descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ibd_pedigree.html">5.2 Expected IBD of close relatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ibd_plink.html">5.3 Computing expected IBD - plink method</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -432,6 +434,7 @@ document.write(`
 <p>A related concept to IBD is <em>identity by state</em> or IBS. IBS refers to sharing of alleles at a particular SNP, regardless of whether that SNP falls on a chromosome segment that has a recent common ancestor. For example, if at a particular SNP both individuals are homozygous for the reference allele, they have IBS=2 at that SNP. Note, it is possible for a position to be shared IBS but not IBD as in the example below:</p>
 <p><img alt="ibd" src="../../_images/ibs.png" /></p>
 <p>As we’ll explore in the next sections, we can predict the percent of the genome shared at IBD, as well as the length and number of segments shared, as a function of the familial relationship between a pair of individuals.</p>
+<p>We will first discuss the percentage of the genome we expect different relative pairs to share IBD, and then will show a method (from plink) for how to estimate IBD sharing from genomes. In subsequent sections, we will look at not just the % sharing IBD, but also the <em>length</em> and <em>number</em> of shared IBD segments for different types of relative pairs.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -474,11 +477,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="../plink_1000G.html"
+       href="ibd_pedigree.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Tutorial 2: Working with 1000 Genomes data and plink</p>
+        <p class="prev-next-title">5.2 Expected IBD of close relatives</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

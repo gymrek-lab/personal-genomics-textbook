@@ -62,9 +62,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'ancestry/relfind/ibd_segments';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Tutorial 2: Working with 1000 Genomes data and plink" href="../plink_1000G.html" />
+    <link rel="prev" title="5.3 Computing expected IBD - plink method" href="ibd_plink.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -190,7 +194,7 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 2 - Ancestry</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../intro_popgen.html">Chapter 3: Introduction to population genetics</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/forces_evolution.html">3.1 The four forces of evolution</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/mutations.html">3.2 Types and patterns of mutations</a></li>
@@ -199,6 +203,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../popgen/hwe.html">3.5 Hardy-Weinberg Equilibrium and random mating</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/fst.html">3.6 Measuring population differentiation with Fst</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/WF-simulations.html">Activity: Exploring the Wright-Fisher model of genetic drift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../popgen/recombination.html">3.7 Recombination</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../global_ancestry.html">Chapter 4: Global ancestry</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -206,7 +211,14 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../global/admixture_global_ancestry.html">4.2 Global ancestry analysis with ADMIXTURE</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../relative_finding.html">Chapter 5: Relative finding</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ibd.html">5.1 Identity by descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ibd_pedigree.html">5.2 Expected IBD of close relatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ibd_plink.html">5.3 Computing expected IBD - plink method</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">5.4 Computing expected IBD segment sharing</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../plink1kg/1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
 </ul>
 </li>
@@ -386,7 +398,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -402,6 +416,16 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expected-number-of-segments">Expected number of segments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expected-length-of-segments">Expected length of segments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#detecting-shared-ibd-segments">Detecting shared IBD segments</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -413,6 +437,52 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="computing-expected-ibd-segment-sharing">
 <h1>5.4 Computing expected IBD segment sharing<a class="headerlink" href="#computing-expected-ibd-segment-sharing" title="Permalink to this heading">#</a></h1>
+<p>In the previous section, we used the <em>percent of the genome</em> shared at different IBD levels (0, 1, or 2) to infer familial relationships. There is another source of information we could use, which is the <em>number</em> and <em>length</em> of distinct shared IBD segments.</p>
+<p>Generally, we expect IBD segments to be large for closely related individuals. In the most extreme case, parent-child pairs will share each entire chromosome at IBD=1. For more distant relatives, shared segments will be shorter, since each generation (each meiosis event) each chromosome will undergo around 1 recombination event, which will break down the segments.</p>
+<p>The plot below from 23andme beautifully shows how different relative pairs will have characteristic length and size of shared segments:</p>
+<p><img alt="sharing" src="../../_images/23andme_sharing.png" />
+Source: <a class="reference external" href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0034267">https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0034267</a></p>
+<section id="expected-number-of-segments">
+<h2>Expected number of segments<a class="headerlink" href="#expected-number-of-segments" title="Permalink to this heading">#</a></h2>
+<p>Let:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(r\)</span> be the number of recombination events per meiosis. This is estimated to be around 35.</p></li>
+<li><p><span class="math notranslate nohighlight">\(c=22\)</span> be the number of autosomal chromosomes</p></li>
+<li><p><span class="math notranslate nohighlight">\(d\)</span> be the number of meiosis events in a path between relative pairs</p></li>
+<li><p><span class="math notranslate nohighlight">\(a\)</span> be the number of shared ancestors for a pair of relatives (1 or 2)</p></li>
+</ul>
+<p>Then the expected number of shared segments for the relative pair is:</p>
+<div class="math notranslate nohighlight">
+\[E[segments] = a \frac{rd+c}{2^{d-1}}\]</div>
+<ul class="simple">
+<li><p>The <span class="math notranslate nohighlight">\(rd+c\)</span> is because every meiosis event is adding <span class="math notranslate nohighlight">\(r\)</span> new additional segments (by breaking up the previous segments)</p></li>
+<li><p>Multiply by <span class="math notranslate nohighlight">\(a\)</span> because if 2 relatives are shared, there are twice as many possible segments that can be shared</p></li>
+<li><p>Divide by <span class="math notranslate nohighlight">\(2^{d-1}\)</span> since every meiosis event there is a 50% chance that a particular segment is lost.</p></li>
+</ul>
+<p>Working this out we get:</p>
+<ul class="simple">
+<li><p>For siblings: <span class="math notranslate nohighlight">\(d=2\)</span>, <span class="math notranslate nohighlight">\(a=2\)</span>, we expect around 92 segments</p></li>
+<li><p>For grandparent/grandchild: <span class="math notranslate nohighlight">\(d=2\)</span>, <span class="math notranslate nohighlight">\(a=1\)</span>, we expect 46 segments</p></li>
+<li><p>For avuncular: <span class="math notranslate nohighlight">\(d=3\)</span>, <span class="math notranslate nohighlight">\(a=2\)</span>, expect 63.5</p></li>
+<li><p>For first cousin: <span class="math notranslate nohighlight">\(d=4\)</span>, <span class="math notranslate nohighlight">\(a=2\)</span>, expect 40.5
+etc.</p></li>
+</ul>
+<p>Note the observed numbers of segments in the 23andme plot above are less than that. This may be because short segments cannot be reliably determined as IBD and are not considered.</p>
+<p>See also <a class="reference external" href="https://gcbias.org/2013/12/02/how-many-genomic-blocks-do-you-share-with-a-cousin/">this helpful blog post</a> which gives further description of the expected number of shared segments.</p>
+</section>
+<section id="expected-length-of-segments">
+<h2>Expected length of segments<a class="headerlink" href="#expected-length-of-segments" title="Permalink to this heading">#</a></h2>
+<p>See the <a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/21324875/">ERSA</a> paper for more info on this.</p>
+<p>The length of shared segments is exponentially distributed, with a mean length depending on the relationship between individuals (mean around <span class="math notranslate nohighlight">\(100cM/d\)</span>, where <span class="math notranslate nohighlight">\(d\)</span> is the number of meiosis events).</p>
+</section>
+<section id="detecting-shared-ibd-segments">
+<h2>Detecting shared IBD segments<a class="headerlink" href="#detecting-shared-ibd-segments" title="Permalink to this heading">#</a></h2>
+<p>We do not go in detail into algorithms for detecting shared segments, but two commonly used approaches are:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/gusevlab/germline2">GERMLINE</a></p></li>
+<li><p><a class="reference external" href="https://faculty.washington.edu/browning/beagle/beagle_4.1_21Jan17.pdf">Beagle</a></p></li>
+</ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -445,12 +515,46 @@ document.write(`
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="ibd_plink.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">5.3 Computing expected IBD - plink method</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../plink_1000G.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial 2: Working with 1000 Genomes data and plink</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expected-number-of-segments">Expected number of segments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expected-length-of-segments">Expected length of segments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#detecting-shared-ibd-segments">Detecting shared IBD segments</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
