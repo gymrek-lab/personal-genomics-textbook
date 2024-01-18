@@ -35,11 +35,10 @@ parts:
         - file: ancestry/popgen/hwe
         - file: ancestry/popgen/fst
         - file: ancestry/popgen/WF-simulations
-#        - file: ancestry/popgen/recombination # TODO
+        - file: ancestry/popgen/recombination
       - file: ancestry/global_ancestry
         sections:
         - file: ancestry/global/pca_global_ancestry
-        # TODO: add PCA activity notes after class
         - file: ancestry/global/admixture_global_ancestry
 #      - file: ancestry/relative_finding
 #        sections:
