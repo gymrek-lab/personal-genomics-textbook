@@ -35,6 +35,7 @@ parts:
         - file: ancestry/popgen/hwe
         - file: ancestry/popgen/fst
         - file: ancestry/popgen/WF-simulations
+        # TODO: add concept of phase, haplotype
         - file: ancestry/popgen/recombination
       - file: ancestry/global_ancestry
         sections:

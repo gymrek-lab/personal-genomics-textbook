@@ -35,6 +35,8 @@ etc.
 
 Note the observed numbers of segments in the 23andme plot above are less than that. This may be because short segments cannot be reliably determined as IBD and are not considered.
 
+See also [this helpful blog post](https://gcbias.org/2013/12/02/how-many-genomic-blocks-do-you-share-with-a-cousin/) which gives further description of the expected number of shared segments.
+
 ## Expected length of segments
 
 See the [ERSA](https://pubmed.ncbi.nlm.nih.gov/21324875/) paper for more info on this.
