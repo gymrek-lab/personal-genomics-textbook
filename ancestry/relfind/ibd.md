@@ -17,3 +17,5 @@ A related concept to IBD is *identity by state* or IBS. IBS refers to sharing of
 ![ibd](images/ibs.png)
 
 As we'll explore in the next sections, we can predict the percent of the genome shared at IBD, as well as the length and number of segments shared, as a function of the familial relationship between a pair of individuals.
+
+We will first discuss the percentage of the genome we expect different relative pairs to share IBD, and then will show a method (from plink) for how to estimate IBD sharing from genomes. In subsequent sections, we will look at not just the % sharing IBD, but also the *length* and *number* of shared IBD segments for different types of relative pairs.

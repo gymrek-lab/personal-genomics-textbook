@@ -8,7 +8,5 @@ The figures below show pedigrees with different relationship types we will refer
 
 ![cousins](relfind/images/pedigree_example2.png)
 
-
-
 ```{tableofcontents}
 ```

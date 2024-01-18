@@ -44,7 +44,7 @@ parts:
         sections:
         - file: ancestry/relfind/ibd
         - file: ancestry/relfind/ibd_pedigree
-#        - file: ancestry/relfind/ibd_plink
+        - file: ancestry/relfind/ibd_plink
 #        - file: ancestry/relfind/ibd_segments
 #        - file: ancestry/relfind/genetic_genealogy
 #      - file: ancestry/admixture
