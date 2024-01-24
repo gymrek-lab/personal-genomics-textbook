@@ -32,7 +32,7 @@ Generally we can assume unrelated individuals (such as D and E above) do not sha
 
 Let:
 * $S$ be the set of possible child chromosomes ($S \in \{(m_1, f_1), (m_1, f_2), (m_2, f_1), (m_2, f_2)\})$
-* $IBD(a,b)$ be the IBd sharing of chromosome combinations $a$ and $b$. e.g.:
+* $IBD(a,b)$ be the IBD sharing of chromosome combinations $a$ and $b$. e.g.:
   * $IBD((m_1, f_1), (m_1, f_2)) = 1$
   * $IBD((m_2, f_1), (m_1, f_2)) = 0$
   * etc.
@@ -72,17 +72,17 @@ Similar to in the above let:
 
 Then:
 
-$$P(IBD[F,B]=i) = \sum_{f \in F, b \in S s.t. IBD(f,b)=i} P(F-f)P(B=b)$$
+$$P(IBD[F,B]=i) = \sum_{f \in F, b \in S s.t. IBD(f,b)=i} P(F=f)P(B=b)$$
 
 Since there is only one possible father combination (($f_1,f_2$) with probability 1), $P(F=f)$ is always 1 here. As in the above case, any of the four combinations in $S$ are equally likely, so $P(B=b)$ will be 0.25 in all cases. We can simplify to:
 
-$$P(IBD[F,B]=i) = \sum_{b s.t. IBD(f, b)=i} 0.25$$
+$$P(IBD[F,B]=i) = \sum_{f \in F, b \in S s.t. IBD(f, b)=i} 0.25$$
 
 Further, all four possible child chromosome combinations in $S$ have IBD of 1 with the father. So we have:
 
 * $P(IBD[F,B]=1) = 4(0.25) = 1$
 * $P(IBD[F,B]=0) = 0$
-* $P(IBD[F,B]=1) = 0$
+* $P(IBD[F,B]=2) = 0$
 
 ## Grandparent/grandchild (F and C)
 
@@ -92,7 +92,7 @@ $$P(IBD[F,C]=i) = \sum_{f \in F, c\in C s.t. IBD(f, c)=i}P(F=f)P(C=c)$$
 
 * The grandparent ($F$) has only one possible combination ($f_1,f_2$) with probability 1.
 * Let $U=(u_1,u_2)$ denote the chromosomes of the unrelated parent of the grandchild (the one not descended from A).
-* The grandchild ($C$) will have the following possible combinations with equal probability (you can work this out if you assume the father, $F$, has each possible combination in $S$ with equal probability):
+* The grandchild ($C$) will have the following possible combinations with equal probability (you can work this out if you assume the father, $B$, has each possible combination in $S$ with equal probability):
 
 $$C \in \{(m_1, u_1), (m_1, u_2), (m_2, u_2), (m_2, u_2)$$
 $$... (f_1, u_1), (f_1, u_2), (f_2, u_1), (f_2, u_2)\}$$
@@ -102,8 +102,8 @@ So the above simplifies to:
 $$P(IBD[F,C]=i) = \sum_{f \in F, c\in C s.t. IBD(f,c)=i}0.125$$
 
 * There are no combinations in $C$ that give IBD=2 with $F$, so $P(IBD[F,C]=2)=0$
-* There are 4 combinations that give IBD=1, so $P(IBD[F,C]=1) = 4(0.125) = 0.5
-* There are 4 combinations that give IBD=0, so $P(IBD[F,C]=0) = 4(0.125) = 0.5
+* There are 4 combinations that give IBD=1, so $P(IBD[F,C]=1) = 4(0.125) = 0.5$
+* There are 4 combinations that give IBD=0, so $P(IBD[F,C]=0) = 4(0.125) = 0.5$
 
 ## Avuncular (A and C)
 
@@ -147,14 +147,14 @@ We know that the child (B) will inherit one chromosome from F. The grandchild (C
 
 So P(IBD=1) is 0.5(0.5) = 0.25 and P(IBD=0) = 1-0.25 = 0.75
 
-We could extend this to great-great-grandchild to get P(IBD=1) = 0.5*0.5*0.5 = 0.125 and so on.
+We could extend this to great-great-grandchild to get P(IBD=1) = $0.5*0.5*0.5$ = 0.125 and so on.
 
 ## First cousins (G and C) (and beyond)
 Again we will use intuition for this one. Each grandchild will inherit one of the four grandparent chromosomes. There is a 25% chance it will be the same one. So P(IBD=1)=0.25.
 
 If we wanted to do G and E:
 G will inherit one of the four grandparent chromosomes
-C will inherit one of the four grandparent chromosomes with 50% chance
+C will inherit one of the four grandparent chromosomes with 50% chance.
 There is a 25% chance it will be the same one
 
 So: P(IBD=1) = 0.5(0.25)=0.125

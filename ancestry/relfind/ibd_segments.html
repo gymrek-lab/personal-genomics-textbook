@@ -202,8 +202,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../popgen/selection.html">3.4 Selection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/hwe.html">3.5 Hardy-Weinberg Equilibrium and random mating</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/fst.html">3.6 Measuring population differentiation with Fst</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../popgen/WF-simulations.html">Activity: Exploring the Wright-Fisher model of genetic drift</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/recombination.html">3.7 Recombination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../popgen/WF-simulations.html">Activity: Exploring the Wright-Fisher model of genetic drift</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../global_ancestry.html">Chapter 4: Global ancestry</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -439,7 +439,7 @@ document.write(`
 <h1>5.4 Computing expected IBD segment sharing<a class="headerlink" href="#computing-expected-ibd-segment-sharing" title="Permalink to this heading">#</a></h1>
 <p>In the previous section, we used the <em>percent of the genome</em> shared at different IBD levels (0, 1, or 2) to infer familial relationships. There is another source of information we could use, which is the <em>number</em> and <em>length</em> of distinct shared IBD segments.</p>
 <p>Generally, we expect IBD segments to be large for closely related individuals. In the most extreme case, parent-child pairs will share each entire chromosome at IBD=1. For more distant relatives, shared segments will be shorter, since each generation (each meiosis event) each chromosome will undergo around 1 recombination event, which will break down the segments.</p>
-<p>The plot below from 23andme beautifully shows how different relative pairs will have characteristic length and size of shared segments:</p>
+<p>The plot below from 23andme beautifully shows how different relative pairs will have characteristic length and number of shared segments:</p>
 <p><img alt="sharing" src="../../_images/23andme_sharing.png" />
 Source: <a class="reference external" href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0034267">https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0034267</a></p>
 <section id="expected-number-of-segments">

@@ -202,8 +202,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../popgen/selection.html">3.4 Selection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/hwe.html">3.5 Hardy-Weinberg Equilibrium and random mating</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/fst.html">3.6 Measuring population differentiation with Fst</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../popgen/WF-simulations.html">Activity: Exploring the Wright-Fisher model of genetic drift</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/recombination.html">3.7 Recombination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../popgen/WF-simulations.html">Activity: Exploring the Wright-Fisher model of genetic drift</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../global_ancestry.html">Chapter 4: Global ancestry</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -215,6 +215,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="ibd.html">5.1 Identity by descent</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">5.2 Expected IBD of close relatives</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ibd_plink.html">5.3 Computing expected IBD - plink method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ibd_segments.html">5.4 Computing expected IBD segment sharing</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -509,7 +510,7 @@ document.write(`
 <p>Let:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(S\)</span> be the set of possible child chromosomes (<span class="math notranslate nohighlight">\(S \in \{(m_1, f_1), (m_1, f_2), (m_2, f_1), (m_2, f_2)\})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(IBD(a,b)\)</span> be the IBd sharing of chromosome combinations <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span>. e.g.:</p>
+<li><p><span class="math notranslate nohighlight">\(IBD(a,b)\)</span> be the IBD sharing of chromosome combinations <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span>. e.g.:</p>
 <ul>
 <li><p><span class="math notranslate nohighlight">\(IBD((m_1, f_1), (m_1, f_2)) = 1\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(IBD((m_2, f_1), (m_1, f_2)) = 0\)</span></p></li>
@@ -550,15 +551,15 @@ document.write(`
 </ul>
 <p>Then:</p>
 <div class="math notranslate nohighlight">
-\[P(IBD[F,B]=i) = \sum_{f \in F, b \in S s.t. IBD(f,b)=i} P(F-f)P(B=b)\]</div>
+\[P(IBD[F,B]=i) = \sum_{f \in F, b \in S s.t. IBD(f,b)=i} P(F=f)P(B=b)\]</div>
 <p>Since there is only one possible father combination ((<span class="math notranslate nohighlight">\(f_1,f_2\)</span>) with probability 1), <span class="math notranslate nohighlight">\(P(F=f)\)</span> is always 1 here. As in the above case, any of the four combinations in <span class="math notranslate nohighlight">\(S\)</span> are equally likely, so <span class="math notranslate nohighlight">\(P(B=b)\)</span> will be 0.25 in all cases. We can simplify to:</p>
 <div class="math notranslate nohighlight">
-\[P(IBD[F,B]=i) = \sum_{b s.t. IBD(f, b)=i} 0.25\]</div>
+\[P(IBD[F,B]=i) = \sum_{f \in F, b \in S s.t. IBD(f, b)=i} 0.25\]</div>
 <p>Further, all four possible child chromosome combinations in <span class="math notranslate nohighlight">\(S\)</span> have IBD of 1 with the father. So we have:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(P(IBD[F,B]=1) = 4(0.25) = 1\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(P(IBD[F,B]=0) = 0\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(P(IBD[F,B]=1) = 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(IBD[F,B]=2) = 0\)</span></p></li>
 </ul>
 </section>
 <section id="grandparent-grandchild-f-and-c">
@@ -569,7 +570,7 @@ document.write(`
 <ul class="simple">
 <li><p>The grandparent (<span class="math notranslate nohighlight">\(F\)</span>) has only one possible combination (<span class="math notranslate nohighlight">\(f_1,f_2\)</span>) with probability 1.</p></li>
 <li><p>Let <span class="math notranslate nohighlight">\(U=(u_1,u_2)\)</span> denote the chromosomes of the unrelated parent of the grandchild (the one not descended from A).</p></li>
-<li><p>The grandchild (<span class="math notranslate nohighlight">\(C\)</span>) will have the following possible combinations with equal probability (you can work this out if you assume the father, <span class="math notranslate nohighlight">\(F\)</span>, has each possible combination in <span class="math notranslate nohighlight">\(S\)</span> with equal probability):</p></li>
+<li><p>The grandchild (<span class="math notranslate nohighlight">\(C\)</span>) will have the following possible combinations with equal probability (you can work this out if you assume the father, <span class="math notranslate nohighlight">\(B\)</span>, has each possible combination in <span class="math notranslate nohighlight">\(S\)</span> with equal probability):</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[C \in \{(m_1, u_1), (m_1, u_2), (m_2, u_2), (m_2, u_2)\]</div>
@@ -580,8 +581,8 @@ document.write(`
 \[P(IBD[F,C]=i) = \sum_{f \in F, c\in C s.t. IBD(f,c)=i}0.125\]</div>
 <ul class="simple">
 <li><p>There are no combinations in <span class="math notranslate nohighlight">\(C\)</span> that give IBD=2 with <span class="math notranslate nohighlight">\(F\)</span>, so <span class="math notranslate nohighlight">\(P(IBD[F,C]=2)=0\)</span></p></li>
-<li><p>There are 4 combinations that give IBD=1, so $P(IBD[F,C]=1) = 4(0.125) = 0.5</p></li>
-<li><p>There are 4 combinations that give IBD=0, so $P(IBD[F,C]=0) = 4(0.125) = 0.5</p></li>
+<li><p>There are 4 combinations that give IBD=1, so <span class="math notranslate nohighlight">\(P(IBD[F,C]=1) = 4(0.125) = 0.5\)</span></p></li>
+<li><p>There are 4 combinations that give IBD=0, so <span class="math notranslate nohighlight">\(P(IBD[F,C]=0) = 4(0.125) = 0.5\)</span></p></li>
 </ul>
 </section>
 <section id="avuncular-a-and-c">
@@ -621,14 +622,14 @@ document.write(`
 <p>First, we know IBD=2 will always have 0 probability in this case, since E has one parent unrelated to F. So we really have to just decide about IBD1 vs. IBD0.</p>
 <p>We know that the child (B) will inherit one chromosome from F. The grandchild (C) will inherit that chromosome with 50% probability. If C gets a chromosome from F, they will pass it on to the greatgrandchild (E) with 50% probability.</p>
 <p>So P(IBD=1) is 0.5(0.5) = 0.25 and P(IBD=0) = 1-0.25 = 0.75</p>
-<p>We could extend this to great-great-grandchild to get P(IBD=1) = 0.5<em>0.5</em>0.5 = 0.125 and so on.</p>
+<p>We could extend this to great-great-grandchild to get P(IBD=1) = <span class="math notranslate nohighlight">\(0.5*0.5*0.5\)</span> = 0.125 and so on.</p>
 </section>
 <section id="first-cousins-g-and-c-and-beyond">
 <h2>First cousins (G and C) (and beyond)<a class="headerlink" href="#first-cousins-g-and-c-and-beyond" title="Permalink to this heading">#</a></h2>
 <p>Again we will use intuition for this one. Each grandchild will inherit one of the four grandparent chromosomes. There is a 25% chance it will be the same one. So P(IBD=1)=0.25.</p>
 <p>If we wanted to do G and E:
 G will inherit one of the four grandparent chromosomes
-C will inherit one of the four grandparent chromosomes with 50% chance
+C will inherit one of the four grandparent chromosomes with 50% chance.
 There is a 25% chance it will be the same one</p>
 <p>So: P(IBD=1) = 0.5(0.25)=0.125</p>
 <p>Each subsequent generation, each copy of the grandparent chromosomes will be lost with 50% probability. So we can get the probability that <span class="math notranslate nohighlight">\(n\)</span>th cousins share a segment IBD=1 is <span class="math notranslate nohighlight">\(\frac{1}{2^{2n}}\)</span>.</p>

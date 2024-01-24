@@ -23,4 +23,5 @@ The idea is that if the heterozygosity is the same in all populations, this equa
 
 Above we showed how to compute $F_{ST}$ for a single variant. We can also compute a global mean $F_{ST}$ by averaging across SNPs.
 
-For reference, $F_{ST}$ values between pairs of human populations tend to be in the range of 15% or less. In the problem set, you will use plink to compute pairwise distances between 1000 Genomes populations.
+In the problem set, you will use plink to compute pairwise distances between 1000 Genomes populations.
+Note, the actual values you get when computing $F_{ST}$ may vary substantially as a function of the exact dataset and specific SNPs used.

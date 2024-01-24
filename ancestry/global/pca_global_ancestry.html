@@ -202,6 +202,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../popgen/selection.html">3.4 Selection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/hwe.html">3.5 Hardy-Weinberg Equilibrium and random mating</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/fst.html">3.6 Measuring population differentiation with Fst</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../popgen/recombination.html">3.7 Recombination</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/WF-simulations.html">Activity: Exploring the Wright-Fisher model of genetic drift</a></li>
 </ul>
 </li>
@@ -210,7 +211,14 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="admixture_global_ancestry.html">4.2 Global ancestry analysis with ADMIXTURE</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../relative_finding.html">Chapter 5: Relative finding</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../relfind/ibd.html">5.1 Identity by descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../relfind/ibd_pedigree.html">5.2 Expected IBD of close relatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../relfind/ibd_plink.html">5.3 Computing expected IBD - plink method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../relfind/ibd_segments.html">5.4 Computing expected IBD segment sharing</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../plink1kg/1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
 </ul>
 </li>
@@ -527,7 +535,7 @@ document.write(`
 <p>Generally, if we have <span class="math notranslate nohighlight">\(n\)</span> samples and <span class="math notranslate nohighlight">\(p\)</span> features, we will be able to find <span class="math notranslate nohighlight">\(min(n-1, m)\)</span> PCs. In this example, we have <span class="math notranslate nohighlight">\(m=2\)</span> features, and can fully explain the data with 2 PCs. (Often in our genetic data, we will have many more features than samples. In that case the number of PCs will be limited by the sample size). The PCs are ordered according to how much variation they explain (PC1 explains the most variation, PC2 explains the next most, etc.).</p>
 <section id="review-of-basic-descriptive-statistics">
 <h2>Review of basic descriptive statistics<a class="headerlink" href="#review-of-basic-descriptive-statistics" title="Permalink to this heading">#</a></h2>
-<p>Let <span class="math notranslate nohighlight">\(X={x_{ij}}\)</span> be our matrix of data. We have <span class="math notranslate nohighlight">\(m\)</span> features (<span class="math notranslate nohighlight">\(i=1..m\)</span>) and <span class="math notranslate nohighlight">\(n\)</span> samples (<span class="math notranslate nohighlight">\(j=1..n\)</span>). In the case of genetics data, <span class="math notranslate nohighlight">\(x_{ij}\)</span> would give sample <span class="math notranslate nohighlight">\(j\)</span>’s genotype (0, 1, or 2) at SNP <span class="math notranslate nohighlight">\(i\)</span>. In our height and weight example, we have <span class="math notranslate nohighlight">\(m=2\)</span> features (height and weight) and simulated <span class="math notranslate nohighlight">\(n=200\)</span> samples. Note below we will use <span class="math notranslate nohighlight">\(X_i = {x_{i1}, x_{i2}, ... x_{in}}\)</span> to refer to the vector of data across all samples for feature <span class="math notranslate nohighlight">\(i\)</span>.</p>
+<p>Let <span class="math notranslate nohighlight">\(X=\{x_{ij}\}\)</span> be our matrix of data. We have <span class="math notranslate nohighlight">\(m\)</span> features (<span class="math notranslate nohighlight">\(i=1..m\)</span>) and <span class="math notranslate nohighlight">\(n\)</span> samples (<span class="math notranslate nohighlight">\(j=1..n\)</span>). In the case of genetics data, <span class="math notranslate nohighlight">\(x_{ij}\)</span> would give sample <span class="math notranslate nohighlight">\(j\)</span>’s genotype (0, 1, or 2) at SNP <span class="math notranslate nohighlight">\(i\)</span>. In our height and weight example, we have <span class="math notranslate nohighlight">\(m=2\)</span> features (height and weight) and simulated <span class="math notranslate nohighlight">\(n=200\)</span> samples. Note below we will use <span class="math notranslate nohighlight">\(X_i = {x_{i1}, x_{i2}, ... x_{in}}\)</span> to refer to the vector of data across all samples for feature <span class="math notranslate nohighlight">\(i\)</span>.</p>
 <p>We will make use of the following statistics:</p>
 <ul class="simple">
 <li><p><strong>Mean</strong>: <span class="math notranslate nohighlight">\(\overline{X_i} = \frac{1}{n} \sum_{j=1}^n x_{ij}\)</span></p></li>
@@ -537,7 +545,7 @@ document.write(`
 <p>Note some special properties of the covariance:</p>
 <ol class="arabic simple">
 <li><p>The covariance of a vector with itself is equal to the variance: <span class="math notranslate nohighlight">\(cov(X_i, X_i) = \sigma^2(X_i)\)</span></p></li>
-<li><p>Covariance ie symmatric: <span class="math notranslate nohighlight">\(cov(X_i, X_k) = cov(X_k, X_i)\)</span>.</p></li>
+<li><p>Covariance is symmetric: <span class="math notranslate nohighlight">\(cov(X_i, X_k) = cov(X_k, X_i)\)</span>.</p></li>
 </ol>
 <p>When performing PCA, we will be dealing primarily with the <em>covariance matrix</em>, often denoted as <span class="math notranslate nohighlight">\(cov(X)\)</span> or <span class="math notranslate nohighlight">\(\Sigma\)</span>. (Note, covariance matrices will come up again in our trait prediction module). The covariance matrix is simply a matrix of the covariances between all pairs of features. So:</p>
 <ul class="simple">
@@ -580,7 +588,7 @@ document.write(`
 <p>These are ordered by the absolute value of the eigenvalues. Intuitively:</p>
 <ul class="simple">
 <li><p>The top eigenvectors are linear combinations of features that explain the most variation in our data.</p></li>
-<li><p>The corresponding eigenvalues tell us about how much variation is explained</p></li>
+<li><p>The corresponding eigenvalues tell us about how much variation is explained.</p></li>
 </ul>
 <p>Let’s compute the eigenvalues and eigenvectors of our height and weight dataset:</p>
 <div class="cell docutils container">
@@ -692,6 +700,7 @@ document.write(`
 <div class="math notranslate nohighlight">
 \[X_{ij} \in {\frac{-2p_i}{\sqrt{2p_i(1-p_i)}}, \frac{1-2p_i}{\sqrt{2p_i(1-p_i)}}, \frac{2-2p_i}{\sqrt{2p_i(1-p_i)}}}\]</div>
 <p>(whereas our original data consisted of 0s, 1s, and 2s.)</p>
+<p>(Note, this step is optional and in practice won’t change your results much.)</p>
 <ul class="simple">
 <li><p><strong>Step 3</strong>: Calculate a covariance matrix <span class="math notranslate nohighlight">\(Cov(X) = XX^T/n\)</span>. Note, since we scaled our data in step 2, all of the diagonal elements of this covariance matrix will be equal to 1.</p></li>
 <li><p><strong>Step 4</strong>: Compute the eigendecomposition of <span class="math notranslate nohighlight">\(Cov(X)\)</span> to get its eigenvectors and eigenvalues</p></li>

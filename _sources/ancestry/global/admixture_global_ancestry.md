@@ -4,7 +4,7 @@ In the previous section we used principal components analysis (PCA) to analyze g
 
 The main idea of ADMIXTURE is to model each individual as coming from a mixture of different source populations. We can then quantify each person's ancestry in terms of the relative contribution of each of the sources.
 
-## The ADMIXTURE model overview
+## ADMIXTURE model overview
 
 The major components of the ADMIXTURE model are:
 
@@ -14,7 +14,7 @@ The major components of the ADMIXTURE model are:
 
 * $f_{kj}$ gives the minor allele frequency of SNP $j$ in population $k$. For example, we might have a SNP with MAF of 0% in population 1 and 10% in population 2. (**unknown**)
 
-In running ADMIXTURE, we will set $K$ to a fixed value (e.g. 3). Then, we will attempt to infer $Q={q_ik}$ and $F={f_{kj}}$ from the data. Below we go through how to frame this as a maximum likelihood problem.
+In running ADMIXTURE, we will set $K$ to a fixed value (e.g. 3). Then, we will attempt to infer $Q=\{q_{ik}\}$ and $F=\{f_{kj}\}$ from the data. Below we go through how to frame this as a maximum likelihood problem.
 
 ## Writing down the likelihood of $Q$ and $F$
 
@@ -22,7 +22,7 @@ Recall from our discussion of Hardy-Weinberg Equilibrium that if we know the MAF
 
 * $P(00) = (1-p)^2$
 * $P(01) = 2p(1-p)$
-* $P(11) = (1-p)^2$
+* $P(11) = p^2$
 
 Here, we extend the same logic to compute the probability of each possible genotype for each SNP, but taking into account that each individual is a mixture of different source populations. Instead of using $p$, we will use $\sum_{k}q_{ik}f_{kj}$, which computes a weighted MAF, weighted by the ancestry components of a particular individual. So for a single sample we get:
 
@@ -30,15 +30,15 @@ Here, we extend the same logic to compute the probability of each possible genot
 * $P(01) = 2[\sum_{k}q_{ik}f_{kj}][\sum_{k}q_{ik}(1-f_{kj})]$
 * $P(11) = [\sum_{k}q_{ik}f_{kj}]^2$
 
-Note, we can conveniently write this as a single equation. Let $g_{ij}$ be the genotype (number of copies of the minor allele at SNP $j$ in sample $i). Then:
+Note, we can conveniently write this as a single equation. Let $g_{ij}$ be the genotype (number of copies of the minor allele at SNP $j$ in sample $i$). Then:
 
-$$ P(g_{ij}|Q={q_{ij}}, F={f_{kj}}) = [\sum_{k}q_{ik}f_{kj}]^{g_{ij}}[\sum_{k}q_{ik}(1-f_{kj})]^{2-g_{ij}} $$
+$$ P(g_{ij}|Q=\{q_{ij}\}, F=\{f_{kj}\}) = [\sum_{k}q_{ik}f_{kj}]^{g_{ij}}[\sum_{k}q_{ik}(1-f_{kj})]^{2-g_{ij}} $$
 
 We can compute the likelihood of the entire data by assuming each SNP and each sample are independent. The goal is to find $Q$ and $F$ that maximize the likelihood below:
 
 $$L(Q, F) = \Pi_i \Pi_j P(g_{ij}|Q, F) $$
 
-Note, when perform likelihood maximization, it is usually best to work with the log of the likelihood function. This is convenient, since it helps with numerical precision issues by avoiding really small numbers. It also turns products into sums which are easier to work with. Below we derive an equation for the log likelihood:
+Note, when we perform likelihood maximization, it is usually best to work with the log of the likelihood function. This is convenient, since it helps with numerical precision issues by avoiding really small numbers. It also turns products into sums which are easier to work with. Below we derive an equation for the log likelihood:
 
 $$\log L(Q, F) = \log \Pi_i \Pi_j P(g_{ij}|Q, F) $$
 

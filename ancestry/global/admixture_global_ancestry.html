@@ -67,7 +67,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'ancestry/global/admixture_global_ancestry';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Tutorial 2: Working with 1000 Genomes data and plink" href="../plink_1000G.html" />
+    <link rel="next" title="Chapter 5: Relative finding" href="../relative_finding.html" />
     <link rel="prev" title="4.1 Global ancestry analysis with PCA" href="pca_global_ancestry.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -202,6 +202,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../popgen/selection.html">3.4 Selection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/hwe.html">3.5 Hardy-Weinberg Equilibrium and random mating</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/fst.html">3.6 Measuring population differentiation with Fst</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../popgen/recombination.html">3.7 Recombination</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/WF-simulations.html">Activity: Exploring the Wright-Fisher model of genetic drift</a></li>
 </ul>
 </li>
@@ -210,7 +211,14 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">4.2 Global ancestry analysis with ADMIXTURE</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../relative_finding.html">Chapter 5: Relative finding</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../relfind/ibd.html">5.1 Identity by descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../relfind/ibd_pedigree.html">5.2 Expected IBD of close relatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../relfind/ibd_plink.html">5.3 Computing expected IBD - plink method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../relfind/ibd_segments.html">5.4 Computing expected IBD segment sharing</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../plink1kg/1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
 </ul>
 </li>
@@ -413,7 +421,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-admixture-model-overview">The ADMIXTURE model overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#admixture-model-overview">ADMIXTURE model overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-down-the-likelihood-of-q-and-f">Writing down the likelihood of <span class="math notranslate nohighlight">\(Q\)</span> and <span class="math notranslate nohighlight">\(F\)</span></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
@@ -431,15 +439,15 @@ document.write(`
 <h1>4.2 Global ancestry analysis with ADMIXTURE<a class="headerlink" href="#global-ancestry-analysis-with-admixture" title="Permalink to this heading">#</a></h1>
 <p>In the previous section we used principal components analysis (PCA) to analyze global ancestry based on SNP genotypes. Here we explore an approach as implemented in the ADMIXTURE program [1] to characterize global ancestry in a different way.</p>
 <p>The main idea of ADMIXTURE is to model each individual as coming from a mixture of different source populations. We can then quantify each person’s ancestry in terms of the relative contribution of each of the sources.</p>
-<section id="the-admixture-model-overview">
-<h2>The ADMIXTURE model overview<a class="headerlink" href="#the-admixture-model-overview" title="Permalink to this heading">#</a></h2>
+<section id="admixture-model-overview">
+<h2>ADMIXTURE model overview<a class="headerlink" href="#admixture-model-overview" title="Permalink to this heading">#</a></h2>
 <p>The major components of the ADMIXTURE model are:</p>
 <ul class="simple">
 <li><p>There are <span class="math notranslate nohighlight">\(K\)</span> “source populations”. We have to choose <span class="math notranslate nohighlight">\(K\)</span> up front. But, we don’t need to know what the <span class="math notranslate nohighlight">\(K\)</span> populations actually correspond to. i.e. we don’t need to say one population is European, one is African, etc. We will instead learn what those source populations are.</p></li>
 <li><p><span class="math notranslate nohighlight">\(q_{ik}\)</span> gives the fraction of individual <span class="math notranslate nohighlight">\(i\)</span>’s genome that is from population <span class="math notranslate nohighlight">\(k\)</span>. For example, we might have individual <span class="math notranslate nohighlight">\(i\)</span> who is a mixture of 50% from population 1 and 50% from population 2. (<strong>unknown</strong>)</p></li>
 <li><p><span class="math notranslate nohighlight">\(f_{kj}\)</span> gives the minor allele frequency of SNP <span class="math notranslate nohighlight">\(j\)</span> in population <span class="math notranslate nohighlight">\(k\)</span>. For example, we might have a SNP with MAF of 0% in population 1 and 10% in population 2. (<strong>unknown</strong>)</p></li>
 </ul>
-<p>In running ADMIXTURE, we will set <span class="math notranslate nohighlight">\(K\)</span> to a fixed value (e.g. 3). Then, we will attempt to infer <span class="math notranslate nohighlight">\(Q={q_ik}\)</span> and <span class="math notranslate nohighlight">\(F={f_{kj}}\)</span> from the data. Below we go through how to frame this as a maximum likelihood problem.</p>
+<p>In running ADMIXTURE, we will set <span class="math notranslate nohighlight">\(K\)</span> to a fixed value (e.g. 3). Then, we will attempt to infer <span class="math notranslate nohighlight">\(Q=\{q_{ik}\}\)</span> and <span class="math notranslate nohighlight">\(F=\{f_{kj}\}\)</span> from the data. Below we go through how to frame this as a maximum likelihood problem.</p>
 </section>
 <section id="writing-down-the-likelihood-of-q-and-f">
 <h2>Writing down the likelihood of <span class="math notranslate nohighlight">\(Q\)</span> and <span class="math notranslate nohighlight">\(F\)</span><a class="headerlink" href="#writing-down-the-likelihood-of-q-and-f" title="Permalink to this heading">#</a></h2>
@@ -447,7 +455,7 @@ document.write(`
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(P(00) = (1-p)^2\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(P(01) = 2p(1-p)\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(P(11) = (1-p)^2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(11) = p^2\)</span></p></li>
 </ul>
 <p>Here, we extend the same logic to compute the probability of each possible genotype for each SNP, but taking into account that each individual is a mixture of different source populations. Instead of using <span class="math notranslate nohighlight">\(p\)</span>, we will use <span class="math notranslate nohighlight">\(\sum_{k}q_{ik}f_{kj}\)</span>, which computes a weighted MAF, weighted by the ancestry components of a particular individual. So for a single sample we get:</p>
 <ul class="simple">
@@ -455,13 +463,13 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(P(01) = 2[\sum_{k}q_{ik}f_{kj}][\sum_{k}q_{ik}(1-f_{kj})]\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(P(11) = [\sum_{k}q_{ik}f_{kj}]^2\)</span></p></li>
 </ul>
-<p>Note, we can conveniently write this as a single equation. Let <span class="math notranslate nohighlight">\(g_{ij}\)</span> be the genotype (number of copies of the minor allele at SNP <span class="math notranslate nohighlight">\(j\)</span> in sample $i). Then:</p>
+<p>Note, we can conveniently write this as a single equation. Let <span class="math notranslate nohighlight">\(g_{ij}\)</span> be the genotype (number of copies of the minor allele at SNP <span class="math notranslate nohighlight">\(j\)</span> in sample <span class="math notranslate nohighlight">\(i\)</span>). Then:</p>
 <div class="math notranslate nohighlight">
-\[ P(g_{ij}|Q={q_{ij}}, F={f_{kj}}) = [\sum_{k}q_{ik}f_{kj}]^{g_{ij}}[\sum_{k}q_{ik}(1-f_{kj})]^{2-g_{ij}} \]</div>
+\[ P(g_{ij}|Q=\{q_{ij}\}, F=\{f_{kj}\}) = [\sum_{k}q_{ik}f_{kj}]^{g_{ij}}[\sum_{k}q_{ik}(1-f_{kj})]^{2-g_{ij}} \]</div>
 <p>We can compute the likelihood of the entire data by assuming each SNP and each sample are independent. The goal is to find <span class="math notranslate nohighlight">\(Q\)</span> and <span class="math notranslate nohighlight">\(F\)</span> that maximize the likelihood below:</p>
 <div class="math notranslate nohighlight">
 \[L(Q, F) = \Pi_i \Pi_j P(g_{ij}|Q, F) \]</div>
-<p>Note, when perform likelihood maximization, it is usually best to work with the log of the likelihood function. This is convenient, since it helps with numerical precision issues by avoiding really small numbers. It also turns products into sums which are easier to work with. Below we derive an equation for the log likelihood:</p>
+<p>Note, when we perform likelihood maximization, it is usually best to work with the log of the likelihood function. This is convenient, since it helps with numerical precision issues by avoiding really small numbers. It also turns products into sums which are easier to work with. Below we derive an equation for the log likelihood:</p>
 <div class="math notranslate nohighlight">
 \[\log L(Q, F) = \log \Pi_i \Pi_j P(g_{ij}|Q, F) \]</div>
 <p>Using <span class="math notranslate nohighlight">\(\log AB = \log A + \log B\)</span> we get:</p>
@@ -536,11 +544,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="../plink_1000G.html"
+       href="../relative_finding.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Tutorial 2: Working with 1000 Genomes data and plink</p>
+        <p class="prev-next-title">Chapter 5: Relative finding</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -559,7 +567,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-admixture-model-overview">The ADMIXTURE model overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#admixture-model-overview">ADMIXTURE model overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-down-the-likelihood-of-q-and-f">Writing down the likelihood of <span class="math notranslate nohighlight">\(Q\)</span> and <span class="math notranslate nohighlight">\(F\)</span></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>

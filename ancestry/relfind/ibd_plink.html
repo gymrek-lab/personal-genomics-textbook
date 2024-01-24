@@ -202,8 +202,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../popgen/selection.html">3.4 Selection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/hwe.html">3.5 Hardy-Weinberg Equilibrium and random mating</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/fst.html">3.6 Measuring population differentiation with Fst</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../popgen/WF-simulations.html">Activity: Exploring the Wright-Fisher model of genetic drift</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/recombination.html">3.7 Recombination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../popgen/WF-simulations.html">Activity: Exploring the Wright-Fisher model of genetic drift</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../global_ancestry.html">Chapter 4: Global ancestry</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -439,25 +439,26 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="computing-expected-ibd-plink-method">
 <h1>5.3 Computing expected IBD - plink method<a class="headerlink" href="#computing-expected-ibd-plink-method" title="Permalink to this heading">#</a></h1>
-<p>In the previous section we looked the expected IBD sharing for different relative pairs. Here, we will look at a method to estimate the percent IBD sharing for a pair of individuals given their genotype data. From that, we can infer what type of relatives they might be, e.g. according to the relationships below:</p>
+<p>In the previous section we looked at the expected IBD sharing for different relative pairs. Here, we will look at a method to estimate the percent IBD sharing for a pair of individuals given their genotype data. From that, we can infer what type of relatives they might be, e.g. according to the relationships below:</p>
 <p><img alt="ibd_sharing" src="../../_images/ibd_sharing.png" /></p>
 <p>This method is implemented in plink and described in <a class="reference external" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1950838/">Purcell et al. 2007</a>.</p>
 <section id="plink-method-of-moments-intuition">
 <h2>Plink method of moments - intuition<a class="headerlink" href="#plink-method-of-moments-intuition" title="Permalink to this heading">#</a></h2>
 <p>For IBD estimation, our input will be the unphased SNP genotypes (0s, 1s, and 2s) for a pair of individuals. Our goal is to output the percent of the genomes that are shared at each IBD level (0, 1, or 2).</p>
 <p>An initial idea is to simply count the number of SNPs whose genotypes are shared at <em>IBS</em> of 0, 1, or 2, which we can easily compute based on observed SNP genotypes. However, this will not be sufficient! Many SNPs might be shared IBS just by chance, even if they are not on large IBD segments with a recent common ancestor. This would cause us to overestimate <em>IBD</em>, and we’ll need to account for this.</p>
-<p>Let <span class="math notranslate nohighlight">\(i \in \{0, 1, 2\}\)</span> be the IBS for a pair of genotypes, and  <span class="math notranslate nohighlight">\(z \in \{0, 1, 2\}\)</span> be the IBD. We can write:</p>
+<p>Let <span class="math notranslate nohighlight">\(i \in \{0, 1, 2\}\)</span> be the possible IBS states for a pair of genotypes, and <span class="math notranslate nohighlight">\(z \in \{0, 1, 2\}\)</span> be possible IBD states. We can write:</p>
 <div class="math notranslate nohighlight">
 \[P(IBS=i) = \sum_{z \in \{0, 1, 2\}} P(IBS=i|IBD=z)P(IBD=z)\]</div>
 <p>where:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(P(IBD=z)\)</span>, the fraction of the genome shared <span class="math notranslate nohighlight">\(IBD=z\)</span>, is the unknown quantity we’d like to estimate. We will be able to rearrange this set of equations (one each for <span class="math notranslate nohighlight">\(P(IBS=0), P(IBS=1), P(IBS=2))\)</span> to solve for <span class="math notranslate nohighlight">\(P(IBD=0), P(IBD=1), P(IBD=2))\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(IBD=z)\)</span>, the fraction of the genome shared <span class="math notranslate nohighlight">\(IBD=z\)</span>, is the unknown quantity we’d like to estimate. We will be able to rearrange this set of equations (one each for <span class="math notranslate nohighlight">\(P(IBS=0), P(IBS=1), P(IBS=2))\)</span> to solve for <span class="math notranslate nohighlight">\(P(IBD=0), P(IBD=1), P(IBD=2)\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(P(IBS=i)\)</span> is the fraction of SNPs shared at <span class="math notranslate nohighlight">\(IBS=i\)</span>. This is something we directly observe from the genotypes.</p></li>
 <li><p><span class="math notranslate nohighlight">\(P(IBS=i|IBD=z)\)</span>, the probability to observe a SNP at <span class="math notranslate nohighlight">\(IBS=i\)</span> given <span class="math notranslate nohighlight">\(IBD=z\)</span>, is something we’ll be able to model (see below) using principles from Hardy-Weinberg Equilibrium. This quantity will be averaged overall SNPs:</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[P(IBS=i|IBD=z) = \frac{1}{m} \sum_m P_m (IBS=i|IBD=z)\]</div>
 <p>where <span class="math notranslate nohighlight">\(P_m(IBS=i|IBD=z)\)</span> is the probability to observe SNP <span class="math notranslate nohighlight">\(m\)</span> at <span class="math notranslate nohighlight">\(IBS=i\)</span> given <span class="math notranslate nohighlight">\(IBD=z\)</span>.</p>
+<p>Note, IBS states refer to genotype sharing a a particular SNP <span class="math notranslate nohighlight">\(m\)</span>, whereas IBD typically refers to a genomic segment. The above can be interpreted as a SNP <span class="math notranslate nohighlight">\(m\)</span> that falls within a larger segment that is shared at some IBD level <span class="math notranslate nohighlight">\(z\)</span>.</p>
 </section>
 <section id="trivial-case-ibd-2">
 <h2>Trivial case - IBD=2<a class="headerlink" href="#trivial-case-ibd-2" title="Permalink to this heading">#</a></h2>
@@ -483,7 +484,7 @@ document.write(`
 <li><p>P(00, 01) = <span class="math notranslate nohighlight">\(2p^3q\)</span> (IBD=1)</p></li>
 <li><p>P(00, 11) = <span class="math notranslate nohighlight">\(p^2q^2\)</span> (IBS=0)</p></li>
 </ul>
-<p>We can write out all possible pairs of genotypes for each IBS state to determine <span class="math notranslate nohighlight">\(P(IBS=i|IBD=z)\)</span>.</p>
+<p>We can write out all possible pairs of genotypes for each IBS state to determine <span class="math notranslate nohighlight">\(P_m(IBS=i|IBD=z)\)</span>.</p>
 <p>For IBS=0, we have:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(P_m(IBS=0|IBD=0) = 2p^2q^2\)</span> since we have possible genotype pairs:</p>

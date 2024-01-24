@@ -8,7 +8,7 @@ A major reason many people participate in "direct-to-consumer" genetics is to le
 
 This chapter deals with global ancestry. We will focus on two methods for computing global ancestry: PCA and ADMIXTURE. We will look later in the course at local ancestry.
 
-[Borrell, et al 2021](https://www.nejm.org/doi/full/10.1056/NEJMms2029562) define:
+Note, the topic of inferring ancestry from genomes can be a sensitive topic. Here we will focus on genetically inferred ancestry. [Borrell, et al 2021](https://www.nejm.org/doi/full/10.1056/NEJMms2029562) define:
 
 * **Race** and **ethnicity** are self-ascribed or socially ascribed (e.g. by police or medical staff) identities. 
 * **Genetic ancestry** describes the genetic origin of one's population. (This often correlates with the geographic origin of someone's ancestors)

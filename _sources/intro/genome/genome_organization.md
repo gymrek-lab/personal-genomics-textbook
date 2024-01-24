@@ -23,6 +23,6 @@ In some cases, individuals may inherit too many or too few copies of a particula
 
 ## Mitochondria
 
-In addition to the 46 chromosome copies, our cells also have *mitochondria*, which actually has its own genome! The mitochdondrial genome is around 16.5kb and consists of a circular DNA molecule. Each cell in your body may contain many (thousands) of mitochondria, and thus will have many copies of the mitochondrial genome. Mitchondrial genomes are typically maternally inherited, meaning your mitchondrial genome will be identical to your mom's, with no contribution from your dad.
+In addition to the 46 chromosome copies, our cells also have *mitochondria*, which actually has its own genome! The mitochdondrial genome is around 16.5kb and consists of a circular DNA molecule. Each cell in your body may contain many (thousands) of mitochondria, and thus will have many copies of the mitochondrial genome. Mitchondrial genomes are typically maternally inherited, meaning your mitchondrial genome will be identical to your mom's, with no contribution from your dad (but there may be [exceptions](https://www.nature.com/articles/d41586-019-00093-1)).
 
 We will mostly ignore the mitochondrial genome in this course, but it will come up again when we talk about genetic genealogy. Mutations in the mitochondrial genome can also result in a wide range of disorders.

@@ -68,7 +68,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Chapter 4: Global ancestry" href="../global_ancestry.html" />
-    <link rel="prev" title="3.6 Measuring population differentiation with Fst" href="fst.html" />
+    <link rel="prev" title="3.7 Recombination" href="recombination.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -202,6 +202,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="selection.html">3.4 Selection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hwe.html">3.5 Hardy-Weinberg Equilibrium and random mating</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fst.html">3.6 Measuring population differentiation with Fst</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recombination.html">3.7 Recombination</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Activity: Exploring the Wright-Fisher model of genetic drift</a></li>
 </ul>
 </li>
@@ -210,7 +211,14 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../global/admixture_global_ancestry.html">4.2 Global ancestry analysis with ADMIXTURE</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../relative_finding.html">Chapter 5: Relative finding</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../relfind/ibd.html">5.1 Identity by descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../relfind/ibd_pedigree.html">5.2 Expected IBD of close relatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../relfind/ibd_plink.html">5.3 Computing expected IBD - plink method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../relfind/ibd_segments.html">5.4 Computing expected IBD segment sharing</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../plink1kg/1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
 </ul>
 </li>
@@ -539,7 +547,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/abc71ef64a5636b6bd95e256cd5973f8b45f599835a2eb893a0c0666fe40a11a.png" src="../../_images/abc71ef64a5636b6bd95e256cd5973f8b45f599835a2eb893a0c0666fe40a11a.png" />
+<img alt="../../_images/e0381fd86f23ddfe78d6ebc1f66d12ef7377a9b81d5813ebeb49905dc10a223e.png" src="../../_images/e0381fd86f23ddfe78d6ebc1f66d12ef7377a9b81d5813ebeb49905dc10a223e.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -561,7 +569,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2bbaccf27126692d2e06d43cf56dcd0aeb9b727f15589601aeff846d0247c397.png" src="../../_images/2bbaccf27126692d2e06d43cf56dcd0aeb9b727f15589601aeff846d0247c397.png" />
+<img alt="../../_images/6651546b0fa223131749d672f2295c32f9d7cd40a594b45247c5f39e72c946e5.png" src="../../_images/6651546b0fa223131749d672f2295c32f9d7cd40a594b45247c5f39e72c946e5.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -599,7 +607,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/451dfb7eadf35a74eecf0dacf964da381652625333709019d2e46114bb66d530.png" src="../../_images/451dfb7eadf35a74eecf0dacf964da381652625333709019d2e46114bb66d530.png" />
+<img alt="../../_images/2dcc4cebcbfedfe9f93f46c45812445ee1af1417d4ae3885b373ca9503605b29.png" src="../../_images/2dcc4cebcbfedfe9f93f46c45812445ee1af1417d4ae3885b373ca9503605b29.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -638,7 +646,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/3290188a92e92968af9a73c811896ee59773a4fbff36ebb9f5b855a519d0f864.png" src="../../_images/3290188a92e92968af9a73c811896ee59773a4fbff36ebb9f5b855a519d0f864.png" />
+<img alt="../../_images/db18c2163844e635c6ba092c8886c70b04e4e816af1796ff630a5968bd1b6907.png" src="../../_images/db18c2163844e635c6ba092c8886c70b04e4e816af1796ff630a5968bd1b6907.png" />
 </div>
 </div>
 </section>
@@ -719,7 +727,13 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/9fb214fd555f415089ac10aa6f4769d2b9ae5c66020a1e270b114244dffa8404.png" src="../../_images/9fb214fd555f415089ac10aa6f4769d2b9ae5c66020a1e270b114244dffa8404.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/melissagymrek/opt/miniconda3/lib/python3.9/site-packages/numpy/core/fromnumeric.py:3474: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+/Users/melissagymrek/opt/miniconda3/lib/python3.9/site-packages/numpy/core/_methods.py:189: RuntimeWarning: invalid value encountered in double_scalars
+  ret = ret.dtype.type(ret / rcount)
+</pre></div>
+</div>
+<img alt="../../_images/0d65ad255552fd1741d3c8a3a8a6b4a828d3c319a410fd3bf2a9fbdcf67190b2.png" src="../../_images/0d65ad255552fd1741d3c8a3a8a6b4a828d3c319a410fd3bf2a9fbdcf67190b2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -760,8 +774,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/9a3c6d8a9cfa26f15710c09343ea33312f87f653b75b48b120d6aa0371909cac.png" src="../../_images/9a3c6d8a9cfa26f15710c09343ea33312f87f653b75b48b120d6aa0371909cac.png" />
-<img alt="../../_images/45e4fb68795a05dac90b678f92e24df229a9e8d99afef1d247b940707ffa7f91.png" src="../../_images/45e4fb68795a05dac90b678f92e24df229a9e8d99afef1d247b940707ffa7f91.png" />
+<img alt="../../_images/ea0bf14f451da118afe2a678891c4121160acbd4e3a6027bf7ceb0873d223698.png" src="../../_images/ea0bf14f451da118afe2a678891c4121160acbd4e3a6027bf7ceb0873d223698.png" />
+<img alt="../../_images/b88b991c361baa58a42481730eb45ff43407c2c7dd949ddaad90cdc17091fe9e.png" src="../../_images/b88b991c361baa58a42481730eb45ff43407c2c7dd949ddaad90cdc17091fe9e.png" />
 </div>
 </div>
 </section>
@@ -798,12 +812,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="fst.html"
+       href="recombination.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">3.6 Measuring population differentiation with Fst</p>
+        <p class="prev-next-title">3.7 Recombination</p>
       </div>
     </a>
     <a class="right-next"
