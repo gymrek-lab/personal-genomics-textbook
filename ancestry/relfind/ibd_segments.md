@@ -4,7 +4,7 @@ In the previous section, we used the *percent of the genome* shared at different
 
 Generally, we expect IBD segments to be large for closely related individuals. In the most extreme case, parent-child pairs will share each entire chromosome at IBD=1. For more distant relatives, shared segments will be shorter, since each generation (each meiosis event) each chromosome will undergo around 1 recombination event, which will break down the segments.
 
-The plot below from 23andme beautifully shows how different relative pairs will have characteristic length and size of shared segments:
+The plot below from 23andme beautifully shows how different relative pairs will have characteristic length and number of shared segments:
 
 ![sharing](images/23andme_sharing.png)
 Source: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0034267

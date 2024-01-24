@@ -1,6 +1,6 @@
 # 5.3 Computing expected IBD - plink method
 
-In the previous section we looked the expected IBD sharing for different relative pairs. Here, we will look at a method to estimate the percent IBD sharing for a pair of individuals given their genotype data. From that, we can infer what type of relatives they might be, e.g. according to the relationships below:
+In the previous section we looked at the expected IBD sharing for different relative pairs. Here, we will look at a method to estimate the percent IBD sharing for a pair of individuals given their genotype data. From that, we can infer what type of relatives they might be, e.g. according to the relationships below:
 
 ![ibd_sharing](images/ibd_sharing.png)
 
@@ -12,18 +12,20 @@ For IBD estimation, our input will be the unphased SNP genotypes (0s, 1s, and 2s
 
 An initial idea is to simply count the number of SNPs whose genotypes are shared at *IBS* of 0, 1, or 2, which we can easily compute based on observed SNP genotypes. However, this will not be sufficient! Many SNPs might be shared IBS just by chance, even if they are not on large IBD segments with a recent common ancestor. This would cause us to overestimate *IBD*, and we'll need to account for this.
 
-Let $i \in \{0, 1, 2\}$ be the IBS for a pair of genotypes, and  $z \in \{0, 1, 2\}$ be the IBD. We can write:
+Let $i \in \{0, 1, 2\}$ be the possible IBS states for a pair of genotypes, and $z \in \{0, 1, 2\}$ be possible IBD states. We can write:
 
 $$P(IBS=i) = \sum_{z \in \{0, 1, 2\}} P(IBS=i|IBD=z)P(IBD=z)$$
 
 where:
-* $P(IBD=z)$, the fraction of the genome shared $IBD=z$, is the unknown quantity we'd like to estimate. We will be able to rearrange this set of equations (one each for $P(IBS=0), P(IBS=1), P(IBS=2))$ to solve for $P(IBD=0), P(IBD=1), P(IBD=2))$
+* $P(IBD=z)$, the fraction of the genome shared $IBD=z$, is the unknown quantity we'd like to estimate. We will be able to rearrange this set of equations (one each for $P(IBS=0), P(IBS=1), P(IBS=2))$ to solve for $P(IBD=0), P(IBD=1), P(IBD=2)$
 * $P(IBS=i)$ is the fraction of SNPs shared at $IBS=i$. This is something we directly observe from the genotypes.
 * $P(IBS=i|IBD=z)$, the probability to observe a SNP at $IBS=i$ given $IBD=z$, is something we'll be able to model (see below) using principles from Hardy-Weinberg Equilibrium. This quantity will be averaged overall SNPs:
 
 $$P(IBS=i|IBD=z) = \frac{1}{m} \sum_m P_m (IBS=i|IBD=z)$$
 
 where $P_m(IBS=i|IBD=z)$ is the probability to observe SNP $m$ at $IBS=i$ given $IBD=z$.
+
+Note, IBS states refer to genotype sharing a a particular SNP $m$, whereas IBD typically refers to a genomic segment. The above can be interpreted as a SNP $m$ that falls within a larger segment that is shared at some IBD level $z$.
 
 ## Trivial case - IBD=2
 
@@ -49,7 +51,7 @@ Now we can use that same logic to estimate the probability to see a particular *
 * P(00, 01) = $2p^3q$ (IBD=1)
 * P(00, 11) = $p^2q^2$ (IBS=0)
 
-We can write out all possible pairs of genotypes for each IBS state to determine $P(IBS=i|IBD=z)$.
+We can write out all possible pairs of genotypes for each IBS state to determine $P_m(IBS=i|IBD=z)$.
 
 For IBS=0, we have:
 * $P_m(IBS=0|IBD=0) = 2p^2q^2$ since we have possible genotype pairs:
