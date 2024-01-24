@@ -18,7 +18,7 @@ VCF files generally have:
   - FORMAT: ":"-separated list of data fields reported for each sample
   - The remaining part of the line has one column per sample. Each sample has a ":"-separated list of data values according to the order specified in FORMAT> 
 
-The most important FORMAT field is "GT", which gives the genotype of each sample. 0=reference allele, 1=alternate allele 1, 2=alternate allele 2, etc. For example GT=0/0 means a sample is homozygous for the reference allele, 1/1 means heterozygous. Some VCFs will have additional FORMAT and INFO fields with extra metadata. 
+The most important FORMAT field is "GT", which gives the genotype of each sample. 0=reference allele, 1=alternate allele 1, 2=alternate allele 2, etc. For example GT=0/0 means a sample is homozygous for the reference allele, 0/1 means heterozygous. Some VCFs will have additional FORMAT and INFO fields with extra metadata. 
 
 Below is an example VCF file:
 ```
