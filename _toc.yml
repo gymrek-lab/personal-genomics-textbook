@@ -34,9 +34,9 @@ parts:
         - file: ancestry/popgen/selection
         - file: ancestry/popgen/hwe
         - file: ancestry/popgen/fst
-        - file: ancestry/popgen/WF-simulations
         # TODO: add concept of phase, haplotype
         - file: ancestry/popgen/recombination
+        - file: ancestry/popgen/WF-simulations
       - file: ancestry/global_ancestry
         sections:
         - file: ancestry/global/pca_global_ancestry
