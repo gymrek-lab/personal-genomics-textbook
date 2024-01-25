@@ -91,7 +91,7 @@ We can use a similar concept as above:
 $$P(IBD[F,C]=i) = \sum_{f \in F, c\in C s.t. IBD(f, c)=i}P(F=f)P(C=c)$$
 
 * The grandparent ($F$) has only one possible combination ($f_1,f_2$) with probability 1.
-* Let $U=(u_1,u_2)$ denote the chromosomes of the unrelated parent of the grandchild (the one not descended from A).
+* Let $U=(u_1,u_2)$ denote the chromosomes of the unrelated parent of the grandchild (the one not descended from F).
 * The grandchild ($C$) will have the following possible combinations with equal probability (you can work this out if you assume the father, $B$, has each possible combination in $S$ with equal probability):
 
 $$C \in \{(m_1, u_1), (m_1, u_2), (m_2, u_2), (m_2, u_2)$$
