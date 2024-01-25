@@ -27,11 +27,12 @@ data.head()
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mNameError[0m                                 Traceback (most recent call last)
-Cell [0;32mIn[2], line 1[0m
-[0;32m----> 1[0m rng [38;5;241m=[39m [43mnp[49m[38;5;241m.[39mrandom[38;5;241m.[39mRandomState([38;5;241m1[39m)
-[1;32m      2[0m X [38;5;241m=[39m np[38;5;241m.[39mdot(rng[38;5;241m.[39mrand([38;5;241m2[39m, [38;5;241m2[39m), rng[38;5;241m.[39mrandn([38;5;241m2[39m, [38;5;241m200[39m))[38;5;241m.[39mT
+Cell [0;32mIn[2], line 5[0m
 [1;32m      3[0m height [38;5;241m=[39m X[:,[38;5;241m0[39m][38;5;241m+[39m[38;5;241m65[39m
+[1;32m      4[0m weight [38;5;241m=[39m X[:,[38;5;241m1[39m][38;5;241m+[39m[38;5;241m120[39m
+[0;32m----> 5[0m data [38;5;241m=[39m [43mpd[49m[38;5;241m.[39mDataFrame({[38;5;124m"[39m[38;5;124mheight[39m[38;5;124m"[39m: height, [38;5;124m"[39m[38;5;124mweight[39m[38;5;124m"[39m: weight})
+[1;32m      6[0m data[38;5;241m.[39mhead()
 
-[0;31mNameError[0m: name 'np' is not defined
-NameError: name 'np' is not defined
+[0;31mNameError[0m: name 'pd' is not defined
+NameError: name 'pd' is not defined
 
