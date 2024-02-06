@@ -1,3 +1,3 @@
 #!/bin/bash
 
-jupyter-book build --all .
+jupyter-book build .
