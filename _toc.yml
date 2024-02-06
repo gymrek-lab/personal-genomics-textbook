@@ -55,19 +55,19 @@ parts:
         - file: ancestry/plink1kg/plink
   - caption: Module 3 - From genotypes to phenotypes
     chapters:
-      - file: complextraits/mendelian
-        sections:
-        - file: complextraits/mendelian/autosomal_recessive
-        - file: complextraits/mendelian/autosomal_dominant
-        - file: complextraits/mendelian/X_linked
-        - file: complextraits/mendelian/penetrance_expressivity
-        - file: complextraits/mendelian/fun_traits
+#      - file: complextraits/mendelian
+#        sections:
+#        - file: complextraits/mendelian/autosomal_recessive
+#        - file: complextraits/mendelian/autosomal_dominant
+#        - file: complextraits/mendelian/X_linked
+#        - file: complextraits/mendelian/penetrance_expressivity
+#        - file: complextraits/mendelian/fun_traits
       - file: complextraits/gwas
         sections:
         - file: complextraits/gwas/quantitative_traits
-        - file: complextraits/gwas/confounding
         - file: complextraits/gwas/GWAS-simulations
-        - file: complextraits/gwas/case_control_traits
+        - file: complextraits/gwas/confounding
+#        - file: complextraits/gwas/case_control_traits TODO
         # TODO: imputation
         # TODO: power
 #  - caption: Module 4 - Trans-ancestry approaches
