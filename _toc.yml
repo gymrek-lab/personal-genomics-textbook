@@ -66,6 +66,7 @@ parts:
         sections:
         - file: complextraits/gwas/quantitative_traits
         - file: complextraits/gwas/confounding
+        - file: complextraits/gwas/GWAS-simulations
         - file: complextraits/gwas/case_control_traits
 #  - caption: Module 4 - Trans-ancestry approaches
 #    chapters:
