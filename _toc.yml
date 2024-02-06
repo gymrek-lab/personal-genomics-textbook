@@ -52,7 +52,7 @@ parts:
       - file: ancestry/plink_1000G
         sections:
         - file: ancestry/plink1kg/1000G
-#        - file: ancestry/plink1kg/plink
+        - file: ancestry/plink1kg/plink
 #  - caption: Module 3 - Complex traits
 #    chapters:
 #      - file: complextraits/overview
