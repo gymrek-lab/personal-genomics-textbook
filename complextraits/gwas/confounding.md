@@ -1,0 +1,1 @@
+# 7.2 Confounding factors in GWAS
