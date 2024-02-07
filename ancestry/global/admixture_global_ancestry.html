@@ -222,6 +222,16 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../plink1kg/1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plink1kg/plink.html">T2.2 Some tips and examples for using plink</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 3 - From genotypes to phenotypes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../complextraits/gwas.html">Chapter 7: GWAS for complex traits</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../complextraits/gwas/quantitative_traits.html">7.1 GWAS for quantitative traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../complextraits/gwas/GWAS-simulations.html">7.2 Exploring GWAS association statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../complextraits/gwas/confounding.html">7.3 Confounding factors in GWAS</a></li>
 </ul>
 </li>
 </ul>
@@ -465,9 +475,9 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(P(01) = 2[\sum_{k}q_{ik}f_{kj}][\sum_{k}q_{ik}(1-f_{kj})]\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(P(11) = [\sum_{k}q_{ik}f_{kj}]^2\)</span></p></li>
 </ul>
-<p>Note, we can conveniently write this as a single equation. Let <span class="math notranslate nohighlight">\(g_{ij}\)</span> be the genotype (number of copies of the minor allele at SNP <span class="math notranslate nohighlight">\(j\)</span> in sample <span class="math notranslate nohighlight">\(i\)</span>). Then:</p>
+<p>Let <span class="math notranslate nohighlight">\(g_{ij}\)</span> be the genotype (number of copies of the minor allele at SNP <span class="math notranslate nohighlight">\(j\)</span> in sample <span class="math notranslate nohighlight">\(i\)</span>). Then, we can write the probabilities above as:</p>
 <div class="math notranslate nohighlight">
-\[ P(g_{ij}|Q=\{q_{ij}\}, F=\{f_{kj}\}) = [\sum_{k}q_{ik}f_{kj}]^{g_{ij}}[\sum_{k}q_{ik}(1-f_{kj})]^{2-g_{ij}} \]</div>
+\[ P(g_{ij}|Q=\{q_{ij}\}, F=\{f_{kj}\}) \]</div>
 <p>We can compute the likelihood of the entire data by assuming each SNP and each sample are independent. The goal is to find <span class="math notranslate nohighlight">\(Q\)</span> and <span class="math notranslate nohighlight">\(F\)</span> that maximize the likelihood below:</p>
 <div class="math notranslate nohighlight">
 \[L(Q, F) = \Pi_i \Pi_j P(g_{ij}|Q, F) \]</div>
@@ -480,15 +490,12 @@ document.write(`
 <p>and applying that rule again:</p>
 <div class="math notranslate nohighlight">
 \[\log L(Q, F) = \sum_i \sum_j \log P(g_{ij}|Q, F) \]</div>
-<p>Note:</p>
+<p>Note the “2” in <span class="math notranslate nohighlight">\(P(01) = 2[\sum_{k}q_{ik}f_{kj}][\sum_{k}q_{ik}(1-f_{kj})]\)</span> will become a constant term, <span class="math notranslate nohighlight">\(+log2\)</span>, in the log likelihood equation. An additive constant does not enter into the maximization problem. When finding the maximum of <span class="math notranslate nohighlight">\(\sum_i \sum_j \log P(g_{ij}|Q, F)\)</span>, we can simply drop the “2” in <span class="math notranslate nohighlight">\(P(01)\)</span> case. Then, we can conveniently write this as a single equation:</p>
 <div class="math notranslate nohighlight">
-\[ \log P(g_{ij}|Q, F) = \log [\sum_{k}q_{ik}f_{kj}]^{g_{ij}}[\sum_{k}q_{ik}(1-f_{kj})]^{2-g_{ij}} \]</div>
+\[ \log L(Q, F) = \sum_i \sum_j \log [\sum_{k}q_{ik}f_{kj}]^{g_{ij}}[\sum_{k}q_{ik}(1-f_{kj})]^{2-g_{ij}} \]</div>
 <p>Using <span class="math notranslate nohighlight">\(\log A^k = k\log A\)</span>: we get:</p>
 <div class="math notranslate nohighlight">
-\[ \log P(g_{ij}|Q, F) = g_{ij} \log [\sum_{k}q_{ik}f_{kj}] + (2-g_{ij})\log [\sum_{k}q_{ik}(1-f_{kj})] \]</div>
-<p>Plugging this back into our main likelihood equation we get:</p>
-<div class="math notranslate nohighlight">
-\[L(Q, F) = \sum_i \sum_j  g_{ij} \log[\sum_{k}q_{ik}f_{kj}] + (2-g_{ij})\log [\sum_{k}q_{ik}(1-f_{kj})] \]</div>
+\[ \log L(Q, F) = \sum_i \sum_j g_{ij} \log [\sum_{k}q_{ik}f_{kj}] + (2-g_{ij})\log [\sum_{k}q_{ik}(1-f_{kj})] \]</div>
 <p>(which matches the likelihood equation given in Alexander, et al.)</p>
 <p>We then must find values for <span class="math notranslate nohighlight">\(Q\)</span> and <span class="math notranslate nohighlight">\(F\)</span> to maximize this log likelihood. These are further subject to the constraints:</p>
 <ul class="simple">

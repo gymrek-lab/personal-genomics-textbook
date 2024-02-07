@@ -65,6 +65,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'ancestry/plink1kg/plink';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Chapter 7: GWAS for complex traits" href="../../complextraits/gwas.html" />
+    <link rel="prev" title="T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)" href="1000G.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -125,8 +127,6 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -194,7 +194,7 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 2 - Ancestry</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../intro_popgen.html">Chapter 3: Introduction to population genetics</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/forces_evolution.html">3.1 The four forces of evolution</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../popgen/mutations.html">3.2 Types and patterns of mutations</a></li>
@@ -218,8 +218,18 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../relfind/ibd_segments.html">5.4 Computing expected IBD segment sharing</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">T2.2 Some tips and examples for using plink</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 3 - From genotypes to phenotypes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../complextraits/gwas.html">Chapter 7: GWAS for complex traits</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../complextraits/gwas/quantitative_traits.html">7.1 GWAS for quantitative traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../complextraits/gwas/GWAS-simulations.html">7.2 Exploring GWAS association statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../complextraits/gwas/confounding.html">7.3 Confounding factors in GWAS</a></li>
 </ul>
 </li>
 </ul>
@@ -475,7 +485,7 @@ document.write(`
 <section id="converting-between-genotype-formats">
 <h4>Converting between genotype formats<a class="headerlink" href="#converting-between-genotype-formats" title="Permalink to this heading">#</a></h4>
 <p>You can use plink to convert genotypes from one format to another. e.g.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>VCF=/datasets/cs284-sp22-a00-public/1000Genomes/ALL.chr21.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>VCF=~/public/1000Genomes/ALL.chr21.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz
 
 # Convert VCF to ped/map
 # (using only couple of variants to make this smaller)
@@ -514,7 +524,7 @@ plink \
 <section id="example-plink-use-case-ld-pruning">
 <h2>Example plink use case - LD pruning<a class="headerlink" href="#example-plink-use-case-ld-pruning" title="Permalink to this heading">#</a></h2>
 <p>Some analyses, such as PCA or running ADMIXTURE, assume we have a set of SNPs in linkage <em>equilibrium</em>. In those cases, it is common to “prune” SNPs to remove highly correlated SNPs from analysis. See the example below for steps to do this.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>VCF=/datasets/cs284-sp22-a00-public/1000Genomes/ALL.chr21.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>VCF=~/public/1000Genomes/ALL.chr21.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz
 
 # Get a list of independent SNPs
 # --indep-pairwise &lt;window size&gt; &lt;step size&gt; &lt;r2 threshold&gt;
@@ -563,6 +573,24 @@ plink --vcf $VCF --extract prune-example.in --out prune-example.pruned --make-be
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="1000G.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../complextraits/gwas.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Chapter 7: GWAS for complex traits</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               

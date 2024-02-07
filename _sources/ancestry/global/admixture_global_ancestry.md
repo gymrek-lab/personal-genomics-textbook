@@ -30,9 +30,9 @@ Here, we extend the same logic to compute the probability of each possible genot
 * $P(01) = 2[\sum_{k}q_{ik}f_{kj}][\sum_{k}q_{ik}(1-f_{kj})]$
 * $P(11) = [\sum_{k}q_{ik}f_{kj}]^2$
 
-Note, we can conveniently write this as a single equation. Let $g_{ij}$ be the genotype (number of copies of the minor allele at SNP $j$ in sample $i$). Then:
+ Let $g_{ij}$ be the genotype (number of copies of the minor allele at SNP $j$ in sample $i$). Then, we can write the probabilities above as:
 
-$$ P(g_{ij}|Q=\{q_{ij}\}, F=\{f_{kj}\}) = [\sum_{k}q_{ik}f_{kj}]^{g_{ij}}[\sum_{k}q_{ik}(1-f_{kj})]^{2-g_{ij}} $$
+$$ P(g_{ij}|Q=\{q_{ij}\}, F=\{f_{kj}\}) $$
 
 We can compute the likelihood of the entire data by assuming each SNP and each sample are independent. The goal is to find $Q$ and $F$ that maximize the likelihood below:
 
@@ -50,17 +50,13 @@ and applying that rule again:
 
 $$\log L(Q, F) = \sum_i \sum_j \log P(g_{ij}|Q, F) $$
 
-Note:
+Note the "2" in $P(01) = 2[\sum_{k}q_{ik}f_{kj}][\sum_{k}q_{ik}(1-f_{kj})]$ will become a constant term, $+log2$, in the log likelihood equation. An additive constant does not enter into the maximization problem. When finding the maximum of $\sum_i \sum_j \log P(g_{ij}|Q, F)$, we can simply drop the "2" in $P(01)$ case. Then, we can conveniently write this as a single equation:
 
-$$ \log P(g_{ij}|Q, F) = \log [\sum_{k}q_{ik}f_{kj}]^{g_{ij}}[\sum_{k}q_{ik}(1-f_{kj})]^{2-g_{ij}} $$
+$$ \log L(Q, F) = \sum_i \sum_j \log [\sum_{k}q_{ik}f_{kj}]^{g_{ij}}[\sum_{k}q_{ik}(1-f_{kj})]^{2-g_{ij}} $$
 
 Using $\log A^k = k\log A$: we get:
 
-$$ \log P(g_{ij}|Q, F) = g_{ij} \log [\sum_{k}q_{ik}f_{kj}] + (2-g_{ij})\log [\sum_{k}q_{ik}(1-f_{kj})] $$
-
-Plugging this back into our main likelihood equation we get:
-
-$$L(Q, F) = \sum_i \sum_j  g_{ij} \log[\sum_{k}q_{ik}f_{kj}] + (2-g_{ij})\log [\sum_{k}q_{ik}(1-f_{kj})] $$
+$$ \log L(Q, F) = \sum_i \sum_j g_{ij} \log [\sum_{k}q_{ik}f_{kj}] + (2-g_{ij})\log [\sum_{k}q_{ik}(1-f_{kj})] $$
 
 (which matches the likelihood equation given in Alexander, et al.)
 

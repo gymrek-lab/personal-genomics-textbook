@@ -1,0 +1,994 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>7.2 Exploring GWAS association statistics &#8212; CSE284 - Personal Genomics</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'complextraits/gwas/GWAS-simulations';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.3 Confounding factors in GWAS" href="confounding.html" />
+    <link rel="prev" title="7.1 GWAS for quantitative traits" href="quantitative_traits.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="CSE284 - Personal Genomics - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="CSE284 - Personal Genomics - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Personal Genomics for Bioinformaticians
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 1 - Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../intro/intro_to_your_genome.html">Chapter 1: Introduction to the human genome</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/structure_DNA.html">1.1 The structure of DNA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/genome_organization.html">1.2 Organization of the human genome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/central_dogma.html">1.3 Genes and the central dogma</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/noncoding.html">1.4 The non-coding genome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/genetic_variation_terminology.html">1.5 Genetic variation terminology</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../intro/intro_genome_tech.html">Chapter 2: Overview of technologies for genome analysis</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/genotype_arrays.html">2.1 Genotyping arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/ngs.html">2.2 Next-generation sequencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/long_reads.html">2.3 Long-read technologies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/tech_summary.html">2.4 Summary of genomics technologies</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../intro/genome_file_formats.html">Tutorial 1: file formats for describing genetic variation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/formats/vcf.html">T1.2 VCF files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/formats/plink.html">T1.2 Plink files</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 2 - Ancestry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/intro_popgen.html">Chapter 3: Introduction to population genetics</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/forces_evolution.html">3.1 The four forces of evolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/mutations.html">3.2 Types and patterns of mutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/drift.html">3.3 Genetic drift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/selection.html">3.4 Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/hwe.html">3.5 Hardy-Weinberg Equilibrium and random mating</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/fst.html">3.6 Measuring population differentiation with Fst</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/recombination.html">3.7 Recombination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/WF-simulations.html">Activity: Exploring the Wright-Fisher model of genetic drift</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/global_ancestry.html">Chapter 4: Global ancestry</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/global/pca_global_ancestry.html">4.1 Global ancestry analysis with PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/global/admixture_global_ancestry.html">4.2 Global ancestry analysis with ADMIXTURE</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/relative_finding.html">Chapter 5: Relative finding</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/relfind/ibd.html">5.1 Identity by descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/relfind/ibd_pedigree.html">5.2 Expected IBD of close relatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/relfind/ibd_plink.html">5.3 Computing expected IBD - plink method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/relfind/ibd_segments.html">5.4 Computing expected IBD segment sharing</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/plink1kg/1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/plink1kg/plink.html">T2.2 Some tips and examples for using plink</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 3 - From genotypes to phenotypes</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../gwas.html">Chapter 7: GWAS for complex traits</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quantitative_traits.html">7.1 GWAS for quantitative traits</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">7.2 Exploring GWAS association statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="confounding.html">7.3 Confounding factors in GWAS</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 1 - glossary and notation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/unix.html">Chapter A1.1: Unix cheat sheet</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/gymrek-lab/personal-genomics-textbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/gymrek-lab/personal-genomics-textbook/issues/new?title=Issue%20on%20page%20%2Fcomplextraits/gwas/GWAS-simulations.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/complextraits/gwas/GWAS-simulations.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>7.2 Exploring GWAS association statistics</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#framework-for-simulating-and-performing-association-tests">7.3.1 Framework for simulating and performing association tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-p-values">7.3.2 Computing P-values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-p-values">7.3.3 Visualizing p-values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qq-plots">7.3.4 QQ plots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confounding-factors">7.3.5 Confounding factors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">7.3.6 Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="exploring-gwas-association-statistics">
+<h1>7.2 Exploring GWAS association statistics<a class="headerlink" href="#exploring-gwas-association-statistics" title="Permalink to this heading">#</a></h1>
+<p>Genome-wide association studies typically consist of performing a regression test for each variant to test it for association with a phenotype.</p>
+<p>For instance, we would like to test if a particular SNP (with alleles “A” and “T” in the population) is associated with height. We would look at many people, and record the SNP genotype (AA=0, AT=1, or TT=2) and height for each person. Then, we’ll just do a linear regression to test if there is a linear relationship between <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+<p>Understanding GWAS output requires some basic intuition about linear regression, p-values, and effect sizes. Here, we’ll explore these concepts and a useful tool, QQ-plots, for visualizing p-value distributions.</p>
+<section id="framework-for-simulating-and-performing-association-tests">
+<h2>7.3.1 Framework for simulating and performing association tests<a class="headerlink" href="#framework-for-simulating-and-performing-association-tests" title="Permalink to this heading">#</a></h2>
+<p>First, let’s build some functions that will allow us to simulate associations between SNPs and a theoretical quantiative phenotype. We will use the following functions below:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SimulateGenotypes(maf,</span> <span class="pre">N)</span></code> simulates an array of randomly generated genotypes for <span class="math notranslate nohighlight">\(N\)</span> people using specified minor allele frequency <span class="math notranslate nohighlight">\(maf\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SimulatePhenotypes(gts,</span> <span class="pre">Beta)</span></code> simulates phenotypes based on a set of input genotypes and an effect size <span class="math notranslate nohighlight">\(\beta\)</span> using the simple linear model:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[y_i = \beta x_i + \epsilon_i\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(y_i\)</span> is the phenotype of person <span class="math notranslate nohighlight">\(i\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(x_i\)</span> is the genotype (0, 1, or 2) of person <span class="math notranslate nohighlight">\(i\)</span> for the SNP of interest</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta\)</span> is the effect size, which gives a measure of how strongly the SNP is associated with the trait. We will require this to be between -1 and 1.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\epsilon_i\)</span> is a noise term. You can think of it is the part of the trait explained by non-genetic factors, such as environment or measurement error.</p></li>
+</ul>
+<p>Run the cell below. You can play around with changing <span class="math notranslate nohighlight">\(N\)</span>, <span class="math notranslate nohighlight">\(\beta\)</span>, or <span class="math notranslate nohighlight">\(maf\)</span> to see how the association plot changes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pylab</span> inline
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1"># Simulate genotypes for N samples with minor allele frequency maf (assuming HWE)</span>
+<span class="k">def</span> <span class="nf">SimulateGenotypes</span><span class="p">(</span><span class="n">maf</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+    <span class="n">gts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">gt</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">maf</span><span class="p">)</span><span class="o">+</span><span class="nb">sum</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">maf</span><span class="p">)</span>
+        <span class="n">gts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gt</span><span class="p">)</span>
+    <span class="c1"># Technical note: scale to have mean 0 var 1</span>
+    <span class="n">gts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">gts</span><span class="p">)</span>
+    <span class="n">gts</span> <span class="o">=</span> <span class="p">(</span><span class="n">gts</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">gts</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">gts</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">gts</span>
+
+<span class="c1"># Simulate phenotypes under a linear model Y=beta*X+error</span>
+<span class="k">def</span> <span class="nf">SimulatePhenotype</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="n">Beta</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">Beta</span><span class="o">&lt;-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">Beta</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Beta should be between -1 and 1&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span>
+    <span class="n">pts</span> <span class="o">=</span> <span class="n">Beta</span><span class="o">*</span><span class="n">gts</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Beta</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">gts</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">pts</span>
+
+<span class="c1"># Simulate an example association</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1"># sample size (number of people)</span>
+<span class="n">Beta</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="c1"># Effect size</span>
+<span class="n">maf</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="c1"># Minor allele frequency</span>
+<span class="n">gts</span> <span class="o">=</span> <span class="n">SimulateGenotypes</span><span class="p">(</span><span class="n">maf</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">pts</span> <span class="o">=</span> <span class="n">SimulatePhenotype</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="n">Beta</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">((</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="c1"># Plot the distribution of phenotypes, should be normal-looking</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Phenotype&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+
+<span class="c1"># Plot the association</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">gts</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">pts</span><span class="p">,</span> <span class="n">whis</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Genotype&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Phenotype&quot;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="s2">&quot;AA&quot;</span><span class="p">,</span><span class="s2">&quot;AT&quot;</span><span class="p">,</span><span class="s2">&quot;TT&quot;</span><span class="p">])</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>%pylab is deprecated, use %matplotlib inline and import the required libraries.
+Populating the interactive namespace from numpy and matplotlib
+</pre></div>
+</div>
+<img alt="../../_images/8fe1a7a43c8cb6bb3fef4dd3939342d3e956a513a7d9f7af8d9c9754cd451cc2.png" src="../../_images/8fe1a7a43c8cb6bb3fef4dd3939342d3e956a513a7d9f7af8d9c9754cd451cc2.png" />
+</div>
+</div>
+<p>Now, let’s write a simple function to perform a GWAS based on a set of genotypes and phenotypes. Our function will take in a set of genotypes (<span class="math notranslate nohighlight">\(X=\{x_1, x_2, ... x_n\}\)</span>) and phenotypes (<span class="math notranslate nohighlight">\(Y=\{y_1, y_2, ... y_n\}\)</span>) and perform a linear regression between the two. We will output two things:</p>
+<ul class="simple">
+<li><p>An effect size (<span class="math notranslate nohighlight">\(\beta\)</span>), which is the inferred slope of the regression line. The bigger the absolute value of <span class="math notranslate nohighlight">\(\beta\)</span>, the more strongly the SNP is associated with the trait.</p></li>
+<li><p>A p-value, quantifying how strongly we believe there is really an association. We’ll explore the p-value more deeply below.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="c1"># Perform a GWAS between the genotypes and phenotypes</span>
+<span class="k">def</span> <span class="nf">Linreg</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="n">pts</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">gts</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+    <span class="n">beta</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">pval</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">pvalues</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">beta</span><span class="p">,</span> <span class="n">pval</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1"># sample size (number of people)</span>
+<span class="n">maf</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="c1"># Minor allele frequency</span>
+<span class="n">Beta</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="c1"># Effect size</span>
+<span class="n">gts</span> <span class="o">=</span> <span class="n">SimulateGenotypes</span><span class="p">(</span><span class="n">maf</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">pts</span> <span class="o">=</span> <span class="n">SimulatePhenotype</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="n">Beta</span><span class="p">)</span>
+<span class="n">gwas_beta</span><span class="p">,</span> <span class="n">gwas_pval</span> <span class="o">=</span> <span class="n">Linreg</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="n">pts</span><span class="p">)</span>
+
+<span class="c1"># Plot the association result</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">gts</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">pts</span><span class="p">,</span> <span class="n">whis</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="n">gwas_beta</span><span class="o">*</span><span class="n">gts</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span> <span class="c1"># GWAS linear regression fit</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="s2">&quot;AA&quot;</span><span class="p">,</span><span class="s2">&quot;AT&quot;</span><span class="p">,</span><span class="s2">&quot;TT&quot;</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Genotype&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Phenotype&quot;</span><span class="p">);</span>
+
+<span class="c1"># Print out GWAS results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Beta: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="k">gwas_beta</span>)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pval: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="k">gwas_pval</span>)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Beta: 0.4912926748901808
+Pval: 1.2462875946400995e-62
+</pre></div>
+</div>
+<img alt="../../_images/4e21a4f5e6442bfd553d3af38e334ca361ed092e1cbb7819b68be5ef93420bd3.png" src="../../_images/4e21a4f5e6442bfd553d3af38e334ca361ed092e1cbb7819b68be5ef93420bd3.png" />
+</div>
+</div>
+</section>
+<section id="computing-p-values">
+<h2>7.3.2 Computing P-values<a class="headerlink" href="#computing-p-values" title="Permalink to this heading">#</a></h2>
+<p>When performing a GWAS, we will get a <em>p-value</em> for each SNP that we test.</p>
+<p>A p-value gives the probability that we would see a result as extreme as we saw even if our data was completely random. We can think of a p-value as a measure of surprise: if there was really no association between the SNP and the trait, what is the probability we’d see a line with this big of a slope?</p>
+<p>Let’s use a little bit more formal definitions:</p>
+<ul class="simple">
+<li><p><em>Null hypothesis</em> (<span class="math notranslate nohighlight">\(H_0\)</span>): You can kind of think of the null hypothesis as “my data is just random”. For GWAS, our null hypothesis is that there is no association between a SNP and a trait. That is, that <span class="math notranslate nohighlight">\(\beta=0\)</span>. This is opposed to the <em>alternative hypothesis</em> (<span class="math notranslate nohighlight">\(H_1: \beta  \neq 0\)</span>)</p></li>
+<li><p><em>Test statistic</em>: The thing we are testing. For GWAS, we are interested in the effect <span class="math notranslate nohighlight">\(\beta\)</span> of our SNP on the trait. Note <span class="math notranslate nohighlight">\(\beta\)</span> can be positive or negative. Close to 0 means no association, close to 1 means having more alternate alleles tends to increase the phenotype value, and the opposite for <span class="math notranslate nohighlight">\(\beta\)</span> close to -1. So let’s use  <span class="math notranslate nohighlight">\(|\beta|\)</span> as our test statistic since we’re interested in finding extreme values, either positive or negative.</p></li>
+<li><p><em>Null distribution</em>: the distribution of the test statistic under the null hypothesis. You can think of a distribution just like a big list of numbers. For GWAS: the distribution of the <span class="math notranslate nohighlight">\(\beta\)</span> we measure given that there is actually no association.</p></li>
+<li><p><em>p-value</em>: The probability of observing a test statistic (<span class="math notranslate nohighlight">\(\beta\)</span>) as extreme as we did under the null hypothesis. For GWAS: what is the probability that even if there is no association (real <span class="math notranslate nohighlight">\(\beta=0\)</span>) I would measure <span class="math notranslate nohighlight">\(\beta\)</span> to be as large as I did?</p></li>
+</ul>
+<p>While we could use math (think t-tests) to find p-values, we’ll instead use some simple simulations to get some intuition instead.</p>
+<p>First, let’s generate an example <em>null distribution</em> for our GWAS example. Note, if you change the sample size (<span class="math notranslate nohighlight">\(N\)</span>) or MAF, this distribution could change! So leave those be for now.</p>
+<p>The code below generates 10,000 “null” samples of betas. That is, the <span class="math notranslate nohighlight">\(\beta\)</span> values we would infer using linear regression even if the real value is <span class="math notranslate nohighlight">\(\beta=0\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1"># sample size (number of people)</span>
+<span class="n">maf</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="c1"># Minor allele frequency</span>
+<span class="n">num_tests</span> <span class="o">=</span> <span class="mi">10000</span> <span class="c1"># Use this many tests to find the null distribution</span>
+<span class="n">gts</span> <span class="o">=</span> <span class="n">SimulateGenotypes</span><span class="p">(</span><span class="n">maf</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">beta_null_dist</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">real_beta</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># null distribution!</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_tests</span><span class="p">):</span>    
+    <span class="n">pts</span> <span class="o">=</span> <span class="n">SimulatePhenotype</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="n">real_beta</span><span class="p">)</span>
+    <span class="n">gwas_beta</span><span class="p">,</span> <span class="n">gwas_p</span> <span class="o">=</span> <span class="n">Linreg</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="n">pts</span><span class="p">)</span>
+    <span class="n">beta_null_dist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">gwas_beta</span><span class="p">))</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">beta_null_dist</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;|beta|&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/6ed6c0d4af9a1d96bb005a95e59ed516a61126de220b7a80c2fb570c04225ea0.png" src="../../_images/6ed6c0d4af9a1d96bb005a95e59ed516a61126de220b7a80c2fb570c04225ea0.png" />
+</div>
+</div>
+<p><strong>Note, even though we simulated <span class="math notranslate nohighlight">\(\beta=0\)</span>, we still measured <span class="math notranslate nohighlight">\(|\beta|&gt;0\)</span> a lot of the time! So in our real data, even if <span class="math notranslate nohighlight">\(\beta&gt;0\)</span>, we might not be that surprised, since we know we can get that result just by chance.</strong></p>
+<p>We can use this list of beta values, <code class="docutils literal notranslate"><span class="pre">beta_null_dist</span></code>, as our null distribution. Now, let’s use this null distribution to compute a p-value for an actual association.</p>
+<p>The function <code class="docutils literal notranslate"><span class="pre">ComputePval</span></code> below to computes a p-value based on the null distribution we generated above. The p-value should give the percent of results in the null distribution that are greater than the observed value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simulate data with a real beta &gt; 0</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1"># sample size (number of people). must be same as was used for generating the null!</span>
+<span class="n">maf</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="c1"># Minor allele frequency</span>
+<span class="n">real_beta</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+<span class="c1"># Function to compute p-value</span>
+<span class="c1"># what percent of results in the null distribution are larger than obs_beta?</span>
+<span class="k">def</span> <span class="nf">ComputePval</span><span class="p">(</span><span class="n">null_dist</span><span class="p">,</span> <span class="n">obs_value</span><span class="p">):</span>
+    <span class="n">pval</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">null_dist</span> <span class="k">if</span> <span class="n">item</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">obs_value</span><span class="p">)])</span><span class="o">*</span><span class="mf">1.0</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">null_dist</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pval</span>
+
+<span class="n">gts</span> <span class="o">=</span> <span class="n">SimulateGenotypes</span><span class="p">(</span><span class="n">maf</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">pts</span> <span class="o">=</span> <span class="n">SimulatePhenotype</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="n">real_beta</span><span class="p">)</span>
+
+<span class="c1"># Perform association test</span>
+<span class="n">obs_beta</span><span class="p">,</span> <span class="n">obs_pval</span> <span class="o">=</span> <span class="n">Linreg</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="n">pts</span><span class="p">)</span>
+
+<span class="c1"># Compute pvalue basedon comparison to the null</span>
+<span class="n">pval</span> <span class="o">=</span> <span class="n">ComputePval</span><span class="p">(</span><span class="n">beta_null_dist</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">obs_beta</span><span class="p">))</span>
+
+<span class="c1"># Visualize how our obs_beta compares to the null</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">beta_null_dist</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;|beta|&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">obs_beta</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Linear regression p-value: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="k">obs_pval</span>)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P-value from comparison to null distribution: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="k">pval</span>)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Linear regression p-value: 0.00903091677613234
+P-value from comparison to null distribution: 0.0075
+</pre></div>
+</div>
+<img alt="../../_images/c6c5b3abad271c08e0734dafab99031383c4280d097fa13af725aad9809bc7dc.png" src="../../_images/c6c5b3abad271c08e0734dafab99031383c4280d097fa13af725aad9809bc7dc.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Test p-value function&quot;&quot;&quot;</span>
+<span class="n">gts</span> <span class="o">=</span> <span class="n">SimulateGenotypes</span><span class="p">(</span><span class="n">maf</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span> <span class="c1"># test random simulations</span>
+    <span class="n">pts</span> <span class="o">=</span> <span class="n">SimulatePhenotype</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="n">real_beta</span><span class="p">)</span>
+    <span class="n">obs_beta</span><span class="p">,</span> <span class="n">obs_pval</span> <span class="o">=</span> <span class="n">Linreg</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="n">pts</span><span class="p">)</span>
+    <span class="n">pval</span> <span class="o">=</span> <span class="n">ComputePval</span><span class="p">(</span><span class="n">beta_null_dist</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">obs_beta</span><span class="p">))</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">obs_pval</span><span class="o">-</span><span class="n">pval</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>How do you think your p-value above will be affected by increasing or decreasing the number of samples we are analyzing (<span class="math notranslate nohighlight">\(N\)</span>)? If you have very few samples, will you be able to get significant p-values? What if you have 1 million samples? Play around with the code above.</p>
+</section>
+<section id="visualizing-p-values">
+<h2>7.3.3 Visualizing p-values<a class="headerlink" href="#visualizing-p-values" title="Permalink to this heading">#</a></h2>
+<p>In GWAS, we perform literally millions of different regression tests. By looking at the distribution of p-values across all of those tests, we can learn some basic diagnostic information about our GWAS to see if it is giving us reliable results.</p>
+<p>First, let’s explore how p-values should be behaving under the <em>null hypothesis</em> that no SNPs in our data are associated with the trait. The code below performs 1,000 simulations of null data and computes the pvalue for each. It then visualizes the pvalues as a histogram.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1"># sample size (number of people). must be same as was used for generating the null!</span>
+<span class="n">maf</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="c1"># Minor allele frequency</span>
+<span class="n">num_snps</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="n">pvals_null</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">gts</span> <span class="o">=</span> <span class="n">SimulateGenotypes</span><span class="p">(</span><span class="n">maf</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_snps</span><span class="p">):</span>
+    <span class="n">pts</span> <span class="o">=</span> <span class="n">SimulatePhenotype</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">obs_beta</span><span class="p">,</span> <span class="n">obs_pval</span> <span class="o">=</span> <span class="n">Linreg</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="n">pts</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">ComputePval</span><span class="p">(</span><span class="n">beta_null_dist</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">obs_beta</span><span class="p">))</span>
+    <span class="n">pvals_null</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">pvals_null</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;P-value&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Frequency&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/d6fe36158563f9216b9e8877374ae63ea09b90665345b5716b7e80c52b74a661.png" src="../../_images/d6fe36158563f9216b9e8877374ae63ea09b90665345b5716b7e80c52b74a661.png" />
+</div>
+</div>
+<p>You should find that if all of our data is null, the p-values should mostly follow a uniform distribution! If there is no association in our data, the p-value is equally likely to be anywhere from 0 to 1. This is the very definition of a p-value.</p>
+<p>Now let’s see what happens if most of our data is null, but some of it is not (in a real GWAS, the vast majority of SNP are not associated with our trait of interest. But a couple of them probably are.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pvals_notnull</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">num_snps</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">frac_assoc</span> <span class="o">=</span> <span class="mf">0.05</span> <span class="c1"># % of SNPs associated with the trait</span>
+<span class="n">maf</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">gts</span> <span class="o">=</span> <span class="n">SimulateGenotypes</span><span class="p">(</span><span class="n">maf</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_snps</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">frac_assoc</span><span class="p">:</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="k">else</span><span class="p">:</span> <span class="n">beta</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="n">pts</span> <span class="o">=</span> <span class="n">SimulatePhenotype</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
+    <span class="n">obs_beta</span><span class="p">,</span> <span class="n">obs_pval</span> <span class="o">=</span> <span class="n">Linreg</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="n">pts</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">ComputePval</span><span class="p">(</span><span class="n">beta_null_dist</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">obs_beta</span><span class="p">))</span>
+    <span class="n">pvals_notnull</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">pvals_notnull</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;P-value&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ea265f8bda5237219e58e2d89fad67f29bf093a47ffe4a7714d590bf4ce1e284.png" src="../../_images/ea265f8bda5237219e58e2d89fad67f29bf093a47ffe4a7714d590bf4ce1e284.png" />
+</div>
+</div>
+<p>What happened to the distribution of p-values when some of our data is not null? You will likely see a big spike in the lowest p-value bin, corresponding to significant p-values. This means there are many more small (significant) p-values than we would have expected compared to if our data was completely random.</p>
+</section>
+<section id="qq-plots">
+<h2>7.3.4 QQ plots<a class="headerlink" href="#qq-plots" title="Permalink to this heading">#</a></h2>
+<p>Above we visualized p-value distributions using histograms. Another really useful tool for visualizing p-values is a QQ plot. QQ plots are generally used to compare distributions to each other. In our case, we’ll use them to visualize how a distribution of p-values we get from our GWAS compares to what we’d expect under the null hypothesis that no SNPs are associated with the disease.</p>
+<p>Consider two distributions (lists) of data, with equal length. We’d like to know if these two distributions are the same (i.e. they have the same min, median, max value, but also all the other percentiles match too). To compare them, we will:</p>
+<ul class="simple">
+<li><p>Step 1: Sort each list separately</p></li>
+<li><p>Step 2: Make a scatter plot of one vs. the other.</p></li>
+</ul>
+<p>If the two lists come from the same distribution, the scatter plot should follow the diagonal (x=y) line pretty well.</p>
+<p>Let’s try generating a QQ plot to compare our list of pvalues from a bunch of null associations (<code class="docutils literal notranslate"><span class="pre">pvals_null</span></code> above) to the uniform distribution.</p>
+<p><strong>One important note is that for making QQ plots for p-values, we will work with <code class="docutils literal notranslate"><span class="pre">-log10(p)</span></code> since we care most about what’s going on with really small p-values.</strong> So in the QQ plots below, bigger number = smaller = more significant p-value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">QQPlot</span><span class="p">(</span><span class="n">pvals</span><span class="p">):</span>
+    <span class="c1"># Sort the observed p-values</span>
+    <span class="n">pvals</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="c1"># Generate numbers from a uniform distribution</span>
+    <span class="c1"># Similar to https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/ppoints</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pvals</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mf">.375</span> <span class="k">if</span> <span class="n">n</span><span class="o">&lt;=</span><span class="mi">10</span> <span class="k">else</span> <span class="mf">.5</span>
+    <span class="n">unif</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+
+    <span class="c1"># Make a QQ plot</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">unif</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">pvals</span><span class="p">),</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">([</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">pvals</span> <span class="k">if</span> <span class="n">item</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">])))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Expected -log10(P)&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Observed -log10(P)&quot;</span><span class="p">)</span>
+    
+<span class="n">QQPlot</span><span class="p">(</span><span class="n">pvals_null</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/75732d8dbe4cd5a9d2075b87fdb7eb561380e37c526050ccce2896b4901d0e12.png" src="../../_images/75732d8dbe4cd5a9d2075b87fdb7eb561380e37c526050ccce2896b4901d0e12.png" />
+</div>
+</div>
+<p>You should find that the null p-values follow the diagonal pretty well, meaning they look pretty uniformly distributed as expected!</p>
+<p>Now let’s make a QQ plot using the p-values from <code class="docutils literal notranslate"><span class="pre">pvals_notnull</span></code> when some of our associations had non-zero <span class="math notranslate nohighlight">\(\beta\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">QQPlot</span><span class="p">(</span><span class="n">pvals_notnull</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/50/q08ymzl96vv6q2617bqv_ssc0000gn/T/ipykernel_32274/1143090772.py:13: RuntimeWarning: divide by zero encountered in log10
+  ax.scatter(-1*np.log10(unif), -1*np.log10(pvals), s=5, color=&quot;black&quot;)
+</pre></div>
+</div>
+<img alt="../../_images/b24840885287f3568618a5a050623128f9d722dc60e18b6e43285ca5901b31b1.png" src="../../_images/b24840885287f3568618a5a050623128f9d722dc60e18b6e43285ca5901b31b1.png" />
+</div>
+</div>
+<p>You should see many more points well above the diagonal, corresponding to a strong departure from the expectation under the null distribution! (i.e. there is a signal!)</p>
+</section>
+<section id="confounding-factors">
+<h2>7.3.5 Confounding factors<a class="headerlink" href="#confounding-factors" title="Permalink to this heading">#</a></h2>
+<p>For most traits we would look at with GWAS, the vast majority of the SNPs in the genome should have no association with the trait. Thus, we’d expect the QQ plot to follow the diagonal line for most of the data, and see a few significant associations at the far right of the plot.</p>
+<p>In some cases, our trait could be affected by things other genetic factors, and if we don’t control our association tests for this it could end up making the p-values from our GWAS unreliable.</p>
+<p>For example, say we are performing a GWAS for eye color, and our dataset consists of 50% people with European ancestry and 50% people with East Asian ancestry. Since blue eyes are much more prevalent in European populations, our GWAS will likely pick up a ton of genetic differences that just happen to be different between the population groups, and have nothing to do with eye color. If we don’t control for ancestry, we’ll end up with a ton of false positive associations in our GWAS.</p>
+<p>The code below simulates the effect of a confounding factor such as ancestry and displays the resulting QQ plot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1"># sample size (number of people)</span>
+<span class="n">Beta</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># Effect size. no real associations</span>
+<span class="n">popBeta</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="c1"># Confounding effect</span>
+<span class="n">maf</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="c1"># Minor allele frequency</span>
+
+<span class="k">def</span> <span class="nf">SimulatePopLabels</span><span class="p">(</span><span class="n">gts</span><span class="p">):</span>
+    <span class="n">poplabels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">gts</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">item</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">:</span> <span class="n">poplabels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span> <span class="n">poplabels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">poplabels</span><span class="p">)</span>
+        
+<span class="k">def</span> <span class="nf">SimulatePhenotypeConfounding</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="n">Beta</span><span class="p">,</span> <span class="n">poplabels</span><span class="p">,</span> <span class="n">popBeta</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">Beta</span><span class="o">&lt;-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">Beta</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Beta should be between -1 and 1&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span>
+    <span class="n">pts</span> <span class="o">=</span> <span class="n">Beta</span><span class="o">*</span><span class="n">gts</span> <span class="o">+</span> <span class="n">popBeta</span><span class="o">*</span><span class="n">poplabels</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Beta</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">popBeta</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">gts</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">pts</span>
+
+<span class="n">num_snps</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">pvals_conf</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">gts</span> <span class="o">=</span> <span class="n">SimulateGenotypes</span><span class="p">(</span><span class="n">maf</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_snps</span><span class="p">):</span>
+    <span class="n">poplabels</span> <span class="o">=</span> <span class="n">SimulatePopLabels</span><span class="p">(</span><span class="n">gts</span><span class="p">)</span>
+    <span class="n">pts</span> <span class="o">=</span> <span class="n">SimulatePhenotypeConfounding</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="n">Beta</span><span class="p">,</span> <span class="n">poplabels</span><span class="p">,</span> <span class="n">popBeta</span><span class="p">)</span>
+    <span class="n">obs_beta</span><span class="p">,</span> <span class="n">obs_pval</span> <span class="o">=</span> <span class="n">Linreg</span><span class="p">(</span><span class="n">gts</span><span class="p">,</span> <span class="n">pts</span><span class="p">)</span>
+    <span class="n">pvals_conf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obs_pval</span><span class="p">)</span>
+<span class="n">QQPlot</span><span class="p">(</span><span class="n">pvals_conf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/b2b8c28ca062a7be7e7b2f6beb11ae938c29f14df0775286bdb6c8f61b954452.png" src="../../_images/b2b8c28ca062a7be7e7b2f6beb11ae938c29f14df0775286bdb6c8f61b954452.png" />
+</div>
+</div>
+<p>You should see a huge inflation in the p-values! There are way too many significant values. The p-values in this case are probably not very reliable.</p>
+<p>When performing GWAS on real data, we’ll have to control for the potential confounding effects of ancestry. We’ll do this in tomorrow’s lab by including ancestry as a covariate in our regression analysis.</p>
+<p>You are encouraged to play around with the code in this notebook by playing with parameters like <span class="math notranslate nohighlight">\(N\)</span>, <span class="math notranslate nohighlight">\(maf\)</span>, and <span class="math notranslate nohighlight">\(\beta\)</span> to see how that changes your p-value distributions.</p>
+</section>
+<section id="summary">
+<h2>7.3.6 Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
+<p>In summary, QQ plots can be a really useful diagnostic tool. If we perform a GWAS, and make a QQ plot from the pvalues, we might see a couple different scenarios:</p>
+<ul class="simple">
+<li><p>The data mostly follows the null, but there are a handful of p-values that are way above the diagonal: good! As expected most SNPs are not associated, but a handful of associations look like they could be real. Generally, this is a sign that the GWAS worked and the p-values are reliable.</p></li>
+<li><p>The data follows the diagonal (null): this could mean: (1) there really is no association between any SNPs in your data and the trait of interest (2) there may be associations but your data didn’t have enough power to pick it up, perhaps because you don’t have enough samples or (3) something else went wrong…</p></li>
+<li><p>Almost all of the points are way above the diagonal. This could mean (1) there is some confounding factor like ancestry you’re not controlling for OR (2) there really are thousands of SNPs associated with the trait.</p></li>
+<li><p>The lines are way below the diagonsl. This can happen but we probably won’t run into it. It could mean you didn’t have enough power so all of your p-values are way higher than expected even under the null.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./complextraits/gwas"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="quantitative_traits.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">7.1 GWAS for quantitative traits</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="confounding.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">7.3 Confounding factors in GWAS</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#framework-for-simulating-and-performing-association-tests">7.3.1 Framework for simulating and performing association tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-p-values">7.3.2 Computing P-values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-p-values">7.3.3 Visualizing p-values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qq-plots">7.3.4 QQ plots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confounding-factors">7.3.5 Confounding factors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">7.3.6 Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Melissa Gymrek
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

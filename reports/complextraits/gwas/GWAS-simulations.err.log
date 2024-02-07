@@ -1,0 +1,60 @@
+Traceback (most recent call last):
+  File "/Users/den/miniconda3/envs/cse284/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/Users/den/miniconda3/envs/cse284/lib/python3.9/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/Users/den/miniconda3/envs/cse284/lib/python3.9/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/Users/den/miniconda3/envs/cse284/lib/python3.9/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/Users/den/miniconda3/envs/cse284/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "/Users/den/miniconda3/envs/cse284/lib/python3.9/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/Users/den/miniconda3/envs/cse284/lib/python3.9/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/Users/den/miniconda3/envs/cse284/lib/python3.9/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import statsmodels.api as sm
+# Perform a GWAS between the genotypes and phenotypes
+def Linreg(gts, pts):
+    X = sm.add_constant(gts)
+    model = sm.OLS(pts, X)
+    results = model.fit()
+    beta = results.params[1]
+    pval = results.pvalues[1]
+    return beta, pval
+
+N = 1000 # sample size (number of people)
+maf = 0.2 # Minor allele frequency
+Beta = 0.5 # Effect size
+gts = SimulateGenotypes(maf, N)
+pts = SimulatePhenotype(gts, Beta)
+gwas_beta, gwas_pval = Linreg(gts, pts)
+
+# Plot the association result
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax = sns.boxplot(x=gts, y=pts, whis=np.inf)
+ax.plot(gts, gwas_beta*gts, color="black") # GWAS linear regression fit
+ax.set_xticklabels(["AA","AT","TT"])
+ax.set_xlabel("Genotype")
+ax.set_ylabel("Phenotype");
+
+# Print out GWAS results
+print("Beta: %s"%gwas_beta)
+print("Pval: %s"%gwas_pval)
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [0;32mIn[2], line 1[0m
+[0;32m----> 1[0m [38;5;28;01mimport[39;00m [38;5;21;01mstatsmodels[39;00m[38;5;21;01m.[39;00m[38;5;21;01mapi[39;00m [38;5;28;01mas[39;00m [38;5;21;01msm[39;00m
+[1;32m      2[0m [38;5;66;03m# Perform a GWAS between the genotypes and phenotypes[39;00m
+[1;32m      3[0m [38;5;28;01mdef[39;00m [38;5;21mLinreg[39m(gts, pts):
+
+[0;31mModuleNotFoundError[0m: No module named 'statsmodels'
+ModuleNotFoundError: No module named 'statsmodels'
+

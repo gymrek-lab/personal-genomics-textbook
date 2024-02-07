@@ -44,7 +44,7 @@ Plink handles many other formats, but all of our data for the course will come i
 You can use plink to convert genotypes from one format to another. e.g.:
 
 ```
-VCF=/datasets/cs284-sp22-a00-public/1000Genomes/ALL.chr21.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz
+VCF=~/public/1000Genomes/ALL.chr21.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz
 
 # Convert VCF to ped/map
 # (using only couple of variants to make this smaller)
@@ -81,7 +81,7 @@ Plink currently loses some information present in VCF files, which can be a comm
 Some analyses, such as PCA or running ADMIXTURE, assume we have a set of SNPs in linkage *equilibrium*. In those cases, it is common to "prune" SNPs to remove highly correlated SNPs from analysis. See the example below for steps to do this.
 
 ```
-VCF=/datasets/cs284-sp22-a00-public/1000Genomes/ALL.chr21.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz
+VCF=~/public/1000Genomes/ALL.chr21.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz
 
 # Get a list of independent SNPs
 # --indep-pairwise <window size> <step size> <r2 threshold>

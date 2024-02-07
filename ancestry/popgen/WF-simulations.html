@@ -222,6 +222,16 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../plink1kg/1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plink1kg/plink.html">T2.2 Some tips and examples for using plink</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 3 - From genotypes to phenotypes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../complextraits/gwas.html">Chapter 7: GWAS for complex traits</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../complextraits/gwas/quantitative_traits.html">7.1 GWAS for quantitative traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../complextraits/gwas/GWAS-simulations.html">7.2 Exploring GWAS association statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../complextraits/gwas/confounding.html">7.3 Confounding factors in GWAS</a></li>
 </ul>
 </li>
 </ul>
@@ -550,7 +560,7 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/c9cf7629520cf1206977c9cf43a485a8522ee8b6589f76353ad6ad5dffdafef9.png" src="../../_images/c9cf7629520cf1206977c9cf43a485a8522ee8b6589f76353ad6ad5dffdafef9.png" />
+<img alt="../../_images/92961d042c066df5fd902cf02f40e84bdf3b68cc2113a634cb63e097baf907fb.png" src="../../_images/92961d042c066df5fd902cf02f40e84bdf3b68cc2113a634cb63e097baf907fb.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -572,7 +582,7 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/69e6d5546823c8af5d2458ae451df894b3e5c04d1ca107eb0193b70e2fc9a555.png" src="../../_images/69e6d5546823c8af5d2458ae451df894b3e5c04d1ca107eb0193b70e2fc9a555.png" />
+<img alt="../../_images/3e10d4ebdc58e528b057c1d9dcc2918dca15d3e77ddb2296c404e3dea1ab494f.png" src="../../_images/3e10d4ebdc58e528b057c1d9dcc2918dca15d3e77ddb2296c404e3dea1ab494f.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -610,7 +620,7 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/84abed92e1564de308d30039403529103232640c54aabb00584e7638975411b0.png" src="../../_images/84abed92e1564de308d30039403529103232640c54aabb00584e7638975411b0.png" />
+<img alt="../../_images/36a21c8a51b580cea4a99678d6d8467bc6fe867adbca297b4d1f3535378d4437.png" src="../../_images/36a21c8a51b580cea4a99678d6d8467bc6fe867adbca297b4d1f3535378d4437.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -649,7 +659,7 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/beb2af60ddbeff6d465123d6cc4db889180d79b40165c79f03aaba169f802fd9.png" src="../../_images/beb2af60ddbeff6d465123d6cc4db889180d79b40165c79f03aaba169f802fd9.png" />
+<img alt="../../_images/3d3cf4d18f4bc24144c9bf4bc3326da3f51bf7952ab7ef41b9dbd369f0a68235.png" src="../../_images/3d3cf4d18f4bc24144c9bf4bc3326da3f51bf7952ab7ef41b9dbd369f0a68235.png" />
 </div>
 </div>
 </section>
@@ -730,7 +740,7 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/4a1177ceec0d0ab9519cf3d3b836984d4367bd2181b452ade96fcaddce3571e8.png" src="../../_images/4a1177ceec0d0ab9519cf3d3b836984d4367bd2181b452ade96fcaddce3571e8.png" />
+<img alt="../../_images/7c1ed39937bc99a92143b0b198380a0eadec7ab136abed2715885e8408d64f66.png" src="../../_images/7c1ed39937bc99a92143b0b198380a0eadec7ab136abed2715885e8408d64f66.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -771,8 +781,8 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/59ae5054562eae7f61f149a2df8be7af44a3c71506a97e8d759aa3a50e4b8f34.png" src="../../_images/59ae5054562eae7f61f149a2df8be7af44a3c71506a97e8d759aa3a50e4b8f34.png" />
-<img alt="../../_images/f3b0bfd72a597d316906b8c65c8e66fd377386018581d50295321d26c439ff84.png" src="../../_images/f3b0bfd72a597d316906b8c65c8e66fd377386018581d50295321d26c439ff84.png" />
+<img alt="../../_images/06dc8e964bd31b1fde231306ffddc00d3f385ed2e0a8a5324652452fcff96f83.png" src="../../_images/06dc8e964bd31b1fde231306ffddc00d3f385ed2e0a8a5324652452fcff96f83.png" />
+<img alt="../../_images/20de1d40c68b3801231bb48556c064f2e67a36e23cf946413b323698d4baaaad.png" src="../../_images/20de1d40c68b3801231bb48556c064f2e67a36e23cf946413b323698d4baaaad.png" />
 </div>
 </div>
 </section>
