@@ -8,7 +8,7 @@ Let's consider a single SNP, with alleles T and G. We'd like to test for associa
 
 |          | TT       | TG       | GG       | total   |
 |----------|----------|----------|----------|---------|
-| controls | $r_0=25$ | $r_1=50$ | $r_2=25  | $R=100$ |
+| controls | $r_0=25$ | $r_1=50$ | $r_2=25$ | $R=100$ |
 | cases    | $s_0=64$ | $s_1=32$ | $s_2=4$  | $S=100$ |
 | total    | $n_0=89$ | $n_1=82$ | $n_2=29$ | $N=200$ |
 
@@ -62,8 +62,9 @@ Let's check our answer with Python's chi-square test in scipy:
 
 ```
 stats.chi2_contingency([[100,160],[100,40]], correction=False)
-(39.56043956043956, 3.180615853514648e-10, 1, array([[130., 130.],
+# (39.56043956043956, 3.180615853514648e-10, 1, array([[130., 130.],
        [ 70.,  70.]]))
 ```
 
-Our answer aggrees with scipy!
+Our answer aggrees with scipy! (the first two values are the chi2 statistic and p-value)
+
