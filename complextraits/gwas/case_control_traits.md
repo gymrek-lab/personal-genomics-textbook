@@ -66,5 +66,55 @@ stats.chi2_contingency([[100,160],[100,40]], correction=False)
        [ 70.,  70.]]))
 ```
 
-Our answer aggrees with scipy! (the first two values are the chi2 statistic and p-value)
+Our answer aggrees with scipy! (the first two values are the chi2 statistic and p-value).
 
+In practice, you can use plink to perform GWAS for case-control phenotypes using a chi-square test with the `plink --assoc` option.
+
+## 7.4.2 Logistic regression for case-control traits
+
+An alternative to the chi-square test is to perform a logistic regression. Whereas linear regression was appropriate for fitting quantitative trait values, logistic regression is more suitable for fitting values that are with 0 or 1:
+
+![logistic](images/logistic.png)
+
+(Note, the logistic line above isn't drawn quite right... it should plateau at 0 and 1).
+
+The logistic curve can be described as:
+
+$$
+p(x) = \frac{1}{1+e^{-\alpha+\beta x}}
+$$
+
+where $x$ is a genotype (0, 1, or 2) and $p(x)$ is the expected phenotype given that genotype. we can rearrange this to write:
+
+$$
+logit(p(x)) = \alpha + \beta x
+$$
+
+where $logit(p(x)) = \log \frac{p(x)}{1-p(x)}$. That is, the logit function is giving the log of the odds of having a case phenotype if you have genotype x. So we can interpret $\beta$ as the increase in the log of the odds for each copy of the alternate allele. It follows then that $e^{\beta}$ gives the estimated odds ratio.
+
+Similar to in linear regression, we can obtain a p-value testing the null hypothesis that $\beta=0$ (or put a different way, $e^{\beta}=OR=1$). (derivation not shown).
+
+Using our example above:
+
+```
+import statsmodels.api as sm 
+X = np.array([0]*25+[1]*50+[2]*25 + [0]*64+[1]*32+[2]*4).reshape(-1,1)
+X = sm.add_constant(X)
+Y = [0]*100 + [1]*100
+log_reg = sm.Logit(Y, sm.add_constant(X)).fit()
+log_reg.params # for intercept, beta
+array([ 0.94000726, -1.38629436])
+
+```
+
+We estimate an odds ratio of -1.386 (for allele G). This comes out to `np.exp(-1.386)=0.25` if we consider G as the risk allele, or 1/0.25=4 if we consider T as the risk allele. Same as above for our Chi-square test!
+
+The major advantage of using a logistic regression vs. a chi-square test is we can add covariates. For example, we might want to control for age, sex, or population PCs. We can simply do so by fitting a model with additional terms, e.g.:
+
+$$
+logit(p) = \alpha + \beta x_i + \sum_k \gamma_k PC_{ki}
+$$
+
+## 7.4.3 Dealing with case-control imbalance
+
+Logistic regression for GWAS may be problematic if there is a strong imbalance between the number of cases vs. controls or in cases where the minor allele count is very low. In these cases, extensions to logistic regression may be required. See Firth logistic regression and saddle point approximation strategies, both of which are discussed in the [REGENIE](https://www.nature.com/articles/s41588-021-00870-7) paper.
