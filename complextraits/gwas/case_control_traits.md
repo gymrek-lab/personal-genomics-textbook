@@ -115,6 +115,8 @@ $$
 logit(p) = \alpha + \beta x_i + \sum_k \gamma_k PC_{ki}
 $$
 
+Note, our example had a really large odds ratio compared to what we typically see in GWAS. Typical odds ratios are in the range of $\sim 0.9-1.1$.
+
 ## 7.4.3 Dealing with case-control imbalance
 
 Logistic regression for GWAS may be problematic if there is a strong imbalance between the number of cases vs. controls or in cases where the minor allele count is very low. In these cases, extensions to logistic regression may be required. See Firth logistic regression and saddle point approximation strategies, both of which are discussed in the [REGENIE](https://www.nature.com/articles/s41588-021-00870-7) paper.

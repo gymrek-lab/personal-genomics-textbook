@@ -68,8 +68,14 @@ parts:
         - file: complextraits/gwas/GWAS-simulations
         - file: complextraits/gwas/confounding
         - file: complextraits/gwas/case_control_traits
+        #- file: complextraits/gwas/lmms
         # TODO: imputation
         # TODO: power
+      - file: complextraits/heritability
+        sections:
+        - file: complextraits/heritability/relatives
+#        - file: complextraits/heritability/lmms
+#        - file: complextraits/heritability/ldsc
 #  - caption: Module 4 - Trans-ancestry approaches
 #    chapters:
 #      - file: multianc/fine-mapping
