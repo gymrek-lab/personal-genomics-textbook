@@ -24,6 +24,17 @@ Notes:
 * For historical reasons, we use $h^2$, not $h$ to define heritability.
 * Some work on heritability distinguishes between *broad sense* heritability (technically, what we defined above), vs *narrow sense heritability* (heritability due only to additive geneticfactors). We will not really distinguish between these in the next sections, and typically will be thinking about strictly additive models.
 
+Heritabilities of some example traits are given below (source: [Visscher et al. 2012](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3257326/)):
+
+* Height: 80%
+* Breast cancer: 30%
+* Type 1 Diabetes: 90%
+* Type 2 Diabetes: 30-60%
+* Obesity: 40-60%
+* Schizophrenia: 70-80%
+* Platelet count: 80%
+* HDL cholesterol: 50%
+
 We'll look at several methods for measuring heritability in closely related individuals, then show two methods for measuring heritability in a cohort of unrelated individuals.
 
 ```{tableofcontents}

@@ -74,21 +74,8 @@ parts:
       - file: complextraits/heritability
         sections:
         - file: complextraits/heritability/relatives
-#        - file: complextraits/heritability/lmms
+        - file: complextraits/heritability/lmms-h2
 #        - file: complextraits/heritability/ldsc
-#  - caption: Module 4 - Trans-ancestry approaches
-#    chapters:
-#      - file: multianc/fine-mapping
-#      - file: multianc/prs
-#  - caption: Module 5 - Beyond common variants
-#    chapters:
-#      - file: beyond/rare
-#      - file: beyond/complex
-#  - caption: Module 6 - Ethics
-#    chapters:
-#      - file: ethics/privacy
-#      - file: ethics/health
-#      - file: ethics/equity
   - caption: Appendix 1 - glossary and notation
     chapters:
       - file: appendix/unix
