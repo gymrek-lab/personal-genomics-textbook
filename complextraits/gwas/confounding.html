@@ -67,7 +67,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'complextraits/gwas/confounding';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Chapter A1.1: Unix cheat sheet" href="../../appendix/unix.html" />
+    <link rel="next" title="7.4 GWAS for case-control traits" href="case_control_traits.html" />
     <link rel="prev" title="7.2 Exploring GWAS association statistics" href="GWAS-simulations.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -232,6 +232,13 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="quantitative_traits.html">7.1 GWAS for quantitative traits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="GWAS-simulations.html">7.2 Exploring GWAS association statistics</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">7.3 Confounding factors in GWAS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="case_control_traits.html">7.4 GWAS for case-control traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmms.html">7.5 Linear mixed models</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../heritability.html">Chapter 8: Heritability</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../heritability/relatives.html">8.1 Measuring heritability in related individuals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../heritability/lmms-h2.html">8.2 Measuring SNP-based heritability using LMMs</a></li>
 </ul>
 </li>
 </ul>
@@ -498,7 +505,7 @@ Y = \alpha_j + \beta_j X_j + \sum_{k=1..c} \gamma_{kj} C_{k} + \epsilon_j
 <section id="controlling-for-confounding-take-2">
 <h2>7.2.4 Controlling for confounding - take 2<a class="headerlink" href="#controlling-for-confounding-take-2" title="Permalink to this heading">#</a></h2>
 <p>An alternative, widely used strategies, is to instead use a quantitative definition of ancestry as covariates in our analysis. Recall, in our ancestry module we used principal components analysis on genotype matrices to “project” each sample along top principal components (PCs). These projections actually give us a (still imperfect) quantitative definition we can use here.</p>
-<p>Let <span class="math notranslate nohighlight">\(v_k=\{v_{1k}, v_{2k}, ... v_{nk}\} be the projection of the \)</span>n<span class="math notranslate nohighlight">\( samples along PC \)</span>k$. We can now use these as covariates in our GWAS with the following model:</p>
+<p>Let <span class="math notranslate nohighlight">\(v_k=\{v_{1k}, v_{2k}, ... v_{nk}\}\)</span> be the projection of the <span class="math notranslate nohighlight">\(n\)</span> samples along PC <span class="math notranslate nohighlight">\(k\)</span>. We can now use these as covariates in our GWAS with the following model:</p>
 <div class="math notranslate nohighlight">
 \[
 Y = \alpha_j + \beta_j X_j + \sum_{k=1..K} \gamma_{kj} PC_{k} + \epsilon_j 
@@ -577,11 +584,11 @@ A_j' = \frac{A_j}{\lambda_{GC}}
       </div>
     </a>
     <a class="right-next"
-       href="../../appendix/unix.html"
+       href="case_control_traits.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Chapter A1.1: Unix cheat sheet</p>
+        <p class="prev-next-title">7.4 GWAS for case-control traits</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

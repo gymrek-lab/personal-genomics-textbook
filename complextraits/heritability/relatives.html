@@ -1,0 +1,709 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>8.1 Measuring heritability in related individuals &#8212; CSE284 - Personal Genomics</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'complextraits/heritability/relatives';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="8.2 Measuring SNP-based heritability using LMMs" href="lmms-h2.html" />
+    <link rel="prev" title="Chapter 8: Heritability" href="../heritability.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="CSE284 - Personal Genomics - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="CSE284 - Personal Genomics - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Personal Genomics for Bioinformaticians
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 1 - Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../intro/intro_to_your_genome.html">Chapter 1: Introduction to the human genome</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/structure_DNA.html">1.1 The structure of DNA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/genome_organization.html">1.2 Organization of the human genome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/central_dogma.html">1.3 Genes and the central dogma</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/noncoding.html">1.4 The non-coding genome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/genetic_variation_terminology.html">1.5 Genetic variation terminology</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../intro/intro_genome_tech.html">Chapter 2: Overview of technologies for genome analysis</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/genotype_arrays.html">2.1 Genotyping arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/ngs.html">2.2 Next-generation sequencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/long_reads.html">2.3 Long-read technologies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/tech_summary.html">2.4 Summary of genomics technologies</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../intro/genome_file_formats.html">Tutorial 1: file formats for describing genetic variation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/formats/vcf.html">T1.2 VCF files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/formats/plink.html">T1.2 Plink files</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 2 - Ancestry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/intro_popgen.html">Chapter 3: Introduction to population genetics</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/forces_evolution.html">3.1 The four forces of evolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/mutations.html">3.2 Types and patterns of mutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/drift.html">3.3 Genetic drift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/selection.html">3.4 Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/hwe.html">3.5 Hardy-Weinberg Equilibrium and random mating</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/fst.html">3.6 Measuring population differentiation with Fst</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/recombination.html">3.7 Recombination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/WF-simulations.html">Activity: Exploring the Wright-Fisher model of genetic drift</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/global_ancestry.html">Chapter 4: Global ancestry</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/global/pca_global_ancestry.html">4.1 Global ancestry analysis with PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/global/admixture_global_ancestry.html">4.2 Global ancestry analysis with ADMIXTURE</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/relative_finding.html">Chapter 5: Relative finding</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/relfind/ibd.html">5.1 Identity by descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/relfind/ibd_pedigree.html">5.2 Expected IBD of close relatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/relfind/ibd_plink.html">5.3 Computing expected IBD - plink method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/relfind/ibd_segments.html">5.4 Computing expected IBD segment sharing</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/plink1kg/1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/plink1kg/plink.html">T2.2 Some tips and examples for using plink</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 3 - From genotypes to phenotypes</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../gwas.html">Chapter 7: GWAS for complex traits</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../gwas/quantitative_traits.html">7.1 GWAS for quantitative traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gwas/GWAS-simulations.html">7.2 Exploring GWAS association statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gwas/confounding.html">7.3 Confounding factors in GWAS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gwas/case_control_traits.html">7.4 GWAS for case-control traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gwas/lmms.html">7.5 Linear mixed models</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../heritability.html">Chapter 8: Heritability</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">8.1 Measuring heritability in related individuals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmms-h2.html">8.2 Measuring SNP-based heritability using LMMs</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 1 - glossary and notation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/unix.html">Chapter A1.1: Unix cheat sheet</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/gymrek-lab/personal-genomics-textbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/gymrek-lab/personal-genomics-textbook/issues/new?title=Issue%20on%20page%20%2Fcomplextraits/heritability/relatives.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/complextraits/heritability/relatives.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>8.1 Measuring heritability in related individuals</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#midparent-regression">8.1.1 Midparent regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#twin-studies">8.1.2 Twin studies</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sibling-pairs-haseman-elston-regression">8.1.3 Sibling pairs - Haseman Elston regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note-on-alternative-way-to-do-he">8.1.4 Note on alternative way to do HE</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="measuring-heritability-in-related-individuals">
+<h1>8.1 Measuring heritability in related individuals<a class="headerlink" href="#measuring-heritability-in-related-individuals" title="Permalink to this heading">#</a></h1>
+<p>In this section we will explore several ways to measure heritability in pedigrees (related individuals).</p>
+<section id="midparent-regression">
+<h2>8.1.1 Midparent regression<a class="headerlink" href="#midparent-regression" title="Permalink to this heading">#</a></h2>
+<p>A classical way to measure heritabilitly of a trait is the midparent method. This method fits the following linear equation:</p>
+<div class="math notranslate nohighlight">
+\[
+Y_{child} = \beta Y_{mid} + \epsilon
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(Y_{child}\)</span> is the phenotype of the child</p></li>
+<li><p><span class="math notranslate nohighlight">\(Y_{mid}=\frac{Y_{mother}+Y_{father}}{2}\)</span> is the average of the two parent phenotypes (“midparent”)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta\)</span> is the slope of the best fit line</p></li>
+<li><p><span class="math notranslate nohighlight">\(\epsilon\)</span> is the error term</p></li>
+</ul>
+<p>Note we are ignoring covariates like sex here. If this were height for example, we’d need to adjust the phenotypes for covariates first.</p>
+<p>Using this method, the slope, <span class="math notranslate nohighlight">\(\beta\)</span> gives an estimate of the heritability. Intuitively, if the slope is close to 1, the trait is completely heritable, and we’d expect the child’s phenotype to be around the average of the two parent values. If heritability is 0, there is no relationship between the child and parent phenotypes. See the example data below:</p>
+<p><img alt="midparent" src="../../_images/midparent.jpeg" /></p>
+<p>Source: <a class="reference external" href="https://www.nature.com/scitable/topicpage/estimating-trait-heritability-46889">Nature Education - Estimating Trait Heritability</a></p>
+<p>Note, even when the heritability is 1, there will still be some variation of the points along the x=y diagonal. Even in this case the child’s phenotype is not completely deterministic: it will depend which half of each parent’s genome they inherit and so there will be some variance.</p>
+<p>To help illustrate this, consider the correlation between <span class="math notranslate nohighlight">\(Y_{child}\)</span> and <span class="math notranslate nohighlight">\(Y_{mid}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+Cor(Y_{child}, Y_{mid}) = \frac{cov(Y_{child}, Y_{mid})}{\sigma(Y_{child})\sigma(Y_{mid})}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\sigma(Y)\)</span> gives the standard deviation. We can assume the variance of <span class="math notranslate nohighlight">\(Y_{child}\)</span> is similar to that of <span class="math notranslate nohighlight">\(Y_{mother}\)</span> and <span class="math notranslate nohighlight">\(Y_{father}\)</span> (all just reflect the variance of the phenotype in the population.) Therefore:</p>
+<div class="math notranslate nohighlight">
+\[
+Var(Y_{mid}) = Var(\frac{Y_{mother}+Y_{father}}{2}) = 2Var(\frac{Y_{child}}{2}) = \frac{1}{2}Var(Y_{child})
+\]</div>
+<p>We assumed there is no covariance between <span class="math notranslate nohighlight">\(Y_{mother}\)</span> and <span class="math notranslate nohighlight">\(Y_{father}\)</span> and also used the common relationship <span class="math notranslate nohighlight">\(Var(aX)=a^2Var(X)\)</span>. We can also write down the least squares estimate of <span class="math notranslate nohighlight">\(\beta\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\beta = h^2 = \frac{cov(Y_{child}), Y_{mid}}{Var(Y_{mid})} = \frac{2cov(Y_{child}), Y_{mid}}{Var(Y_{child})} 
+\]</div>
+<p>Rearraing the above equation for the correlation and substituting our expressions for <span class="math notranslate nohighlight">\(\beta\)</span> and <span class="math notranslate nohighlight">\(Var(Y_{child})\)</span> gives:</p>
+<div class="math notranslate nohighlight">
+\[
+Cor(Y_{child}, Y_{mid}) = \frac{cov(Y_{child}, Y_{mid})}{\sigma(Y_{child})\sigma(Y_{mid})} =  \frac{cov(Y_{child}, Y_{mid})}{\sqrt{2}Var(Y_{mid})} = \sqrt{\frac{1}{2}}h^2
+\]</div>
+<p>And so, even if the heritability is 1, the correlation bewteen the values will be less than 1 (0.71).</p>
+</section>
+<section id="twin-studies">
+<h2>8.1.2 Twin studies<a class="headerlink" href="#twin-studies" title="Permalink to this heading">#</a></h2>
+<p>The midparent method isn’t perfect. It will tend to over-estimate heritability, since there is likely a lot of shared environmental factors between parents and children. A second study design we could use to estimate heritability is by looking at identical twins, which attempts to account for this.</p>
+<p>Consider that you collected phenotypes for many sets of monozygotic (MZ) twins. We could attribute to the correlation of phenotypes between them as being due to both their shared genomes (100%) and their shared environment:</p>
+<div class="math notranslate nohighlight">
+\[
+r_{MZ} = V_G + V_E
+\]</div>
+<p>Now we can also collect data for a set of dizygotic (DZ) twins. DZ twins are together <em>in utero</em>, but genetically are the same as siblings. That is, they are expected to share around half of their genomes (remember, this is an average). However, they are still expected to share a similar amount of their environments as do MZ twins. So we can write:</p>
+<div class="math notranslate nohighlight">
+\[
+r_{DZ} = \frac{1}{2}V_G + V_E
+\]</div>
+<p>Now we can rearrange to get:
+$<span class="math notranslate nohighlight">\(
+2(r_{MZ}-r_{DZ}) = 2V_G+2V_E-V_G-2V_E = V_G
+\)</span>$</p>
+<p>this is known as <em>Falconer’s</em> method to estimate heritability from twin studies as:</p>
+<div class="math notranslate nohighlight">
+\[
+h^2 = 2(r_{MZ}-r_{DZ}) 
+\]</div>
+<p>This does better by accounting for shared environment. However, it also makes the simplifying assumption that DZ twins share half their genomes. In reality, there will be a distribution of sharing. Also, it’s possible that MZ twins actually do share more environmental factors, if they are treated more similarly than DZ twins might be.</p>
+</section>
+<section id="sibling-pairs-haseman-elston-regression">
+<h2>8.1.3 Sibling pairs - Haseman Elston regression<a class="headerlink" href="#sibling-pairs-haseman-elston-regression" title="Permalink to this heading">#</a></h2>
+<p>Let’s look at one more method to measure heritability, this time in siblings. As mentioned above, siblings will share on average 50% of their genomes, but there is a distribution: some share more, some share less. <em>Haseman-Elston</em> (HE) regression looks at the values of phenotypes for pairs of siblings. Intuitively, siblings who happen to share more of their genomes IBD should have more similar phenotypes than those who happen to share less. We can use the following regression to data from many pairs of siblings:</p>
+<div class="math notranslate nohighlight">
+\[
+(Y_{i1}-Y_{i2})^2 = \alpha + \beta \pi_{i} + \epsilon
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(Y_{i1}\)</span> and <span class="math notranslate nohighlight">\(Y_{i2}\)</span> are the phenotype values for sibling pair <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(\pi_{i}\)</span> is the IBD sharing between the sibling pair. This line is expected to have a negative slope: if IBD is large, the phenotype difference is expected to be small, and vice versa. It turns out that the slope of this line gives us yet another way to estimate heritability:</p>
+<div class="math notranslate nohighlight">
+\[
+h^2 = -\frac{\beta}{2}
+\]</div>
+<p>This is actually related to Falconer’s formula above. We can write:</p>
+<div class="math notranslate nohighlight">
+\[
+E[Corr(Y_{i1}, Y_{i2})] = \frac{Cov(Y_{i1},Y_{i2})}{Var(Y_{i1})Var(Y_{i2})}
+\]</div>
+<p>Let’s assume we have standardized the phenotypes to have mean 0 and variance 1. Then the covariance is the same as the correlation and we can write:</p>
+<div class="math notranslate nohighlight">
+\[
+E[Corr(Y_{i1}, Y_{i2})] = E[Y_{i1}Y_{i2}]-E[Y_{i1}]E[Y_{i2}] = E[Y_{i1}Y_{i2}]
+\]</div>
+<p>Now back to the HE-regression equation. We can expand the left-hand side:</p>
+<div class="math notranslate nohighlight">
+\[
+E[(Y_{i1}-Y_{i2})^2] = E[Y_{i1}^2] + E[Y_{i2}^2] - 2E[Y_{i1}Y_{i2}] = 2Var(Y_{i1}) - 2E[Y_{i1}Y_{i2}] = 2 - 2E[Y_{i1}Y_{i2}]
+\]</div>
+<p>(since the variance of <span class="math notranslate nohighlight">\(Y_{i1}\)</span> and <span class="math notranslate nohighlight">\(Y_{i2}\)</span> are the same, and <span class="math notranslate nohighlight">\(E[Y^2]=Var(Y)-E[Y]^2=1-0 = 1\)</span>). We can rearrange the HE-regression formula to instead regress on the product of sibling phenotype values:</p>
+<div class="math notranslate nohighlight">
+\[
+Y_{i1}Y_{i2} = \alpha - \frac{\beta}{2} \pi_{i} + \epsilon
+\]</div>
+<p>(Note the constant 2 just got absorbed into the <span class="math notranslate nohighlight">\(\alpha\)</span> intercept term and we can ignore it.) Now we can see the parallel to the formula we used for <span class="math notranslate nohighlight">\(r_{DZ}\)</span> above:</p>
+<div class="math notranslate nohighlight">
+\[
+r_{DZ} = \frac{1}{2}V_G + V_E
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+E[r_{i}] = E[Y_{i1}Y_{i2}] = \pi_{i} (- \frac{\beta}{2}) + \epsilon
+\]</div>
+<p>Parallels:</p>
+<ul class="simple">
+<li><p>For twin studies, we measured the correlation <span class="math notranslate nohighlight">\(r_{DZ}\)</span>. For HE regression, we measured <span class="math notranslate nohighlight">\((Y_{i1}-Y_{i2})^2\)</span>, which we rearranged here to be related to the <em>expected correlation</em> between sibs.</p></li>
+<li><p>For twin studies, we just set the IBD (<span class="math notranslate nohighlight">\(\pi\)</span>) term to 0.5. Here we instead have <span class="math notranslate nohighlight">\(\pi_{i}\)</span> is the actual measured IBD between sib pair <span class="math notranslate nohighlight">\(i\)</span>.</p></li>
+<li><p>The <span class="math notranslate nohighlight">\(V_G\)</span> term from the twin equation, which turned out to be equal to the heritability estimate, turned into <span class="math notranslate nohighlight">\(-\frac{\beta}{2}\)</span> here.</p></li>
+<li><p>The <span class="math notranslate nohighlight">\(V_E\)</span> term from the twin equation is just our <span class="math notranslate nohighlight">\(\epsilon\)</span> here.</p></li>
+</ul>
+<p>This matches up with what we stated above, which is that <span class="math notranslate nohighlight">\(-\frac{\beta}{2}\)</span> is another estimate of heritability.</p>
+</section>
+<section id="note-on-alternative-way-to-do-he">
+<h2>8.1.4 Note on alternative way to do HE<a class="headerlink" href="#note-on-alternative-way-to-do-he" title="Permalink to this heading">#</a></h2>
+<p>Note: we could have also just regressed the product of sibling phenotype values in the first place on IBD:</p>
+<div class="math notranslate nohighlight">
+\[
+Y_{i1}Y_{i2} = \alpha + \beta\pi_{i} + \epsilon
+\]</div>
+<p>In this case, <span class="math notranslate nohighlight">\(\beta\)</span> directly gives us the estimate of <span class="math notranslate nohighlight">\(h^2\)</span>. This alternate formulation appears to be a bit more commonly used than the squared difference of phenotypes way presented above.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./complextraits/heritability"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../heritability.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Chapter 8: Heritability</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="lmms-h2.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">8.2 Measuring SNP-based heritability using LMMs</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#midparent-regression">8.1.1 Midparent regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#twin-studies">8.1.2 Twin studies</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sibling-pairs-haseman-elston-regression">8.1.3 Sibling pairs - Haseman Elston regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note-on-alternative-way-to-do-he">8.1.4 Note on alternative way to do HE</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Melissa Gymrek
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

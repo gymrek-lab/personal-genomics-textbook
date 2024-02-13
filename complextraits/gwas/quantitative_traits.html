@@ -232,6 +232,13 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">7.1 GWAS for quantitative traits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="GWAS-simulations.html">7.2 Exploring GWAS association statistics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="confounding.html">7.3 Confounding factors in GWAS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="case_control_traits.html">7.4 GWAS for case-control traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmms.html">7.5 Linear mixed models</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../heritability.html">Chapter 8: Heritability</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../heritability/relatives.html">8.1 Measuring heritability in related individuals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../heritability/lmms-h2.html">8.2 Measuring SNP-based heritability using LMMs</a></li>
 </ul>
 </li>
 </ul>
@@ -493,7 +500,7 @@ That is, each individual’s <span class="math notranslate nohighlight">\(\epsil
 <section id="visualizing-gwas-results">
 <h2>7.1.4 Visualizing GWAS results<a class="headerlink" href="#visualizing-gwas-results" title="Permalink to this heading">#</a></h2>
 <p>Once summary statistics are obtained for each SNP, we can use several strategies to visualize them.</p>
-<p>The plot below is a <em>Manhattan plot</em>. Each dot in the plot represents a single SNP that was tested. The x-axis gives the chromosome position. The y-axis gives the <span class="math notranslate nohighlight">\(-\log_10\)</span> p-value of the SNP. Note, we use <span class="math notranslate nohighlight">\(-\log_10\)</span> instead of the raw p-value since this emphasizes the most significant (lowest) p-values, which are the ones we are most interested in.</p>
+<p>The plot below is a <em>Manhattan plot</em>. Each dot in the plot represents a single SNP that was tested. The x-axis gives the chromosome position. The y-axis gives the <span class="math notranslate nohighlight">\(-\log_{10}\)</span> p-value of the SNP. Note, we use <span class="math notranslate nohighlight">\(-\log_{10}\)</span> instead of the raw p-value since this emphasizes the most significant (lowest) p-values, which are the ones we are most interested in.</p>
 <p><img alt="manhattan" src="../../_images/manhattan.png" />
 Source: <a class="reference external" href="https://www.nature.com/articles/ncomms10448">Hu et al Nature Communications 2016</a> (“Are you a morning person”?)</p>
 <p>We can notice an interesting pattern in the plot above: we often see “skyscrapers” of many strongly trait-associated SNPs nearby to each other, which inspired the name of Manhattan plot. This pattern is driven by the fact that SNPs that are nearby tend to be in <em>linkage disequilibrium (LD)</em>, and thus genotypes from nearby SNPs will be correlated with each other. If one SNP is causal for a trait, then it will be associated with the trait, but its LD partners will also be. An important conclusion that we can draw from this is that many trait-associated variants are unlikely to be causal themselves, but rather are just correlated with something else that is causal.</p>

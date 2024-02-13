@@ -46,7 +46,7 @@ The quantities above (effect size, pvalue) are referred to as *summary statistic
 
 Once summary statistics are obtained for each SNP, we can use several strategies to visualize them. 
 
-The plot below is a *Manhattan plot*. Each dot in the plot represents a single SNP that was tested. The x-axis gives the chromosome position. The y-axis gives the $-\log_10$ p-value of the SNP. Note, we use $-\log_10$ instead of the raw p-value since this emphasizes the most significant (lowest) p-values, which are the ones we are most interested in.
+The plot below is a *Manhattan plot*. Each dot in the plot represents a single SNP that was tested. The x-axis gives the chromosome position. The y-axis gives the $-\log_{10}$ p-value of the SNP. Note, we use $-\log_{10}$ instead of the raw p-value since this emphasizes the most significant (lowest) p-values, which are the ones we are most interested in.
 
 ![manhattan](images/manhattan.png)
 Source: [Hu et al Nature Communications 2016](https://www.nature.com/articles/ncomms10448) ("Are you a morning person"?)
