@@ -58,7 +58,7 @@ While this will help control for some confounding, there are some important limi
 
 An alternative, widely used strategies, is to instead use a quantitative definition of ancestry as covariates in our analysis. Recall, in our ancestry module we used principal components analysis on genotype matrices to "project" each sample along top principal components (PCs). These projections actually give us a (still imperfect) quantitative definition we can use here.
 
-Let $v_k=\{v_{1k}, v_{2k}, ... v_{nk}\} be the projection of the $n$ samples along PC $k$. We can now use these as covariates in our GWAS with the following model:
+Let $v_k=\{v_{1k}, v_{2k}, ... v_{nk}\}$ be the projection of the $n$ samples along PC $k$. We can now use these as covariates in our GWAS with the following model:
 
 $$
 Y = \alpha_j + \beta_j X_j + \sum_{k=1..K} \gamma_{kj} PC_{k} + \epsilon_j 
