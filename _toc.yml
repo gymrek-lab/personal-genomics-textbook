@@ -77,7 +77,8 @@ parts:
         - file: complextraits/heritability/lmms-h2
 #        - file: complextraits/heritability/ldsc
       - file: complextraits/prs
-        - file: complextraits/prs/clumping_thresholding
+        sections:
+        - file: complextraits/prs/clumping-thresholding
   - caption: Appendix 1 - glossary and notation
     chapters:
       - file: appendix/unix
