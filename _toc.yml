@@ -79,6 +79,7 @@ parts:
       - file: complextraits/prs
         sections:
         - file: complextraits/prs/clumping-thresholding
+        - file: complextraits/prs/bayesian_prs
   - caption: Appendix 1 - glossary and notation
     chapters:
       - file: appendix/unix
