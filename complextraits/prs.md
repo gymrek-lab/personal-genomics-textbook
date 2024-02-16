@@ -16,7 +16,7 @@ where $PRS_i$ is the score for person $i$, $w_j$ is the weight of SNP $j$, $X_{i
 
 * **Assumption 1: Additivity**: as in GWAS, by using these linear models we are assuming all relevant SNPs show additive associations with the trait of interest. That is, heterozygotes have half has much as homozygotes for the risk allele at a particular SNP.
 
-* **Assumption 2: Independence**: We are assuming each SNP's contribution to the trait prediction is independent (and additive). That is, if we have two SNPs with weights $w_1$ and $w_2$, we can model $Y=w_1X_1 + w_2_X2 + \epsilon$. We are ignoring any interactions between different variants.
+* **Assumption 2: Independence**: We are assuming each SNP's contribution to the trait prediction is independent (and additive). That is, if we have two SNPs with weights $w_1$ and $w_2$, we can model $Y=w_1X_1 + w_2X_2 + \epsilon$. We are ignoring any interactions between different variants.
 
 We typically will think of these scores as giving someone's risk or trait prediction *relative* to the rest of the population, rather than as giving an absolute risk value, as illustrated below:
 

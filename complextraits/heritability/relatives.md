@@ -33,10 +33,14 @@ $$
 Cor(Y_{child}, Y_{mid}) = \frac{cov(Y_{child}, Y_{mid})}{\sigma(Y_{child})\sigma(Y_{mid})}
 $$
 
-where $\sigma(Y)$ gives the standard deviation. We can assume the variance of $Y_{child}$ is similar to that of $Y_{mother}$ and $Y_{father}$ (all just reflect the variance of the phenotype in the population.) Therefore:
+where $\sigma(Y)$ gives the standard deviation. We can assume the variance of $Y_{child}$ is similar to that of $Y_{mother}$ and $Y_{father}$ (all just reflect the variance of the phenotype in the population). $Var(Y_{mother}=Y_{father}=Y_{child})$. Therefore:
 
 $$
-Var(Y_{mid}) = Var(\frac{Y_{mother}+Y_{father}}{2}) = 2Var(\frac{Y_{child}}{2}) = \frac{1}{2}Var(Y_{child})
+Var(Y_{mid}) = Var(\frac{Y_{mother}+Y_{father}}{2}) = Var(\frac{Y_{mother}}{2}) + Var(\frac{Y_{father}}{2})  = 2Var(\frac{Y_{child}}{2})
+$$
+
+$$
+Var(Y_{mid}) = \frac{1}{2}Var(Y_{child})
 $$
 
 We assumed there is no covariance between $Y_{mother}$ and $Y_{father}$ and also used the common relationship $Var(aX)=a^2Var(X)$. We can also write down the least squares estimate of $\beta$:
@@ -45,7 +49,7 @@ $$
 \beta = h^2 = \frac{cov(Y_{child}), Y_{mid}}{Var(Y_{mid})} = \frac{2cov(Y_{child}), Y_{mid}}{Var(Y_{child})} 
 $$
 
-Rearraing the above equation for the correlation and substituting our expressions for $\beta$ and $Var(Y_{child})$ gives:
+Rearranging the above equation for the correlation and substituting our expressions for $\beta$ and $Var(Y_{child})$ gives:
 
 $$
 Cor(Y_{child}, Y_{mid}) = \frac{cov(Y_{child}, Y_{mid})}{\sigma(Y_{child})\sigma(Y_{mid})} =  \frac{cov(Y_{child}, Y_{mid})}{\sqrt{2}Var(Y_{mid})} = \sqrt{\frac{1}{2}}h^2
@@ -71,6 +75,7 @@ r_{DZ} = \frac{1}{2}V_G + V_E
 $$
 
 Now we can rearrange to get:
+
 $$
 2(r_{MZ}-r_{DZ}) = 2V_G+2V_E-V_G-2V_E = V_G
 $$

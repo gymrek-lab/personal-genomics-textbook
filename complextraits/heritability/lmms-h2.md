@@ -25,7 +25,7 @@ $$
 That is, $Y$ has contributions from both genetic factors ($u$) and noise/environment ($\epsilon$). Taking the variance of each side and assuming no gene-environment interactions:
 
 $$
-Var(Y) = Var(u) + Var(e) = \sigma^2_gK+\sigma^2eI
+Var(Y) = Var(u) + Var(e) = \sigma^2_gK+\sigma^2_eI
 $$
 
 Note, $I$ is the $n \times n$ identity matrix and thus has 1's on the diagonal, and the mean diagonal value of $K$ is close to 1 assuming the SNPs were normalized first to have mean 0 variance 1.
