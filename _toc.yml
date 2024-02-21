@@ -80,6 +80,12 @@ parts:
         sections:
         - file: complextraits/prs/clumping-thresholding
         - file: complextraits/prs/bayesian_prs
+#      - file: complextraits/fine-mapping
+#        sections:
+#        - file: complextraits/fine-mapping/solved-gwas
+#        - file: complextraits/fine-mapping/condition_regression
+#        - file: complextraits/fine-mapping/bayesian_finemapping
+#        - file: complextraits/fine-mapping/trans-ancestry-finemapping
   - caption: Appendix 1 - glossary and notation
     chapters:
       - file: appendix/unix
