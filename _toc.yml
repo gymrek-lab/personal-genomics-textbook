@@ -86,6 +86,7 @@ parts:
 #        - file: complextraits/fine-mapping/condition_regression
 #        - file: complextraits/fine-mapping/bayesian_finemapping
 #        - file: complextraits/fine-mapping/trans-ancestry-finemapping
+#        - file: complextraits/fine-mapping/coloc
   - caption: Appendix 1 - glossary and notation
     chapters:
       - file: appendix/unix
