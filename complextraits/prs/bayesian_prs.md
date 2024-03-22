@@ -135,14 +135,15 @@ E[\beta| \hat{\beta}] = (D + T^{-1})^{-1}\hat{\beta}
 $$
 
 This is really exciting, since we can get:
-* The marginal effects from a published GWAS on our trait of interest
-* The LD matrix can be computed from publicly available genomes, such as the 1000 Genomes
+* The marginal effects $\hat{\beta}$ from a published GWAS on our trait of interest
+* The LD matrix $D$ can be computed from publicly available genomes, such as the 1000 Genomes
 
 These posterior estimates of $\beta$ are exactly what will be used as the weights in our PRS using the Bayesian approaches.
 
 Notes:
 * the variances of the priors on $\beta_j$ values (and therefore the $T$ matrix) will differ across methods. 
 * This formula has parallels to penalized regression techniques, such as ridge regression. The $T$ matrix can be viewed as a regularization term that forces us to shrink some of the $\beta_j$ values to 0.
+* To actually fit these models requires a method like Gibbs sampling since there are multiple unknown parameters to estimate (e.g. $\beta_j$'s, $\sigma^2$, $\sigma_j$'s)
 
 ## 9.2.5 Summary: frequentist vs. Bayesian PRS
 
