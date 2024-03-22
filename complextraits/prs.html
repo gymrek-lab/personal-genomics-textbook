@@ -7,9 +7,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Chapter 12: Polygenic risk scores &#8212; CSE284 - Personal Genomics</title>
+    <title>Chapter 9: Polygenic risk scores &#8212; CSE284 - Personal Genomics</title>
   
   
   
@@ -62,9 +62,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'complextraits/prs';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="9.1 Clumping + Threshold (C+T) method" href="prs/clumping-thresholding.html" />
+    <link rel="prev" title="8.2 Measuring SNP-based heritability using LMMs" href="heritability/lmms-h2.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -125,8 +129,6 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -220,6 +222,29 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../ancestry/plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../ancestry/plink1kg/1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ancestry/plink1kg/plink.html">T2.2 Some tips and examples for using plink</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 3 - From genotypes to phenotypes</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="gwas.html">Chapter 7: GWAS for complex traits</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="gwas/quantitative_traits.html">7.1 GWAS for quantitative traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gwas/GWAS-simulations.html">7.2 Exploring GWAS association statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gwas/confounding.html">7.3 Confounding factors in GWAS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gwas/case_control_traits.html">7.4 GWAS for case-control traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gwas/lmms.html">7.5 Linear mixed models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gwas/power.html">7.6 Power to detect associations</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="heritability.html">Chapter 8: Heritability</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="heritability/relatives.html">8.1 Measuring heritability in related individuals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="heritability/lmms-h2.html">8.2 Measuring SNP-based heritability using LMMs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Chapter 9: Polygenic risk scores</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="prs/clumping-thresholding.html">9.1 Clumping + Threshold (C+T) method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prs/bayesian_prs.html">9.2 Bayesian methods for polygenic risk scores</a></li>
 </ul>
 </li>
 </ul>
@@ -409,7 +434,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Chapter 12: Polygenic risk scores</h1>
+    <h1>Chapter 9: Polygenic risk scores</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -423,8 +448,31 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="chapter-12-polygenic-risk-scores">
-<h1>Chapter 12: Polygenic risk scores<a class="headerlink" href="#chapter-12-polygenic-risk-scores" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="chapter-9-polygenic-risk-scores">
+<h1>Chapter 9: Polygenic risk scores<a class="headerlink" href="#chapter-9-polygenic-risk-scores" title="Permalink to this heading">#</a></h1>
+<p>In the previous chapter, we performed GWAS to identify regions of the genome associated with complex traits. In this chapter, we will attempt to use the results from GWAS as a starting point to build <em>predictive models</em> to predict a person’s value of a trait (or risk for disease) from their genome.</p>
+<p>The ability to predict traits from genomes has multiple potential clinical applications. For example, if we could predict who is most at risk for heart disease, we could prioritize them for treatment with cholesterol-lowering statin medication. Or, if someone is predicted to have high risk for breast or prostate cancer, they can be prescribed earlier and more frequent screening for those conditions. Another use case could be determining the best course of treatment by using a person’s genome to predict the outcome of different treatments.</p>
+<p>As in GWAS, we’ll be focusing on <em>complex</em>, or <em>polygenic</em>, traits, which have contributions from many genetic variants across the genome. To predict these traits, we will build <strong>polygenic risk scores</strong> (PRS), which you might also see referred to as <strong>polygenic scores</strong> (PGS).</p>
+<p>We will see multiple ways to construct PRS, but most final scores consist of a weighted sum of SNP genotypes across a set of trait-relevant SNPs <span class="math notranslate nohighlight">\(S\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+PRS_i = \sum_{j \in S} w_j X_{ij}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(PRS_i\)</span> is the score for person <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(w_j\)</span> is the weight of SNP <span class="math notranslate nohighlight">\(j\)</span>, <span class="math notranslate nohighlight">\(X_{ij}\)</span> is the genotype (0, 1, or 2) of person <span class="math notranslate nohighlight">\(i\)</span> at SNP <span class="math notranslate nohighlight">\(j\)</span>. <span class="math notranslate nohighlight">\(S\)</span> here is the set of SNPs included in the score, which will differ between different scores. Note these scores are making several simplifying assumptions about the <em>genetic architecture</em> of complex traits:</p>
+<ul class="simple">
+<li><p><strong>Assumption 1: Additivity</strong>: as in GWAS, by using these linear models we are assuming all relevant SNPs show additive associations with the trait of interest. That is, heterozygotes have half has much as homozygotes for the risk allele at a particular SNP.</p></li>
+<li><p><strong>Assumption 2: Independence</strong>: We are assuming each SNP’s contribution to the trait prediction is independent (and additive). That is, if we have two SNPs with weights <span class="math notranslate nohighlight">\(w_1\)</span> and <span class="math notranslate nohighlight">\(w_2\)</span>, we can model <span class="math notranslate nohighlight">\(Y=w_1X_1 + w_2X_2 + \epsilon\)</span>. We are ignoring any interactions between different variants.</p></li>
+</ul>
+<p>We typically will think of these scores as giving someone’s risk or trait prediction <em>relative</em> to the rest of the population, rather than as giving an absolute risk value, as illustrated below:</p>
+<p><img alt="prs_curve" src="../_images/prs_curve.jpeg" /></p>
+<p>Source: <a class="reference external" href="https://www.cdc.gov/genomics/disease/polygenic.htm">https://www.cdc.gov/genomics/disease/polygenic.htm</a>.
+Polygenic risk scores can be used to determine who is at high vs. low risk for a trait.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="prs/clumping-thresholding.html">9.1 Clumping + Threshold (C+T) method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prs/bayesian_prs.html">9.2 Bayesian methods for polygenic risk scores</a></li>
+</ul>
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -457,6 +505,24 @@ document.write(`
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="heritability/lmms-h2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">8.2 Measuring SNP-based heritability using LMMs</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="prs/clumping-thresholding.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">9.1 Clumping + Threshold (C+T) method</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               

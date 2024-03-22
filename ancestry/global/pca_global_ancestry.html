@@ -7,7 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>4.1 Global ancestry analysis with PCA &#8212; CSE284 - Personal Genomics</title>
   
@@ -234,11 +234,17 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../../complextraits/gwas/confounding.html">7.3 Confounding factors in GWAS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../complextraits/gwas/case_control_traits.html">7.4 GWAS for case-control traits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../complextraits/gwas/lmms.html">7.5 Linear mixed models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../complextraits/gwas/power.html">7.6 Power to detect associations</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../complextraits/heritability.html">Chapter 8: Heritability</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../complextraits/heritability/relatives.html">8.1 Measuring heritability in related individuals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../complextraits/heritability/lmms-h2.html">8.2 Measuring SNP-based heritability using LMMs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../complextraits/prs.html">Chapter 9: Polygenic risk scores</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../complextraits/prs/clumping-thresholding.html">9.1 Clumping + Threshold (C+T) method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../complextraits/prs/bayesian_prs.html">9.2 Bayesian methods for polygenic risk scores</a></li>
 </ul>
 </li>
 </ul>
@@ -547,7 +553,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/ce761a11d78be4531bdf3d023fe99e01bba889ad4b127682ac07d6e5967d2507.png" src="../../_images/ce761a11d78be4531bdf3d023fe99e01bba889ad4b127682ac07d6e5967d2507.png" />
+<img alt="../../_images/7302a08d714b85b8ad2af05432db3588458637c7e95d1629ffca61ad64d06e3b.png" src="../../_images/7302a08d714b85b8ad2af05432db3588458637c7e95d1629ffca61ad64d06e3b.png" />
 </div>
 </div>
 <p>Intuitively, if we had do draw a line through these points that explained the largest about of variation in our data, we’d draw it along the x=y diagonal. After that, the rest of the variation in the data can be described as the distance of each point from that diagonal. Those two directions will be the two principal components (PCs).</p>
@@ -659,7 +665,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/86f1b3f0a3089057e078bc1a123e85772767b098ba54e8e75995ce9b8bac0c15.png" src="../../_images/86f1b3f0a3089057e078bc1a123e85772767b098ba54e8e75995ce9b8bac0c15.png" />
+<img alt="../../_images/453d55644759086f50d2f787e397e8f67321103ab2771b4778dc8b4600906b73.png" src="../../_images/453d55644759086f50d2f787e397e8f67321103ab2771b4778dc8b4600906b73.png" />
 </div>
 </div>
 <p>We note an interesting property - that the covariance matrix <span class="math notranslate nohighlight">\(C\)</span> can now be decomposed in terms of its eigenvectors and eigenvalues. Let:</p>
@@ -704,7 +710,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/a2bd3b567ec3c9934bdb60d864a3b5b1bb9dedc60ab1c8634f99e2d2019ac70b.png" src="../../_images/a2bd3b567ec3c9934bdb60d864a3b5b1bb9dedc60ab1c8634f99e2d2019ac70b.png" />
+<img alt="../../_images/dcfb035c58309a25eabeb7e35245d28fc5fc4a5e497521343ac4047ea72422da.png" src="../../_images/dcfb035c58309a25eabeb7e35245d28fc5fc4a5e497521343ac4047ea72422da.png" />
 </div>
 </div>
 </section>

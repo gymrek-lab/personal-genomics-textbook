@@ -7,7 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>7.5 Linear mixed models &#8212; CSE284 - Personal Genomics</title>
   
@@ -67,7 +67,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'complextraits/gwas/lmms';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Chapter 8: Heritability" href="../heritability.html" />
+    <link rel="next" title="7.6 Power to detect associations" href="power.html" />
     <link rel="prev" title="7.4 GWAS for case-control traits" href="case_control_traits.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -234,11 +234,17 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="confounding.html">7.3 Confounding factors in GWAS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="case_control_traits.html">7.4 GWAS for case-control traits</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">7.5 Linear mixed models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="power.html">7.6 Power to detect associations</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../heritability.html">Chapter 8: Heritability</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../heritability/relatives.html">8.1 Measuring heritability in related individuals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../heritability/lmms-h2.html">8.2 Measuring SNP-based heritability using LMMs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../prs.html">Chapter 9: Polygenic risk scores</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../prs/clumping-thresholding.html">9.1 Clumping + Threshold (C+T) method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../prs/bayesian_prs.html">9.2 Bayesian methods for polygenic risk scores</a></li>
 </ul>
 </li>
 </ul>
@@ -471,7 +477,7 @@ document.write(`
 <p>Recall our original linear model we used for quantitative traits:</p>
 <div class="math notranslate nohighlight">
 \[
-Y = \beta_j X_j + C\gamma + \epsilon_j
+Y = \beta_j X_j + C\gamma + \epsilon
 \]</div>
 <p>where:</p>
 <ul class="simple">
@@ -479,9 +485,9 @@ Y = \beta_j X_j + C\gamma + \epsilon_j
 <li><p><span class="math notranslate nohighlight">\(X_j=\{x_{j1}, ..., x_{jn}\}\)</span> is a vector of genotypes for SNP <span class="math notranslate nohighlight">\(j\)</span> (0s, 1s, and 2s).</p></li>
 <li><p><span class="math notranslate nohighlight">\(\beta_j\)</span> is the effect size for SNP <span class="math notranslate nohighlight">\(j\)</span> (this is just a scalar value).</p></li>
 <li><p><span class="math notranslate nohighlight">\(C\)</span> is an <span class="math notranslate nohighlight">\(n\times C\)</span> matrix of covariates (e.g. sex, age, top population PCs) and <span class="math notranslate nohighlight">\(\gamma\)</span> is a <span class="math notranslate nohighlight">\(C \times 1\)</span> vector of covariate coefficients.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\epsilon=\{\epsilon_{1}..., \epsilon_{j}\}\)</span> is a vector of noise terms for each sample.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\epsilon=\{\epsilon_{1}..., \epsilon_{n}\}\)</span> is a vector of noise terms for each sample.</p></li>
 </ul>
-<p>We generally make the assumption that the noise term for each sample is independent and normally distributed, with <span class="math notranslate nohighlight">\(\epsilon_j \sim N(0, \sigma^2_e I)\)</span>. Here <span class="math notranslate nohighlight">\(\sigma^2_e\)</span> is an unknown scalar value that quantifies how much variance is due to the noise term (not explained by SNP <span class="math notranslate nohighlight">\(j\)</span>), and <span class="math notranslate nohighlight">\(I\)</span> is the <span class="math notranslate nohighlight">\(n \times n\)</span> identity matrix. In other words, the variance of each individuals noise term is <span class="math notranslate nohighlight">\(\sigma^2_e\)</span> and the covariance between noise terms for different samples is 0.</p>
+<p>We generally make the assumption that the noise term for each sample is independent and normally distributed, with <span class="math notranslate nohighlight">\(\epsilon_i \sim N(0, \sigma^2_e I)\)</span>. Here <span class="math notranslate nohighlight">\(\sigma^2_e\)</span> is an unknown scalar value that quantifies how much variance is due to the noise term (not explained by SNP <span class="math notranslate nohighlight">\(j\)</span>), and <span class="math notranslate nohighlight">\(I\)</span> is the <span class="math notranslate nohighlight">\(n \times n\)</span> identity matrix. In other words, the variance of each individuals noise term is <span class="math notranslate nohighlight">\(\sigma^2_e\)</span> and the covariance between noise terms for different samples is 0.</p>
 <p>In the model above, we refer to the SNP (<span class="math notranslate nohighlight">\(\beta_j X_j\)</span>) and covariates (<span class="math notranslate nohighlight">\(C\gamma\)</span>) terms as <em>fixed effects</em>. This means we assume they have some true underlying, constant, value.</p>
 <p>Now we will introduce an additional term to our model:</p>
 <div class="math notranslate nohighlight">
@@ -583,11 +589,11 @@ K = X^TX/m
       </div>
     </a>
     <a class="right-next"
-       href="../heritability.html"
+       href="power.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Chapter 8: Heritability</p>
+        <p class="prev-next-title">7.6 Power to detect associations</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

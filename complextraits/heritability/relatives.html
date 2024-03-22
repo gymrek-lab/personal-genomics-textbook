@@ -7,7 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>8.1 Measuring heritability in related individuals &#8212; CSE284 - Personal Genomics</title>
   
@@ -234,11 +234,17 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../gwas/confounding.html">7.3 Confounding factors in GWAS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gwas/case_control_traits.html">7.4 GWAS for case-control traits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gwas/lmms.html">7.5 Linear mixed models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gwas/power.html">7.6 Power to detect associations</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../heritability.html">Chapter 8: Heritability</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">8.1 Measuring heritability in related individuals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lmms-h2.html">8.2 Measuring SNP-based heritability using LMMs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../prs.html">Chapter 9: Polygenic risk scores</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../prs/clumping-thresholding.html">9.1 Clumping + Threshold (C+T) method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../prs/bayesian_prs.html">9.2 Bayesian methods for polygenic risk scores</a></li>
 </ul>
 </li>
 </ul>
@@ -482,17 +488,21 @@ Y_{child} = \beta Y_{mid} + \epsilon
 \[
 Cor(Y_{child}, Y_{mid}) = \frac{cov(Y_{child}, Y_{mid})}{\sigma(Y_{child})\sigma(Y_{mid})}
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(\sigma(Y)\)</span> gives the standard deviation. We can assume the variance of <span class="math notranslate nohighlight">\(Y_{child}\)</span> is similar to that of <span class="math notranslate nohighlight">\(Y_{mother}\)</span> and <span class="math notranslate nohighlight">\(Y_{father}\)</span> (all just reflect the variance of the phenotype in the population.) Therefore:</p>
+<p>where <span class="math notranslate nohighlight">\(\sigma(Y)\)</span> gives the standard deviation. We can assume the variance of <span class="math notranslate nohighlight">\(Y_{child}\)</span> is similar to that of <span class="math notranslate nohighlight">\(Y_{mother}\)</span> and <span class="math notranslate nohighlight">\(Y_{father}\)</span> (all just reflect the variance of the phenotype in the population). <span class="math notranslate nohighlight">\(Var(Y_{mother}=Y_{father}=Y_{child})\)</span>. Therefore:</p>
 <div class="math notranslate nohighlight">
 \[
-Var(Y_{mid}) = Var(\frac{Y_{mother}+Y_{father}}{2}) = 2Var(\frac{Y_{child}}{2}) = \frac{1}{2}Var(Y_{child})
+Var(Y_{mid}) = Var(\frac{Y_{mother}+Y_{father}}{2}) = Var(\frac{Y_{mother}}{2}) + Var(\frac{Y_{father}}{2})  = 2Var(\frac{Y_{child}}{2})
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+Var(Y_{mid}) = \frac{1}{2}Var(Y_{child})
 \]</div>
 <p>We assumed there is no covariance between <span class="math notranslate nohighlight">\(Y_{mother}\)</span> and <span class="math notranslate nohighlight">\(Y_{father}\)</span> and also used the common relationship <span class="math notranslate nohighlight">\(Var(aX)=a^2Var(X)\)</span>. We can also write down the least squares estimate of <span class="math notranslate nohighlight">\(\beta\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[
 \beta = h^2 = \frac{cov(Y_{child}), Y_{mid}}{Var(Y_{mid})} = \frac{2cov(Y_{child}), Y_{mid}}{Var(Y_{child})} 
 \]</div>
-<p>Rearraing the above equation for the correlation and substituting our expressions for <span class="math notranslate nohighlight">\(\beta\)</span> and <span class="math notranslate nohighlight">\(Var(Y_{child})\)</span> gives:</p>
+<p>Rearranging the above equation for the correlation and substituting our expressions for <span class="math notranslate nohighlight">\(\beta\)</span> and <span class="math notranslate nohighlight">\(Var(Y_{child})\)</span> gives:</p>
 <div class="math notranslate nohighlight">
 \[
 Cor(Y_{child}, Y_{mid}) = \frac{cov(Y_{child}, Y_{mid})}{\sigma(Y_{child})\sigma(Y_{mid})} =  \frac{cov(Y_{child}, Y_{mid})}{\sqrt{2}Var(Y_{mid})} = \sqrt{\frac{1}{2}}h^2
@@ -512,10 +522,11 @@ r_{MZ} = V_G + V_E
 \[
 r_{DZ} = \frac{1}{2}V_G + V_E
 \]</div>
-<p>Now we can rearrange to get:
-$<span class="math notranslate nohighlight">\(
+<p>Now we can rearrange to get:</p>
+<div class="math notranslate nohighlight">
+\[
 2(r_{MZ}-r_{DZ}) = 2V_G+2V_E-V_G-2V_E = V_G
-\)</span>$</p>
+\]</div>
 <p>this is known as <em>Falconer’s</em> method to estimate heritability from twin studies as:</p>
 <div class="math notranslate nohighlight">
 \[

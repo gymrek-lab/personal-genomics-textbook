@@ -7,7 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>8.2 Measuring SNP-based heritability using LMMs &#8212; CSE284 - Personal Genomics</title>
   
@@ -67,7 +67,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'complextraits/heritability/lmms-h2';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Chapter A1.1: Unix cheat sheet" href="../../appendix/unix.html" />
+    <link rel="next" title="Chapter 9: Polygenic risk scores" href="../prs.html" />
     <link rel="prev" title="8.1 Measuring heritability in related individuals" href="relatives.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -234,11 +234,17 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../gwas/confounding.html">7.3 Confounding factors in GWAS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gwas/case_control_traits.html">7.4 GWAS for case-control traits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gwas/lmms.html">7.5 Linear mixed models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gwas/power.html">7.6 Power to detect associations</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../heritability.html">Chapter 8: Heritability</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="relatives.html">8.1 Measuring heritability in related individuals</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">8.2 Measuring SNP-based heritability using LMMs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../prs.html">Chapter 9: Polygenic risk scores</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../prs/clumping-thresholding.html">9.1 Clumping + Threshold (C+T) method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../prs/bayesian_prs.html">9.2 Bayesian methods for polygenic risk scores</a></li>
 </ul>
 </li>
 </ul>
@@ -468,7 +474,7 @@ Y = u + \epsilon
 <p>That is, <span class="math notranslate nohighlight">\(Y\)</span> has contributions from both genetic factors (<span class="math notranslate nohighlight">\(u\)</span>) and noise/environment (<span class="math notranslate nohighlight">\(\epsilon\)</span>). Taking the variance of each side and assuming no gene-environment interactions:</p>
 <div class="math notranslate nohighlight">
 \[
-Var(Y) = Var(u) + Var(e) = \sigma^2_gK+\sigma^2eI
+Var(Y) = Var(u) + Var(e) = \sigma^2_gK+\sigma^2_eI
 \]</div>
 <p>Note, <span class="math notranslate nohighlight">\(I\)</span> is the <span class="math notranslate nohighlight">\(n \times n\)</span> identity matrix and thus has 1’s on the diagonal, and the mean diagonal value of <span class="math notranslate nohighlight">\(K\)</span> is close to 1 assuming the SNPs were normalized first to have mean 0 variance 1.</p>
 <p>Then:</p>
@@ -520,11 +526,11 @@ h^2_{SNP} = \frac{\sigma^2_g}{\sigma^2_g + \sigma^2_e}
       </div>
     </a>
     <a class="right-next"
-       href="../../appendix/unix.html"
+       href="../prs.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Chapter A1.1: Unix cheat sheet</p>
+        <p class="prev-next-title">Chapter 9: Polygenic risk scores</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

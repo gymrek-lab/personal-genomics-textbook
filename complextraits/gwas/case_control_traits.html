@@ -7,7 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>7.4 GWAS for case-control traits &#8212; CSE284 - Personal Genomics</title>
   
@@ -234,11 +234,17 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="confounding.html">7.3 Confounding factors in GWAS</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">7.4 GWAS for case-control traits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lmms.html">7.5 Linear mixed models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="power.html">7.6 Power to detect associations</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../heritability.html">Chapter 8: Heritability</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../heritability/relatives.html">8.1 Measuring heritability in related individuals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../heritability/lmms-h2.html">8.2 Measuring SNP-based heritability using LMMs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../prs.html">Chapter 9: Polygenic risk scores</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../prs/clumping-thresholding.html">9.1 Clumping + Threshold (C+T) method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../prs/bayesian_prs.html">9.2 Bayesian methods for polygenic risk scores</a></li>
 </ul>
 </li>
 </ul>
@@ -460,7 +466,7 @@ document.write(`
 <section id="chi-square-test-for-case-control-traits">
 <h2>7.4.1 Chi-square test for case-control traits<a class="headerlink" href="#chi-square-test-for-case-control-traits" title="Permalink to this heading">#</a></h2>
 <p>Let’s consider a single SNP, with alleles T and G. We’d like to test for association between the genotypes at this SNP and a case-control phenotype. We could start by making a table of how many times we saw each <em>genotype</em> (TT, TG, or GG) in either cases or controls:</p>
-<table class="table">
+<table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p>TT</p></th>
@@ -491,7 +497,7 @@ document.write(`
 </tbody>
 </table>
 <p>Now, we can convert that to a table of how many times we saw each <em>allele</em>:</p>
-<table class="table">
+<table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p>T</p></th>
@@ -530,7 +536,7 @@ OR(T) = \frac{B/A}{D/C} = \frac{BC}{AD}
 \]</div>
 <p>In this case, we get the OR=4. That is, the odds that a T occurs in a case is 4 times higher than the odds that a G occurs in a case.</p>
 <p>We’d also like to get a p-value to assess whether this is statistically significant. In this case, the <em>null hypothesis</em> is that the OR=1. An OR<span class="math notranslate nohighlight">\(&gt;\)</span>1 indicates that allele T increases risk, whereas an OR<span class="math notranslate nohighlight">\(&lt;\)</span>1 indicates that it decreases risk. We can use a Chi-square test to do this. A Chi-square test compares the observed vs. expected counts. We can compute the expected counts in each cell in our table, assuming the alleles were equally distributed in the cases and controls:</p>
-<table class="table">
+<table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p>T</p></th>

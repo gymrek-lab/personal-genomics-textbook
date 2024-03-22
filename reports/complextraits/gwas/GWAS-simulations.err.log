@@ -1,60 +1,136 @@
 Traceback (most recent call last):
-  File "/Users/den/miniconda3/envs/cse284/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+  File "/Users/melissagymrek/miniconda3/lib/python3.11/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
     executenb(
-  File "/Users/den/miniconda3/envs/cse284/lib/python3.9/site-packages/nbclient/client.py", line 1204, in execute
+  File "/Users/melissagymrek/miniconda3/lib/python3.11/site-packages/nbclient/client.py", line 1305, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-  File "/Users/den/miniconda3/envs/cse284/lib/python3.9/site-packages/nbclient/util.py", line 84, in wrapped
-    return just_run(coro(*args, **kwargs))
-  File "/Users/den/miniconda3/envs/cse284/lib/python3.9/site-packages/nbclient/util.py", line 62, in just_run
-    return loop.run_until_complete(coro)
-  File "/Users/den/miniconda3/envs/cse284/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/melissagymrek/miniconda3/lib/python3.11/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/melissagymrek/miniconda3/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
     return future.result()
-  File "/Users/den/miniconda3/envs/cse284/lib/python3.9/site-packages/nbclient/client.py", line 663, in async_execute
+           ^^^^^^^^^^^^^^^
+  File "/Users/melissagymrek/miniconda3/lib/python3.11/site-packages/nbclient/client.py", line 705, in async_execute
     await self.async_execute_cell(
-  File "/Users/den/miniconda3/envs/cse284/lib/python3.9/site-packages/nbclient/client.py", line 965, in async_execute_cell
+  File "/Users/melissagymrek/miniconda3/lib/python3.11/site-packages/nbclient/client.py", line 1058, in async_execute_cell
     await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "/Users/den/miniconda3/envs/cse284/lib/python3.9/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+  File "/Users/melissagymrek/miniconda3/lib/python3.11/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import statsmodels.api as sm
-# Perform a GWAS between the genotypes and phenotypes
-def Linreg(gts, pts):
-    X = sm.add_constant(gts)
-    model = sm.OLS(pts, X)
-    results = model.fit()
-    beta = results.params[1]
-    pval = results.pvalues[1]
-    return beta, pval
+%pylab inline
+import numpy as np
+import seaborn as sns
 
+# Simulate genotypes for N samples with minor allele frequency maf (assuming HWE)
+def SimulateGenotypes(maf, N):
+    gts = []
+    for i in range(N):
+        gt = sum(random.random() < maf)+sum(random.random() < maf)
+        gts.append(gt)
+    # Technical note: scale to have mean 0 var 1
+    gts = np.array(gts)
+    gts = (gts-np.mean(gts))/np.sqrt(np.var(gts))
+    return gts
+
+# Simulate phenotypes under a linear model Y=beta*X+error
+def SimulatePhenotype(gts, Beta):
+    if Beta<-1 or Beta>1:
+        print("Error: Beta should be between -1 and 1")
+        return [None]*len(pts)
+    pts = Beta*gts + np.random.normal(0, np.sqrt(1-Beta**2), size=len(gts))
+    return pts
+
+# Simulate an example association
 N = 1000 # sample size (number of people)
-maf = 0.2 # Minor allele frequency
 Beta = 0.5 # Effect size
+maf = 0.2 # Minor allele frequency
 gts = SimulateGenotypes(maf, N)
 pts = SimulatePhenotype(gts, Beta)
-gwas_beta, gwas_pval = Linreg(gts, pts)
 
-# Plot the association result
 fig = plt.figure()
-ax = fig.add_subplot(111)
+fig.set_size_inches((8, 4))
+
+# Plot the distribution of phenotypes, should be normal-looking
+ax = fig.add_subplot(121)
+ax.hist(pts, alpha=0.5)
+ax.set_xlabel("Phenotype")
+ax.set_ylabel("Frequency")
+
+# Plot the association
+ax = fig.add_subplot(122)
 ax = sns.boxplot(x=gts, y=pts, whis=np.inf)
-ax.plot(gts, gwas_beta*gts, color="black") # GWAS linear regression fit
-ax.set_xticklabels(["AA","AT","TT"])
 ax.set_xlabel("Genotype")
 ax.set_ylabel("Phenotype");
-
-# Print out GWAS results
-print("Beta: %s"%gwas_beta)
-print("Pval: %s"%gwas_pval)
+ax.set_xticklabels(["AA","AT","TT"])
+fig.tight_layout()
 ------------------
+
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Cell [0;32mIn[2], line 1[0m
-[0;32m----> 1[0m [38;5;28;01mimport[39;00m [38;5;21;01mstatsmodels[39;00m[38;5;21;01m.[39;00m[38;5;21;01mapi[39;00m [38;5;28;01mas[39;00m [38;5;21;01msm[39;00m
-[1;32m      2[0m [38;5;66;03m# Perform a GWAS between the genotypes and phenotypes[39;00m
-[1;32m      3[0m [38;5;28;01mdef[39;00m [38;5;21mLinreg[39m(gts, pts):
+Cell [0;32mIn[1], line 1[0m
+[0;32m----> 1[0m [43mget_ipython[49m[43m([49m[43m)[49m[38;5;241;43m.[39;49m[43mrun_line_magic[49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43mpylab[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43minline[39;49m[38;5;124;43m'[39;49m[43m)[49m
+[1;32m      2[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
+[1;32m      3[0m [38;5;28;01mimport[39;00m [38;5;21;01mseaborn[39;00m [38;5;28;01mas[39;00m [38;5;21;01msns[39;00m
 
-[0;31mModuleNotFoundError[0m: No module named 'statsmodels'
-ModuleNotFoundError: No module named 'statsmodels'
+File [0;32m~/miniconda3/lib/python3.11/site-packages/IPython/core/interactiveshell.py:2456[0m, in [0;36mInteractiveShell.run_line_magic[0;34m(self, magic_name, line, _stack_depth)[0m
+[1;32m   2454[0m     kwargs[[38;5;124m'[39m[38;5;124mlocal_ns[39m[38;5;124m'[39m] [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mget_local_scope(stack_depth)
+[1;32m   2455[0m [38;5;28;01mwith[39;00m [38;5;28mself[39m[38;5;241m.[39mbuiltin_trap:
+[0;32m-> 2456[0m     result [38;5;241m=[39m [43mfn[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[1;32m   2458[0m [38;5;66;03m# The code below prevents the output from being displayed[39;00m
+[1;32m   2459[0m [38;5;66;03m# when using magics with decorator @output_can_be_silenced[39;00m
+[1;32m   2460[0m [38;5;66;03m# when the last Python token in the expression is a ';'.[39;00m
+[1;32m   2461[0m [38;5;28;01mif[39;00m [38;5;28mgetattr[39m(fn, magic[38;5;241m.[39mMAGIC_OUTPUT_CAN_BE_SILENCED, [38;5;28;01mFalse[39;00m):
+
+File [0;32m~/miniconda3/lib/python3.11/site-packages/IPython/core/magics/pylab.py:155[0m, in [0;36mPylabMagics.pylab[0;34m(self, line)[0m
+[1;32m    151[0m [38;5;28;01melse[39;00m:
+[1;32m    152[0m     [38;5;66;03m# invert no-import flag[39;00m
+[1;32m    153[0m     import_all [38;5;241m=[39m [38;5;129;01mnot[39;00m args[38;5;241m.[39mno_import_all
+[0;32m--> 155[0m gui, backend, clobbered [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mshell[49m[38;5;241;43m.[39;49m[43menable_pylab[49m[43m([49m[43margs[49m[38;5;241;43m.[39;49m[43mgui[49m[43m,[49m[43m [49m[43mimport_all[49m[38;5;241;43m=[39;49m[43mimport_all[49m[43m)[49m
+[1;32m    156[0m [38;5;28mself[39m[38;5;241m.[39m_show_matplotlib_backend(args[38;5;241m.[39mgui, backend)
+[1;32m    157[0m [38;5;28mprint[39m(
+[1;32m    158[0m     [38;5;124m"[39m[38;5;124m%[39m[38;5;124mpylab is deprecated, use [39m[38;5;124m%[39m[38;5;124mmatplotlib inline and import the required libraries.[39m[38;5;124m"[39m
+[1;32m    159[0m )
+
+File [0;32m~/miniconda3/lib/python3.11/site-packages/IPython/core/interactiveshell.py:3687[0m, in [0;36mInteractiveShell.enable_pylab[0;34m(self, gui, import_all, welcome_message)[0m
+[1;32m   3660[0m [38;5;250m[39m[38;5;124;03m"""Activate pylab support at runtime.[39;00m
+[1;32m   3661[0m 
+[1;32m   3662[0m [38;5;124;03mThis turns on support for matplotlib, preloads into the interactive[39;00m
+[0;32m   (...)[0m
+[1;32m   3683[0m [38;5;124;03m    This argument is ignored, no welcome message will be displayed.[39;00m
+[1;32m   3684[0m [38;5;124;03m"""[39;00m
+[1;32m   3685[0m [38;5;28;01mfrom[39;00m [38;5;21;01mIPython[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcore[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpylabtools[39;00m [38;5;28;01mimport[39;00m import_pylab
+[0;32m-> 3687[0m gui, backend [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43menable_matplotlib[49m[43m([49m[43mgui[49m[43m)[49m
+[1;32m   3689[0m [38;5;66;03m# We want to prevent the loading of pylab to pollute the user's[39;00m
+[1;32m   3690[0m [38;5;66;03m# namespace as shown by the %who* magics, so we execute the activation[39;00m
+[1;32m   3691[0m [38;5;66;03m# code in an empty namespace, and we update *both* user_ns and[39;00m
+[1;32m   3692[0m [38;5;66;03m# user_ns_hidden with this information.[39;00m
+[1;32m   3693[0m ns [38;5;241m=[39m {}
+
+File [0;32m~/miniconda3/lib/python3.11/site-packages/IPython/core/interactiveshell.py:3633[0m, in [0;36mInteractiveShell.enable_matplotlib[0;34m(self, gui)[0m
+[1;32m   3612[0m [38;5;28;01mdef[39;00m [38;5;21menable_matplotlib[39m([38;5;28mself[39m, gui[38;5;241m=[39m[38;5;28;01mNone[39;00m):
+[1;32m   3613[0m [38;5;250m    [39m[38;5;124;03m"""Enable interactive matplotlib and inline figure support.[39;00m
+[1;32m   3614[0m 
+[1;32m   3615[0m [38;5;124;03m    This takes the following steps:[39;00m
+[0;32m   (...)[0m
+[1;32m   3631[0m [38;5;124;03m        display figures inline.[39;00m
+[1;32m   3632[0m [38;5;124;03m    """[39;00m
+[0;32m-> 3633[0m     [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib_inline[39;00m[38;5;21;01m.[39;00m[38;5;21;01mbackend_inline[39;00m [38;5;28;01mimport[39;00m configure_inline_support
+[1;32m   3635[0m     [38;5;28;01mfrom[39;00m [38;5;21;01mIPython[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcore[39;00m [38;5;28;01mimport[39;00m pylabtools [38;5;28;01mas[39;00m pt
+[1;32m   3636[0m     gui, backend [38;5;241m=[39m pt[38;5;241m.[39mfind_gui_and_backend(gui, [38;5;28mself[39m[38;5;241m.[39mpylab_gui_select)
+
+File [0;32m~/miniconda3/lib/python3.11/site-packages/matplotlib_inline/__init__.py:1[0m
+[0;32m----> 1[0m [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m [38;5;28;01mimport[39;00m backend_inline, config  [38;5;66;03m# noqa[39;00m
+[1;32m      2[0m __version__ [38;5;241m=[39m [38;5;124m"[39m[38;5;124m0.1.6[39m[38;5;124m"[39m  [38;5;66;03m# noqa[39;00m
+
+File [0;32m~/miniconda3/lib/python3.11/site-packages/matplotlib_inline/backend_inline.py:6[0m
+[1;32m      1[0m [38;5;124;03m"""A matplotlib backend for publishing figures via display_data"""[39;00m
+[1;32m      3[0m [38;5;66;03m# Copyright (c) IPython Development Team.[39;00m
+[1;32m      4[0m [38;5;66;03m# Distributed under the terms of the BSD 3-Clause License.[39;00m
+[0;32m----> 6[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m
+[1;32m      7[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mimport[39;00m colors
+[1;32m      8[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mbackends[39;00m [38;5;28;01mimport[39;00m backend_agg
+
+[0;31mModuleNotFoundError[0m: No module named 'matplotlib'
 

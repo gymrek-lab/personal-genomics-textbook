@@ -7,7 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Activity: Exploring the Wright-Fisher model of genetic drift &#8212; CSE284 - Personal Genomics</title>
   
@@ -234,11 +234,17 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../../complextraits/gwas/confounding.html">7.3 Confounding factors in GWAS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../complextraits/gwas/case_control_traits.html">7.4 GWAS for case-control traits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../complextraits/gwas/lmms.html">7.5 Linear mixed models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../complextraits/gwas/power.html">7.6 Power to detect associations</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../complextraits/heritability.html">Chapter 8: Heritability</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../complextraits/heritability/relatives.html">8.1 Measuring heritability in related individuals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../complextraits/heritability/lmms-h2.html">8.2 Measuring SNP-based heritability using LMMs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../complextraits/prs.html">Chapter 9: Polygenic risk scores</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../complextraits/prs/clumping-thresholding.html">9.1 Clumping + Threshold (C+T) method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../complextraits/prs/bayesian_prs.html">9.2 Bayesian methods for polygenic risk scores</a></li>
 </ul>
 </li>
 </ul>
@@ -567,7 +573,7 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/c293b4b264b95a27ad6fbcc37a25c702f819a728103d2ea2afb699e1270d06a2.png" src="../../_images/c293b4b264b95a27ad6fbcc37a25c702f819a728103d2ea2afb699e1270d06a2.png" />
+<img alt="../../_images/d4e82e517426b9993da75421808136e9f72e53afd957fb4c5394a3777df445c9.png" src="../../_images/d4e82e517426b9993da75421808136e9f72e53afd957fb4c5394a3777df445c9.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -589,7 +595,7 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/d4328ce577256881a73fa9ba3ab5141569b0b0a5c934cab622054f95d06fb9ea.png" src="../../_images/d4328ce577256881a73fa9ba3ab5141569b0b0a5c934cab622054f95d06fb9ea.png" />
+<img alt="../../_images/7125aed5ade38604a1b69e8a1554b1b013a803fff16ac96832d77410ed0df0ac.png" src="../../_images/7125aed5ade38604a1b69e8a1554b1b013a803fff16ac96832d77410ed0df0ac.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -627,7 +633,7 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/f82787bbc782ae4217271ff83612eddc9fe4c9346d25799d9bdba6d97938ee5f.png" src="../../_images/f82787bbc782ae4217271ff83612eddc9fe4c9346d25799d9bdba6d97938ee5f.png" />
+<img alt="../../_images/4c9af5f91f331d7301da4859e1b44e76cd6769e42a4884388ba18d58a989a6f6.png" src="../../_images/4c9af5f91f331d7301da4859e1b44e76cd6769e42a4884388ba18d58a989a6f6.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -666,7 +672,7 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/199178b36fb98a74d62f0bfab7b248c9c7d53036f941aea6f3fde6d16f3a8394.png" src="../../_images/199178b36fb98a74d62f0bfab7b248c9c7d53036f941aea6f3fde6d16f3a8394.png" />
+<img alt="../../_images/329a852c095dcf16334bd810b93e25294492817b8f864782b1c96d242c687d83.png" src="../../_images/329a852c095dcf16334bd810b93e25294492817b8f864782b1c96d242c687d83.png" />
 </div>
 </div>
 </section>
@@ -747,7 +753,7 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/14b2e0c27cc040252117301695dde6c816af8cee6c2a68b2f9a14d258fc7e9f0.png" src="../../_images/14b2e0c27cc040252117301695dde6c816af8cee6c2a68b2f9a14d258fc7e9f0.png" />
+<img alt="../../_images/6e41259cbe01851151bfa72c4f6c6b812d6a848e931356dfd773fd24afe2d779.png" src="../../_images/6e41259cbe01851151bfa72c4f6c6b812d6a848e931356dfd773fd24afe2d779.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -788,8 +794,8 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/a568cf0c1abd65db25319f55e0c71097a1107e75577a5725d853ef0574b4ae34.png" src="../../_images/a568cf0c1abd65db25319f55e0c71097a1107e75577a5725d853ef0574b4ae34.png" />
-<img alt="../../_images/ba527ca094c11e3731a30ddf25c0950eb862bfd38e190881e9fdbf6c8900a012.png" src="../../_images/ba527ca094c11e3731a30ddf25c0950eb862bfd38e190881e9fdbf6c8900a012.png" />
+<img alt="../../_images/02e1aab3d4e20c1d26c43ac4e66daac88dfe1606310bf8f3c2f52302a7078f6b.png" src="../../_images/02e1aab3d4e20c1d26c43ac4e66daac88dfe1606310bf8f3c2f52302a7078f6b.png" />
+<img alt="../../_images/99c0397d8d5ceb2ee1b8cd780e995e793d6da3e17e0ca511fc8d94af5207fa9c.png" src="../../_images/99c0397d8d5ceb2ee1b8cd780e995e793d6da3e17e0ca511fc8d94af5207fa9c.png" />
 </div>
 </div>
 </section>

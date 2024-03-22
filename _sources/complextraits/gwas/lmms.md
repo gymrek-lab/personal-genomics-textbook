@@ -15,7 +15,7 @@ Linear mixed models introduced below give a way to account for this. They will a
 Recall our original linear model we used for quantitative traits:
 
 $$
-Y = \beta_j X_j + C\gamma + \epsilon_j
+Y = \beta_j X_j + C\gamma + \epsilon
 $$
 
 where:
@@ -24,9 +24,9 @@ where:
 * $X_j=\{x_{j1}, ..., x_{jn}\}$ is a vector of genotypes for SNP $j$ (0s, 1s, and 2s).
 * $\beta_j$ is the effect size for SNP $j$ (this is just a scalar value).
 * $C$ is an $n\times C$ matrix of covariates (e.g. sex, age, top population PCs) and $\gamma$ is a $C \times 1$ vector of covariate coefficients.
-* $\epsilon=\{\epsilon_{1}..., \epsilon_{j}\}$ is a vector of noise terms for each sample.
+* $\epsilon=\{\epsilon_{1}..., \epsilon_{n}\}$ is a vector of noise terms for each sample.
 
-We generally make the assumption that the noise term for each sample is independent and normally distributed, with $\epsilon_j \sim N(0, \sigma^2_e I)$. Here $\sigma^2_e$ is an unknown scalar value that quantifies how much variance is due to the noise term (not explained by SNP $j$), and $I$ is the $n \times n$ identity matrix. In other words, the variance of each individuals noise term is $\sigma^2_e$ and the covariance between noise terms for different samples is 0.
+We generally make the assumption that the noise term for each sample is independent and normally distributed, with $\epsilon_i \sim N(0, \sigma^2_e I)$. Here $\sigma^2_e$ is an unknown scalar value that quantifies how much variance is due to the noise term (not explained by SNP $j$), and $I$ is the $n \times n$ identity matrix. In other words, the variance of each individuals noise term is $\sigma^2_e$ and the covariance between noise terms for different samples is 0.
 
 In the model above, we refer to the SNP ($\beta_j X_j$) and covariates ($C\gamma$) terms as *fixed effects*. This means we assume they have some true underlying, constant, value.
 

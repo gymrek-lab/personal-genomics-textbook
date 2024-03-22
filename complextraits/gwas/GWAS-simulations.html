@@ -7,7 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>7.2 Exploring GWAS association statistics &#8212; CSE284 - Personal Genomics</title>
   
@@ -234,11 +234,17 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="confounding.html">7.3 Confounding factors in GWAS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="case_control_traits.html">7.4 GWAS for case-control traits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lmms.html">7.5 Linear mixed models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="power.html">7.6 Power to detect associations</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../heritability.html">Chapter 8: Heritability</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../heritability/relatives.html">8.1 Measuring heritability in related individuals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../heritability/lmms-h2.html">8.2 Measuring SNP-based heritability using LMMs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../prs.html">Chapter 9: Polygenic risk scores</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../prs/clumping-thresholding.html">9.1 Clumping + Threshold (C+T) method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../prs/bayesian_prs.html">9.2 Bayesian methods for polygenic risk scores</a></li>
 </ul>
 </li>
 </ul>
@@ -535,7 +541,7 @@ document.write(`
 Populating the interactive namespace from numpy and matplotlib
 </pre></div>
 </div>
-<img alt="../../_images/17110dc62bd62b86c2acbfee598c544136d094bb41e9b5cbbfc846ff578edc66.png" src="../../_images/17110dc62bd62b86c2acbfee598c544136d094bb41e9b5cbbfc846ff578edc66.png" />
+<img alt="../../_images/f1847de88c6698989ff8b7e9ac748129947c3a5fcadb0107165db0f8cf3472a1.png" src="../../_images/f1847de88c6698989ff8b7e9ac748129947c3a5fcadb0107165db0f8cf3472a1.png" />
 </div>
 </div>
 <p>Now, let’s write a simple function to perform a GWAS based on a set of genotypes and phenotypes. Our function will take in a set of genotypes (<span class="math notranslate nohighlight">\(X=\{x_1, x_2, ... x_n\}\)</span>) and phenotypes (<span class="math notranslate nohighlight">\(Y=\{y_1, y_2, ... y_n\}\)</span>) and perform a linear regression between the two. We will output two things:</p>
@@ -578,11 +584,11 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Beta: 0.44400327927721395
-Pval: 2.1019135675421984e-50
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Beta: 0.5330429988256793
+Pval: 1.4716111198058436e-68
 </pre></div>
 </div>
-<img alt="../../_images/ae5e5bcd72da39a8ec0e13f47361ef6b28bfdf90f93b4b39f05136f547133684.png" src="../../_images/ae5e5bcd72da39a8ec0e13f47361ef6b28bfdf90f93b4b39f05136f547133684.png" />
+<img alt="../../_images/4883bd179738682da6097130919b7e0ddb6d48d72f7068a6d205292f4fa91ed6.png" src="../../_images/4883bd179738682da6097130919b7e0ddb6d48d72f7068a6d205292f4fa91ed6.png" />
 </div>
 </div>
 </section>
@@ -623,7 +629,7 @@ Pval: 2.1019135675421984e-50
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/80bac03bcfd91bf23706e3f21dbbcebaadf71b8e06435304d08ce794b5317270.png" src="../../_images/80bac03bcfd91bf23706e3f21dbbcebaadf71b8e06435304d08ce794b5317270.png" />
+<img alt="../../_images/400a5e296b19880e71b5602ec966d662f90b12a7edd6baf8d889b2e3f7fd33e2.png" src="../../_images/400a5e296b19880e71b5602ec966d662f90b12a7edd6baf8d889b2e3f7fd33e2.png" />
 </div>
 </div>
 <p><strong>Note, even though we simulated <span class="math notranslate nohighlight">\(\beta=0\)</span>, we still measured <span class="math notranslate nohighlight">\(|\beta|&gt;0\)</span> a lot of the time! So in our real data, even if <span class="math notranslate nohighlight">\(\beta&gt;0\)</span>, we might not be that surprised, since we know we can get that result just by chance.</strong></p>
@@ -665,11 +671,11 @@ Pval: 2.1019135675421984e-50
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Linear regression p-value: 0.0018476632249911043
-P-value from comparison to null distribution: 0.0011
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Linear regression p-value: 0.005525761688817975
+P-value from comparison to null distribution: 0.007
 </pre></div>
 </div>
-<img alt="../../_images/1247fd4f580a74d30c2ecf49337229aaaa6f8b6d0483bb028621205c7e10494e.png" src="../../_images/1247fd4f580a74d30c2ecf49337229aaaa6f8b6d0483bb028621205c7e10494e.png" />
+<img alt="../../_images/7bd328ce66645709717adac67890238daeaa4d0090982cfa70ae49e80c688c19.png" src="../../_images/7bd328ce66645709717adac67890238daeaa4d0090982cfa70ae49e80c688c19.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -719,7 +725,7 @@ P-value from comparison to null distribution: 0.0011
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Frequency&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/81776e3a0a790df5fb3736dfdad113d68503351b7d4ae33a6a8285a2cf743f42.png" src="../../_images/81776e3a0a790df5fb3736dfdad113d68503351b7d4ae33a6a8285a2cf743f42.png" />
+<img alt="../../_images/aa0292bb3e6dd9073aac6c18988c7345f3340c3d216a4365bcef1a1921ce0870.png" src="../../_images/aa0292bb3e6dd9073aac6c18988c7345f3340c3d216a4365bcef1a1921ce0870.png" />
 </div>
 </div>
 <p>You should find that if all of our data is null, the p-values should mostly follow a uniform distribution! If there is no association in our data, the p-value is equally likely to be anywhere from 0 to 1. This is the very definition of a p-value.</p>
@@ -752,7 +758,7 @@ P-value from comparison to null distribution: 0.0011
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/67f756f499b3dab493cabb2af862b62b2f9992e01d4c7986e09a4bb9fa90756b.png" src="../../_images/67f756f499b3dab493cabb2af862b62b2f9992e01d4c7986e09a4bb9fa90756b.png" />
+<img alt="../../_images/e2a9427d4ee9b566d6a294e0649f59b9cf299bf23a94c2a8567fac70083f089a.png" src="../../_images/e2a9427d4ee9b566d6a294e0649f59b9cf299bf23a94c2a8567fac70083f089a.png" />
 </div>
 </div>
 <p>What happened to the distribution of p-values when some of our data is not null? You will likely see a big spike in the lowest p-value bin, corresponding to significant p-values. This means there are many more small (significant) p-values than we would have expected compared to if our data was completely random.</p>
@@ -794,7 +800,7 @@ P-value from comparison to null distribution: 0.0011
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/5f4595edd0c8502215558d92d94c802ca495b453000a868ddbeee77f67622d43.png" src="../../_images/5f4595edd0c8502215558d92d94c802ca495b453000a868ddbeee77f67622d43.png" />
+<img alt="../../_images/2fe6ce0d3ceaa13af2f882d48c1665e0949a2df6820caaf886929d68cf33bbfb.png" src="../../_images/2fe6ce0d3ceaa13af2f882d48c1665e0949a2df6820caaf886929d68cf33bbfb.png" />
 </div>
 </div>
 <p>You should find that the null p-values follow the diagonal pretty well, meaning they look pretty uniformly distributed as expected!</p>
@@ -806,11 +812,11 @@ P-value from comparison to null distribution: 0.0011
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/50/q08ymzl96vv6q2617bqv_ssc0000gn/T/ipykernel_59277/1143090772.py:13: RuntimeWarning: divide by zero encountered in log10
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/w4/nkmln4bj2vz4g8dnl_qtgtc80000gn/T/ipykernel_34182/1143090772.py:13: RuntimeWarning: divide by zero encountered in log10
   ax.scatter(-1*np.log10(unif), -1*np.log10(pvals), s=5, color=&quot;black&quot;)
 </pre></div>
 </div>
-<img alt="../../_images/6b3c96c9825dfd337079dd396bd91d1302907ab232b4bebfd97353c012346857.png" src="../../_images/6b3c96c9825dfd337079dd396bd91d1302907ab232b4bebfd97353c012346857.png" />
+<img alt="../../_images/2a8c2776467c89e58bb642eb0b990905c850f38a26dfe4aeec0edd375b33313a.png" src="../../_images/2a8c2776467c89e58bb642eb0b990905c850f38a26dfe4aeec0edd375b33313a.png" />
 </div>
 </div>
 <p>You should see many more points well above the diagonal, corresponding to a strong departure from the expectation under the null distribution! (i.e. there is a signal!)</p>
@@ -855,7 +861,7 @@ P-value from comparison to null distribution: 0.0011
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/e79a5d6a6e97d7e51fb405854c5579e05910368270d97a891f170f3204a4ddcc.png" src="../../_images/e79a5d6a6e97d7e51fb405854c5579e05910368270d97a891f170f3204a4ddcc.png" />
+<img alt="../../_images/3660569ee94596baea2c31f0d9f8d16b919f27dfc65ca6aeb56c98fe8ab83ed8.png" src="../../_images/3660569ee94596baea2c31f0d9f8d16b919f27dfc65ca6aeb56c98fe8ab83ed8.png" />
 </div>
 </div>
 <p>You should see a huge inflation in the p-values! There are way too many significant values. The p-values in this case are probably not very reliable.</p>

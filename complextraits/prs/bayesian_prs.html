@@ -1,0 +1,732 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>9.2 Bayesian methods for polygenic risk scores &#8212; CSE284 - Personal Genomics</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'complextraits/prs/bayesian_prs';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Chapter A1.1: Unix cheat sheet" href="../../appendix/unix.html" />
+    <link rel="prev" title="9.1 Clumping + Threshold (C+T) method" href="clumping-thresholding.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="CSE284 - Personal Genomics - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="CSE284 - Personal Genomics - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Personal Genomics for Bioinformaticians
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 1 - Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../intro/intro_to_your_genome.html">Chapter 1: Introduction to the human genome</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/structure_DNA.html">1.1 The structure of DNA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/genome_organization.html">1.2 Organization of the human genome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/central_dogma.html">1.3 Genes and the central dogma</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/noncoding.html">1.4 The non-coding genome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/genetic_variation_terminology.html">1.5 Genetic variation terminology</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../intro/intro_genome_tech.html">Chapter 2: Overview of technologies for genome analysis</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/genotype_arrays.html">2.1 Genotyping arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/ngs.html">2.2 Next-generation sequencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/long_reads.html">2.3 Long-read technologies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/tech_summary.html">2.4 Summary of genomics technologies</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../intro/genome_file_formats.html">Tutorial 1: file formats for describing genetic variation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/formats/vcf.html">T1.2 VCF files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/formats/plink.html">T1.2 Plink files</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 2 - Ancestry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/intro_popgen.html">Chapter 3: Introduction to population genetics</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/forces_evolution.html">3.1 The four forces of evolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/mutations.html">3.2 Types and patterns of mutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/drift.html">3.3 Genetic drift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/selection.html">3.4 Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/hwe.html">3.5 Hardy-Weinberg Equilibrium and random mating</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/fst.html">3.6 Measuring population differentiation with Fst</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/recombination.html">3.7 Recombination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/WF-simulations.html">Activity: Exploring the Wright-Fisher model of genetic drift</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/global_ancestry.html">Chapter 4: Global ancestry</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/global/pca_global_ancestry.html">4.1 Global ancestry analysis with PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/global/admixture_global_ancestry.html">4.2 Global ancestry analysis with ADMIXTURE</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/relative_finding.html">Chapter 5: Relative finding</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/relfind/ibd.html">5.1 Identity by descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/relfind/ibd_pedigree.html">5.2 Expected IBD of close relatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/relfind/ibd_plink.html">5.3 Computing expected IBD - plink method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/relfind/ibd_segments.html">5.4 Computing expected IBD segment sharing</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/plink1kg/1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/plink1kg/plink.html">T2.2 Some tips and examples for using plink</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 3 - From genotypes to phenotypes</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../gwas.html">Chapter 7: GWAS for complex traits</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../gwas/quantitative_traits.html">7.1 GWAS for quantitative traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gwas/GWAS-simulations.html">7.2 Exploring GWAS association statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gwas/confounding.html">7.3 Confounding factors in GWAS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gwas/case_control_traits.html">7.4 GWAS for case-control traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gwas/lmms.html">7.5 Linear mixed models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gwas/power.html">7.6 Power to detect associations</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../heritability.html">Chapter 8: Heritability</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../heritability/relatives.html">8.1 Measuring heritability in related individuals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../heritability/lmms-h2.html">8.2 Measuring SNP-based heritability using LMMs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../prs.html">Chapter 9: Polygenic risk scores</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="clumping-thresholding.html">9.1 Clumping + Threshold (C+T) method</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">9.2 Bayesian methods for polygenic risk scores</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 1 - glossary and notation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/unix.html">Chapter A1.1: Unix cheat sheet</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/gymrek-lab/personal-genomics-textbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/gymrek-lab/personal-genomics-textbook/issues/new?title=Issue%20on%20page%20%2Fcomplextraits/prs/bayesian_prs.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/complextraits/prs/bayesian_prs.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>9.2 Bayesian methods for polygenic risk scores</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-vs-frequentist-regression">9.2.1 Bayesian vs. frequentist regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-a-prior-on-gwas-effect-sizes">9.2.2 Setting a prior on GWAS effect sizes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#marginal-effects">9.2.3 Marginal effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-posterior-effect-sizes">9.2.4 Estimating posterior effect sizes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-frequentist-vs-bayesian-prs">9.2.5 Summary: frequentist vs. Bayesian PRS</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="bayesian-methods-for-polygenic-risk-scores">
+<h1>9.2 Bayesian methods for polygenic risk scores<a class="headerlink" href="#bayesian-methods-for-polygenic-risk-scores" title="Permalink to this heading">#</a></h1>
+<p>Recall the general form for a polygenic risk score we introduced earlier:</p>
+<div class="math notranslate nohighlight">
+\[
+PRS_i = \sum_{j \in S} w_j X_{ij}
+\]</div>
+<p>When constructing our scores, we have to tackle two issues:</p>
+<ul class="simple">
+<li><p>What to set the weights <span class="math notranslate nohighlight">\(w_j\)</span> to?</p></li>
+<li><p>Which set of SNPs <span class="math notranslate nohighlight">\(S\)</span> should we use for our score?</p></li>
+</ul>
+<p>For the C+T method, we set the weights <span class="math notranslate nohighlight">\(w_j\)</span> simply to the effect sizes we learned in GWAS. To decide the set of SNPs, we tried a variety of LD-clumping and p-value thresholds to see which gave us the best score.</p>
+<p>Here, we will consider a different class of <em>Bayesian</em> methods, in which we will choose the SNP weights in a different way. We’ll also make use of <em>all</em> the SNPs, just not a subset.</p>
+<section id="bayesian-vs-frequentist-regression">
+<h2>9.2.1 Bayesian vs. frequentist regression<a class="headerlink" href="#bayesian-vs-frequentist-regression" title="Permalink to this heading">#</a></h2>
+<p>Recall our GWAS model for a single SNP (let’s ignore covariates):</p>
+<div class="math notranslate nohighlight">
+\[
+Y = \beta_j X_j + \epsilon
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(Y=\{y_1, ..., y_n\}\)</span> is a vector of phenotypes for each of our <span class="math notranslate nohighlight">\(n\)</span> samples. (This is often scaled to have mean 0 and variance 1).</p></li>
+<li><p><span class="math notranslate nohighlight">\(X_j=\{x_{j1}, ..., x_{jn}\}\)</span> is a vector of genotypes for SNP <span class="math notranslate nohighlight">\(j\)</span> (0s, 1s, and 2s).</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta_j\)</span> is the effect size for SNP <span class="math notranslate nohighlight">\(j\)</span> (this is just a scalar value).</p></li>
+<li><p><span class="math notranslate nohighlight">\(\epsilon=\{\epsilon_{1}..., \epsilon_{n}\}\)</span> is a vector of noise terms for each sample.</p></li>
+</ul>
+<p>When we do GWAS, we typically use a standard least squares regression to estimate the effect size <span class="math notranslate nohighlight">\(\beta_j\)</span>. This ends up being the maximum likelihood estimate (MLE), which maximizes <span class="math notranslate nohighlight">\(P(Y|X_j, \beta_j)\)</span>. Note that a <em>likelihood</em> is giving: what is the probability to observe the data I saw (here, <span class="math notranslate nohighlight">\(Y\)</span>), given some set of parameters and undelrying model. Our GWAS approach can be referred to as a <em>frequentist</em> approach: we don’t make any prior assumptions about <span class="math notranslate nohighlight">\(\beta_j\)</span> and just use the data given to us to try and estimate it.</p>
+<p>On the other hand, in a <em>Bayesian</em> approach we could incorporate some prior knowledge. We can use Bayes’ Theorem to write:</p>
+<div class="math notranslate nohighlight">
+\[
+P(\beta_j|Y, X_j) = \frac{P(Y|\beta_j, X_j)P(\beta_j)}{\int P(Y|\beta_j, X_j) P(\beta_j) d\beta_j}
+\]</div>
+<p>We have:</p>
+<ul class="simple">
+<li><p>On the left is the <em>posterior probability</em> <span class="math notranslate nohighlight">\(P(\beta_j|Y, X_j)\)</span>. The posterior gives us a distribution of <span class="math notranslate nohighlight">\(\beta_j\)</span>, taking into account both the data that we saw (<span class="math notranslate nohighlight">\(Y\)</span>) and the prior.</p></li>
+<li><p>On the right we have the likelihood we already described above (<span class="math notranslate nohighlight">\(P(Y|\beta_j, X_j)\)</span>). This is what we try to maximize in the frequentist approach.</p></li>
+<li><p>We also have the <em>prior</em>, which gives a prior distribution on <span class="math notranslate nohighlight">\(\beta_j\)</span> based on values we think it might take on.</p></li>
+<li><p>The denominator here is called the <em>evidence</em>. It integrates over all possible values of <span class="math notranslate nohighlight">\(\beta_j\)</span>. We’ll ignore this since it will always be the same.</p></li>
+</ul>
+<p>In the Bayesian approach, we are interested in taking into account <em>prior</em> information in order to obtain the <em>posterior</em> distribution of <span class="math notranslate nohighlight">\(\beta_j\)</span>.</p>
+</section>
+<section id="setting-a-prior-on-gwas-effect-sizes">
+<h2>9.2.2 Setting a prior on GWAS effect sizes<a class="headerlink" href="#setting-a-prior-on-gwas-effect-sizes" title="Permalink to this heading">#</a></h2>
+<p>For most complex traits, we expect that the majority of SNPs will have effect sizes close to 0, whereas a subset of SNPs will have non-zero effects. We would like a prior on <span class="math notranslate nohighlight">\(\beta_j\)</span> that could capture this. Of the different Bayesian PRS methods we will discuss, the main difference between them is how they set the prior.</p>
+<p>One potential option is to consider that we have a mixture of causal and non-causal SNPs. With probability <span class="math notranslate nohighlight">\(p\)</span>, a SNP is causal and we draw its effect from some distribution. It is common to draw the effects from a normal distribution with mean 0 and some variance <span class="math notranslate nohighlight">\(\sigma^2_g\)</span>. With probability <span class="math notranslate nohighlight">\(1-p\)</span>, we set the effect size to 0. This prior is known as the “spike and slab” model, which is depicted below:</p>
+<p><img alt="spikeslab" src="../../_images/spike_slab.png" /></p>
+<p>Source: <a class="reference external" href="https://web.stat.tamu.edu/~debdeep/pres-GLT.pdf">https://web.stat.tamu.edu/~debdeep/pres-GLT.pdf</a></p>
+<p>This model is very intuitive, and it is what is used by the widely cited <a class="reference external" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4596916/">LDPred</a> method. However a challenge is that the prior is not continuous which ends up making computation of the posterior distribution of <span class="math notranslate nohighlight">\(\beta_j\)</span> challenging.</p>
+<p>An alternative is to use a mixture of normal distributions that takes on a similar shape to the model above, but has the advantage of being continuous. The method <a class="reference external" href="https://www.nature.com/articles/s41467-019-09718-5">PRS-CS</a> method uses a “global-local scale mixture of normals”, with prior:</p>
+<div class="math notranslate nohighlight">
+\[
+\beta_j \sim N(0, \frac{\sigma^2}{N} \phi \psi_j); \psi_j \sim g
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(N\)</span> is the sample size and <span class="math notranslate nohighlight">\(\sigma^2\)</span> is related to the noise term in the regression.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\phi\)</span> is the <em>global scale parameter</em>. It is shared across all SNPs, and controls the sparsity of the model.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\psi_j\)</span> is a SNP-specific weight, which is drawn from some continuous density <span class="math notranslate nohighlight">\(g\)</span>.</p></li>
+</ul>
+<p>While more complex than the simple two-way mixture in LDPred, it gives a similar looking prior:</p>
+<p><img alt="continuous" src="../../_images/continuous_shirnkage.png" /></p>
+<p>Source: <a class="reference external" href="https://web.stat.tamu.edu/~debdeep/pres-GLT.pdf">https://web.stat.tamu.edu/~debdeep/pres-GLT.pdf</a></p>
+<p>Finally, a third option is presented in <a class="reference external" href="https://www.nature.com/articles/s41467-019-12653-0">SBayesR</a>, which uses a finite (discrete) mixture of normal distributions. This lies somewhere in between the choice in LDPred (one normal distribution plus a spike at 0) and PRS-CS (continuous mixture of normal distributions). Ultimately, all of these choices can be described as mixtures of normal distributions, ranging from least (LDPred) to most (PRS-CS) flexible, with the continuous solution in PRS-CS making inference of the posterior distribution the easiest. The image below summarizes these differences:</p>
+<p><img alt="bayesian" src="../../_images/bayesian_prs.png" /></p>
+</section>
+<section id="marginal-effects">
+<h2>9.2.3 Marginal effects<a class="headerlink" href="#marginal-effects" title="Permalink to this heading">#</a></h2>
+<p>For complex traits, we make the assumption that the underlying model relating genotypes to phenotypes is:</p>
+<div class="math notranslate nohighlight">
+\[
+Y = \beta_1 X_1 + \beta_2 X_2 + ... \beta_m X_m + \epsilon
+\]</div>
+<p>That is, there are additive contributions from many different causal variants.</p>
+<p>However, what we measure in GWAS using least squares regression, in which we fit models for one SNP at a time, are actually the <em>marginal effect sizes</em> (denoted by the variables with hats below)</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+Y \sim X_1 \rightarrow \hat{\beta_1} \\
+Y \sim X_2 \rightarrow \hat{\beta_2} \\
+... \\
+Y \sim X_m \rightarrow \hat{\beta_m} \\
+\end{split}\]</div>
+<p>Recall from our GWAS discussions how we often saw “skyscrapers” of many highly correlated SNPs reaching strong p-values, simply because they are correlated with something causal rather than causal themselves. It is very often the case that the <em>marginal</em> effect size will appear to be strong, even if the true underlying effect is not. It can also be the case that the marginal effect size ends up being lower than the actual effect size. The marginal effect sizes are a reflection of all the causal things that are tagged by a particular SNP.</p>
+</section>
+<section id="estimating-posterior-effect-sizes">
+<h2>9.2.4 Estimating posterior effect sizes<a class="headerlink" href="#estimating-posterior-effect-sizes" title="Permalink to this heading">#</a></h2>
+<p>Let’s first write the underlying model described above in matrix form:</p>
+<div class="math notranslate nohighlight">
+\[
+y = \mathbf{X}\beta + \epsilon
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(y\)</span> is an <span class="math notranslate nohighlight">\(N \times 1\)</span> vector of phenotype values</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is an <span class="math notranslate nohighlight">\(N \times M\)</span> matrix of SNP genotypes. Here, we’ll assume the columns (SNPs) have been standardized to have mean 0 variance 1.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta\)</span> is a <span class="math notranslate nohighlight">\(M \times 1\)</span> vector of effect sizes for each of the <span class="math notranslate nohighlight">\(M\)</span> SNPs. Note this is the <em>actual</em> effect sizes, not the marginal effects we measure in GWAS.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\epsilon\)</span> is an <span class="math notranslate nohighlight">\(N \times 1\)</span> vector of the noise terms, with <span class="math notranslate nohighlight">\(\epsilon \sim N(0, \sigma^2 I)\)</span>.</p></li>
+</ul>
+<p>Now back in the Bayesian world, we’ll set a prior on the <span class="math notranslate nohighlight">\(\beta_j\)</span> values:</p>
+<div class="math notranslate nohighlight">
+\[
+\beta_j \sim N(0, \sigma^2_j)
+\]</div>
+<p>where the <span class="math notranslate nohighlight">\(\sigma^2_j\)</span> will differ slightly across methods (e.g. LDPred, PRS-CS, SBayesR).</p>
+<p>Let’s also define:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{\beta}\)</span>: marginal effect sizes measured by individual linear regressions on each SNP <span class="math notranslate nohighlight">\(j\)</span>. Note the marginal estimates turn out to be equal to <span class="math notranslate nohighlight">\(\hat{\beta} = \mathbf{X}^Ty/N\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(D\)</span>: the LD matrix of LD between each pair of SNPs. Note <span class="math notranslate nohighlight">\(D=\mathbf{X}^T\mathbf{X}/N\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(T = diag\{\sigma^2_1, \sigma^2_2, ... \sigma^2_m\}\)</span>. This encodes the information about the prior. It is just the variance terms from the prior for the <span class="math notranslate nohighlight">\(\beta_j\)</span>’s.</p></li>
+</ul>
+<p>Then it turns out we can write the posterior mean of the <span class="math notranslate nohighlight">\(\beta\)</span> values in terms of the LD matrix <span class="math notranslate nohighlight">\(D\)</span>, the marginal effect sizes <span class="math notranslate nohighlight">\(\hat{\beta}\)</span>, and our priors:</p>
+<div class="math notranslate nohighlight">
+\[
+E[\beta| \hat{\beta}] = (D + T^{-1})^{-1}\hat{\beta}
+\]</div>
+<p>This is really exciting, since we can get:</p>
+<ul class="simple">
+<li><p>The marginal effects <span class="math notranslate nohighlight">\(\hat{\beta}\)</span> from a published GWAS on our trait of interest</p></li>
+<li><p>The LD matrix <span class="math notranslate nohighlight">\(D\)</span> can be computed from publicly available genomes, such as the 1000 Genomes</p></li>
+</ul>
+<p>These posterior estimates of <span class="math notranslate nohighlight">\(\beta\)</span> are exactly what will be used as the weights in our PRS using the Bayesian approaches.</p>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>the variances of the priors on <span class="math notranslate nohighlight">\(\beta_j\)</span> values (and therefore the <span class="math notranslate nohighlight">\(T\)</span> matrix) will differ across methods.</p></li>
+<li><p>This formula has parallels to penalized regression techniques, such as ridge regression. The <span class="math notranslate nohighlight">\(T\)</span> matrix can be viewed as a regularization term that forces us to shrink some of the <span class="math notranslate nohighlight">\(\beta_j\)</span> values to 0.</p></li>
+<li><p>To actually fit these models requires a method like Gibbs sampling since there are multiple unknown parameters to estimate (e.g. <span class="math notranslate nohighlight">\(\beta_j\)</span>’s, <span class="math notranslate nohighlight">\(\sigma^2\)</span>, <span class="math notranslate nohighlight">\(\sigma_j\)</span>’s)</p></li>
+</ul>
+</section>
+<section id="summary-frequentist-vs-bayesian-prs">
+<h2>9.2.5 Summary: frequentist vs. Bayesian PRS<a class="headerlink" href="#summary-frequentist-vs-bayesian-prs" title="Permalink to this heading">#</a></h2>
+<p>In the C+T approeach we:</p>
+<ul class="simple">
+<li><p>Used the marginal effect sizes directly from GWAS</p></li>
+<li><p>Used LD-clumping to subset the SNPs</p></li>
+</ul>
+<p>In the Bayesian PRS approaches we:</p>
+<ul class="simple">
+<li><p>Used posterior means of effect sizes as weights (based on marginal effects and LD)</p></li>
+<li><p>Used all the SNPs (many of which will get set close to 0 weight)</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./complextraits/prs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="clumping-thresholding.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">9.1 Clumping + Threshold (C+T) method</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../appendix/unix.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Chapter A1.1: Unix cheat sheet</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-vs-frequentist-regression">9.2.1 Bayesian vs. frequentist regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-a-prior-on-gwas-effect-sizes">9.2.2 Setting a prior on GWAS effect sizes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#marginal-effects">9.2.3 Marginal effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-posterior-effect-sizes">9.2.4 Estimating posterior effect sizes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-frequentist-vs-bayesian-prs">9.2.5 Summary: frequentist vs. Bayesian PRS</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Melissa Gymrek
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
