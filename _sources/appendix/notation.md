@@ -1,1 +1,0 @@
-# Chapter A2.4: Notation used throughout the book
