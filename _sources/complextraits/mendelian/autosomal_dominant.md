@@ -1,0 +1,1 @@
+# 6.2 Autosomal dominant traits

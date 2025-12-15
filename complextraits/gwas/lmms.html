@@ -1,0 +1,667 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>7.5 Linear mixed models &#8212; CSE284 - Personal Genomics</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'complextraits/gwas/lmms';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.6 Power to detect associations" href="power.html" />
+    <link rel="prev" title="7.4 GWAS for case-control traits" href="case_control_traits.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="CSE284 - Personal Genomics - Home"/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="CSE284 - Personal Genomics - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Personal Genomics for Bioinformaticians
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 1 - Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../intro/intro_to_your_genome.html">Chapter 1: Introduction to the human genome</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/structure_DNA.html">1.1 The structure of DNA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/genome_organization.html">1.2 Organization of the human genome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/central_dogma.html">1.3 Genes and the central dogma</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/noncoding.html">1.4 The non-coding genome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/genome/genetic_variation_terminology.html">1.5 Genetic variation terminology</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../intro/intro_genome_tech.html">Chapter 2: Overview of technologies for genome analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/genotype_arrays.html">2.1 Genotyping arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/ngs.html">2.2 Next-generation sequencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/long_reads.html">2.3 Long-read technologies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/tech/tech_summary.html">2.4 Summary of genomics technologies</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../intro/genome_file_formats.html">Tutorial 1: file formats for describing genetic variation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/formats/vcf.html">T1.2 VCF files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/formats/plink.html">T1.2 Plink files</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 2 - Ancestry</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/intro_popgen.html">Chapter 3: Introduction to population genetics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/forces_evolution.html">3.1 The four forces of evolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/mutations.html">3.2 Types and patterns of mutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/drift.html">3.3 Genetic drift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/selection.html">3.4 Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/hwe.html">3.5 Hardy-Weinberg Equilibrium and random mating</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/fst.html">3.6 Measuring population differentiation with Fst</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/recombination.html">3.7 Recombination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/popgen/WF-simulations.html">Activity: Exploring the Wright-Fisher model of genetic drift</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/global_ancestry.html">Chapter 4: Global ancestry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/global/pca_global_ancestry.html">4.1 Global ancestry analysis with PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/global/admixture_global_ancestry.html">4.2 Global ancestry analysis with ADMIXTURE</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/relative_finding.html">Chapter 5: Relative finding</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/relfind/ibd.html">5.1 Identity by descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/relfind/ibd_pedigree.html">5.2 Expected IBD of close relatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/relfind/ibd_plink.html">5.3 Computing expected IBD - plink method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/relfind/ibd_segments.html">5.4 Computing expected IBD segment sharing</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ancestry/plink_1000G.html">Tutorial 2: Working with 1000 Genomes data and plink</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/plink1kg/1000G.html">T2.1 The 1000 Genomes Project dataset (and wrangling VCF files)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ancestry/plink1kg/plink.html">T2.2 Some tips and examples for using plink</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Module 3 - From genotypes to phenotypes</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../gwas.html">Chapter 7: GWAS for complex traits</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quantitative_traits.html">7.1 GWAS for quantitative traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GWAS-simulations.html">7.2 Exploring GWAS association statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="confounding.html">7.3 Confounding factors in GWAS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="case_control_traits.html">7.4 GWAS for case-control traits</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">7.5 Linear mixed models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="power.html">7.6 Power to detect associations</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../heritability.html">Chapter 8: Heritability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../heritability/relatives.html">8.1 Measuring heritability in related individuals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../heritability/lmms-h2.html">8.2 Measuring SNP-based heritability using LMMs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../prs.html">Chapter 9: Polygenic risk scores</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../prs/clumping-thresholding.html">9.1 Clumping + Threshold (C+T) method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../prs/bayesian_prs.html">9.2 Bayesian methods for polygenic risk scores</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 1 - glossary and notation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/unix.html">Chapter A1.1: Unix cheat sheet</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/gymrek-lab/personal-genomics-textbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/gymrek-lab/personal-genomics-textbook/issues/new?title=Issue%20on%20page%20%2Fcomplextraits/gwas/lmms.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/complextraits/gwas/lmms.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>7.5 Linear mixed models</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cryptic-relatedness">7.5.1 Cryptic relatedness</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-of-lmms">7.5.2 Overview of LMMs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#genetic-relatedness-matrix-grm">7.5.3 Genetic relatedness matrix (GRM)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-all-together-pcs-and-lmms">7.5.4 Putting it all together - PCs and LMMs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-of-lmms">7.5.5 Advantages of LMMs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-applications-of-lmms">7.5.6 Other applications of LMMs</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="linear-mixed-models">
+<h1>7.5 Linear mixed models<a class="headerlink" href="#linear-mixed-models" title="Link to this heading">#</a></h1>
+<p>In previous sections, we introduced the concept of association testing for GWAS using linear or logistic models. We also saw how factors, most commonly ancestry, can confound association tests, and added population PCs as covariates to our models to control for this confounding and reduce in inflation in the p-values.</p>
+<p>Here, we’ll introduce an extension of the linear models considered previously, known as <em>linear mixed models</em> that will help us further control for possible confounding from relatedness and also as a result will help improve power to detect associations. The concept of statistical power will be described in more detail in a subsequent section.</p>
+<section id="cryptic-relatedness">
+<h2>7.5.1 Cryptic relatedness<a class="headerlink" href="#cryptic-relatedness" title="Link to this heading">#</a></h2>
+<p>While top PCs capture overall population structure (e.g. is this person East Asian vs. European), they do not capture information about relatedness between samples. Including related individuals in our GWAS could introduce bias: if two individuals share a large fraction of the genome, they are more likely to have similar phenotype values. However, when we are testing each SNP individually we are treating each person as if they are an independent data point. One strategy is to remove related individuals (e.g. using IBD sharing like we saw how to compute with plink when we did relative finding). However, even after doing that we can still have individuals who share “cryptic relatedness”, characterized by long shared genomic segments.</p>
+<p>Linear mixed models introduced below give a way to account for this. They will also end up being useful for several other applications we’ll see in future chapters.</p>
+</section>
+<section id="overview-of-lmms">
+<h2>7.5.2 Overview of LMMs<a class="headerlink" href="#overview-of-lmms" title="Link to this heading">#</a></h2>
+<p>Recall our original linear model we used for quantitative traits:</p>
+<div class="math notranslate nohighlight">
+\[
+Y = \beta_j X_j + C\gamma + \epsilon
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(Y=\{y_1, ..., y_n\}\)</span> is a vector of phenotypes for each of our <span class="math notranslate nohighlight">\(n\)</span> samples. (This is often scaled to have mean 0 and variance 1).</p></li>
+<li><p><span class="math notranslate nohighlight">\(X_j=\{x_{j1}, ..., x_{jn}\}\)</span> is a vector of genotypes for SNP <span class="math notranslate nohighlight">\(j\)</span> (0s, 1s, and 2s).</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta_j\)</span> is the effect size for SNP <span class="math notranslate nohighlight">\(j\)</span> (this is just a scalar value).</p></li>
+<li><p><span class="math notranslate nohighlight">\(C\)</span> is an <span class="math notranslate nohighlight">\(n\times C\)</span> matrix of covariates (e.g. sex, age, top population PCs) and <span class="math notranslate nohighlight">\(\gamma\)</span> is a <span class="math notranslate nohighlight">\(C \times 1\)</span> vector of covariate coefficients.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\epsilon=\{\epsilon_{1}..., \epsilon_{n}\}\)</span> is a vector of noise terms for each sample.</p></li>
+</ul>
+<p>We generally make the assumption that the noise term for each sample is independent and normally distributed, with <span class="math notranslate nohighlight">\(\epsilon_i \sim N(0, \sigma^2_e I)\)</span>. Here <span class="math notranslate nohighlight">\(\sigma^2_e\)</span> is an unknown scalar value that quantifies how much variance is due to the noise term (not explained by SNP <span class="math notranslate nohighlight">\(j\)</span>), and <span class="math notranslate nohighlight">\(I\)</span> is the <span class="math notranslate nohighlight">\(n \times n\)</span> identity matrix. In other words, the variance of each individuals noise term is <span class="math notranslate nohighlight">\(\sigma^2_e\)</span> and the covariance between noise terms for different samples is 0.</p>
+<p>In the model above, we refer to the SNP (<span class="math notranslate nohighlight">\(\beta_j X_j\)</span>) and covariates (<span class="math notranslate nohighlight">\(C\gamma\)</span>) terms as <em>fixed effects</em>. This means we assume they have some true underlying, constant, value.</p>
+<p>Now we will introduce an additional term to our model:</p>
+<div class="math notranslate nohighlight">
+\[
+Y = \beta_j X_j + C\gamma + u + \epsilon
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(u \sim N(0, \sigma^2_g K)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(K\)</span> is an <span class="math notranslate nohighlight">\(n \times n\)</span> <em>genetic relatedness matrix</em> (GRM). The GRM can be thought of as giving the correlation of genotypes across all SNPs for each pair of samples, adjusted for minor allele frequencies. We will give more details on <span class="math notranslate nohighlight">\(K\)</span> below.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma^2_g\)</span> is a scalar value quantifying how much phenotypic variance is driven by genetic relatedness.</p></li>
+</ul>
+<p>Some important notes about <span class="math notranslate nohighlight">\(u\)</span>:</p>
+<ul class="simple">
+<li><p>The <span class="math notranslate nohighlight">\(u\)</span> term added above will be treated as a <em>random effect</em> that will capture <em>all genotyped SNPs</em> (similar to as if we added <span class="math notranslate nohighlight">\(m\)</span> additional variables to our model for each of the <span class="math notranslate nohighlight">\(m\)</span> SNPs in our dataset). As opposed to fixed effects, we assume random effects are just that (random) and are drawn from some distribution. We are not actually going to look at the effect of each of the genome-wide SNPs in this model, but rather will treat them as nuisance parameters that are captured by this <span class="math notranslate nohighlight">\(u\)</span> term.</p></li>
+<li><p>Another way to think about <span class="math notranslate nohighlight">\(u\)</span> is that it adds some structure to our error terms. In the fixed-effects only models, errors were uncorrelated across samples. Now, we have <span class="math notranslate nohighlight">\(u+\epsilon \sim N(0, \sigma^2_eI+\sigma^2_gK)\)</span>. Now, the covariance of this term for a pair of samples is no longer 0, but is a function of their relatedness. More closely related samples will tend to have more correlated <span class="math notranslate nohighlight">\(\epsilon+u\)</span> terms, whereas completely unrelated samples will not have correlated terms.</p></li>
+</ul>
+<p><img alt="random_effects" src="../../_images/random_effects.png" />
+Phenotypic covariance is modeled as being due to a combination of uncorrelated noise (<span class="math notranslate nohighlight">\(\sigma^2_eI\)</span>) and genetic relatedness (<span class="math notranslate nohighlight">\(\sigma^2_g K\)</span>).</p>
+<p>We do not go over how to fit an LMM here, but point readers to tools such as GCTA or BOLT-LMM. Most tools implementing LMMs will use a version of restricted maximum likelihood (REML). They take as input the genotypes and phenotypes, and output effect sizes and p-values for each SNP similar to the linear model. These tools can also be used to estimate the <span class="math notranslate nohighlight">\(\sigma^2_e\)</span> and <span class="math notranslate nohighlight">\(\sigma^2_g\)</span> terms, which we will talk about more when we discuss heritability in the next chapter.</p>
+</section>
+<section id="genetic-relatedness-matrix-grm">
+<h2>7.5.3 Genetic relatedness matrix (GRM)<a class="headerlink" href="#genetic-relatedness-matrix-grm" title="Link to this heading">#</a></h2>
+<p>Let <span class="math notranslate nohighlight">\(X=\{X_ij\}\)</span> be an <span class="math notranslate nohighlight">\(m \times n\)</span> matrix of SNP genotypes, where <span class="math notranslate nohighlight">\(X_{ij}\)</span> gives the standardized genotype of SNP <span class="math notranslate nohighlight">\(j\)</span> at sample <span class="math notranslate nohighlight">\(i\)</span>. For a SNP <span class="math notranslate nohighlight">\(j\)</span> with MAF=<span class="math notranslate nohighlight">\(p_j\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+X_{ij} \in \{ \frac{-2p_j}{\sqrt{2p_j(1-p_j)}}, \frac{1-2p_j}{\sqrt{2p_j(1-p_j)}}, \frac{2-2p_j}{\sqrt{2p_j(1-p_j)}}\}
+\]</div>
+<p>Then the GRM is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+K = X^TX/m
+\]</div>
+<p>Note the GRM is an <span class="math notranslate nohighlight">\(n \times n\)</span> matrix, where <span class="math notranslate nohighlight">\(K_{ab}\)</span> gives the relatedness of individuals <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span>.</p>
+</section>
+<section id="putting-it-all-together-pcs-and-lmms">
+<h2>7.5.4 Putting it all together - PCs and LMMs<a class="headerlink" href="#putting-it-all-together-pcs-and-lmms" title="Link to this heading">#</a></h2>
+<p>In a typical modern GWAS, the GRM comes into play in two different ways:</p>
+<ul class="simple">
+<li><p>The eigenvectors of the GRM turn out to be the same as projection of samples along the top PCs, as we did in global ancestry analysis. These are included as fixed effects covariates (e.g. <span class="math notranslate nohighlight">\(C\gamma\)</span> in the model above). These PCs control for global population structure.</p></li>
+<li><p>The GRM is also used to define the covariance of the random effects term <span class="math notranslate nohighlight">\(u \sim N(0, \sigma^2_g K)\)</span>. This allows us to tell the model that phenotype values for more closely related individuals should be more correlated.</p></li>
+</ul>
+</section>
+<section id="advantages-of-lmms">
+<h2>7.5.5 Advantages of LMMs<a class="headerlink" href="#advantages-of-lmms" title="Link to this heading">#</a></h2>
+<p>LMMs provide multiple advantages over fixed-effects only models for GWAS:</p>
+<ul class="simple">
+<li><p>By controlling for cryptic relatedness, we can be less concerned about having related samples in our cohort. (It is still considered good practice to remove close relatives though).</p></li>
+<li><p>They also turn out to improve power. We have not yet formally defined power, but intuitively this means the p-values tend to be stronger than under the standard linear models. This is likely because by controlling for relatedness at other areas of the genome when testing each individual SNP, we are reducing noise, making it easier to detect an effect for that SNP.</p></li>
+</ul>
+</section>
+<section id="other-applications-of-lmms">
+<h2>7.5.6 Other applications of LMMs<a class="headerlink" href="#other-applications-of-lmms" title="Link to this heading">#</a></h2>
+<p>In future chapters, we’ll use LMMs for a number of applications including:</p>
+<ul class="simple">
+<li><p>Estimating heritability</p></li>
+<li><p>Partitioning trait variance explained between different genomic annotations</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./complextraits/gwas"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="case_control_traits.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">7.4 GWAS for case-control traits</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="power.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">7.6 Power to detect associations</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cryptic-relatedness">7.5.1 Cryptic relatedness</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-of-lmms">7.5.2 Overview of LMMs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#genetic-relatedness-matrix-grm">7.5.3 Genetic relatedness matrix (GRM)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-all-together-pcs-and-lmms">7.5.4 Putting it all together - PCs and LMMs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-of-lmms">7.5.5 Advantages of LMMs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-applications-of-lmms">7.5.6 Other applications of LMMs</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Melissa Gymrek
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
