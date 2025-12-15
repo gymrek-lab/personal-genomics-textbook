@@ -1,1 +1,0 @@
-# Chapter 17: Ethics part I - privacy
