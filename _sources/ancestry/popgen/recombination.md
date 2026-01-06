@@ -64,7 +64,7 @@ This measures how far the observed haplotype frequencies deviate from the expect
 
 $$ D' = D/D_{max}$$
 
-where $D_{max} = \max\{-q_1q_2, -(1-q_1)(1-q_2)\}$ if $D<0$ and $D_{max} = \min\{q_1(1-q_2), (1-q_1)q_2\} if $D>0$.
+where $D_{max} = \max\{-q_1q_2, -(1-q_1)(1-q_2)\}$ if $D<0$ and $D_{max} = \min\{q_1(1-q_2), (1-q_1)q_2\}$ if $D>0$.
 
 ### $r^2$
 
